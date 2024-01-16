@@ -6,8 +6,8 @@
         <?= form_open_multipart(base_url('admin/bencana/pelaporan/save')) ?>
         <input type="hidden" name="id" value="<?= @$pelaporan->id ?>">
         <div class="mb-3">
-            <label class="form-label" for="tanggal">tanggal</label>
-            <input type="datetime-local" class="form-control" name="tanggal" id="tanggal" value="<?= @$pelaporan->tanggal ?>">
+            <label class="form-label" for="tanggal">tanggal <span class="text-danger">*</span></label>
+            <input type="datetime-local" class="form-control" name="tanggal" id="tanggal" value="<?= @$pelaporan->tanggal ?>" required>
         </div>
         <div class="row">
             <div class="col-lg-6">
@@ -40,7 +40,7 @@
         <div class="row">
             <div class="col-lg-6">
                 <div class="mb-3">
-                    <label class="form-label" for="kejadian">jenis kejadian</label>
+                    <label class="form-label" for="kejadian">jenis kejadian <span class="text-danger">*</span></label>
                     <select class="form-select" name="kejadian" id="kejadian" width="100px" required>
                         <option value="">--Pilih--</option>
                         <option <?= @$pelaporan->kejadian == 'Banjir' ? 'selected' : '' ?> value="Banjir">Banjir</option>
@@ -182,8 +182,8 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="mb-3">
-                    <label class="form-label" for="akses_telepon_internet">akses telepon / internet <span class="text-danger">*</span></label>
-                    <select class="form-select" name="akses_telepon_internet" id="akses_telepon_internet" width="100px" required>
+                    <label class="form-label" for="akses_telepon_internet">akses telepon / internet</label>
+                    <select class="form-select" name="akses_telepon_internet" id="akses_telepon_internet" width="100px">
                         <option value="">--Pilih--</option>
                         <option <?= @$pelaporan->akses_telepon_internet == 'Berfungsi' ? 'selected' : '' ?> value="Berfungsi">Berfungsi</option>
                         <option <?= @$pelaporan->akses_telepon_internet == 'Tidak Berfungsi' ? 'selected' : '' ?> value="Tidak Berfungsi">Tidak Berfungsi</option>
@@ -193,7 +193,7 @@
             <div class="col-md-4">
                 <div class="mb-3">
                     <label class="form-label" for="akses_listrik">akses listrik</label>
-                    <select class="form-select" name="akses_listrik" id="akses_listrik" width="100px" required>
+                    <select class="form-select" name="akses_listrik" id="akses_listrik" width="100px">
                         <option value="">--Pilih--</option>
                         <option <?= @$pelaporan->akses_listrik == 'Berfungsi' ? 'selected' : '' ?> value="Berfungsi">Berfungsi</option>
                         <option <?= @$pelaporan->akses_listrik == 'Tidak Berfungsi' ? 'selected' : '' ?> value="Tidak Berfungsi">Tidak Berfungsi</option>
@@ -203,7 +203,7 @@
             <div class="col-md-4">
                 <div class="mb-3">
                     <label class="form-label" for="akses_air_bersih">akses air bersih</label>
-                    <select class="form-select" name="akses_air_bersih" id="akses_air_bersih" width="100px" required>
+                    <select class="form-select" name="akses_air_bersih" id="akses_air_bersih" width="100px">
                         <option value="">--Pilih--</option>
                         <option <?= @$pelaporan->akses_air_bersih == 'Berfungsi' ? 'selected' : '' ?> value="Berfungsi">Berfungsi</option>
                         <option <?= @$pelaporan->akses_air_bersih == 'Tidak Berfungsi' ? 'selected' : '' ?> value="Tidak Berfungsi">Tidak Berfungsi</option>

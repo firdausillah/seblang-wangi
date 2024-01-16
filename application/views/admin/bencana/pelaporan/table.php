@@ -23,9 +23,9 @@
                 <?php foreach ($pelaporan as $index => $item) : ?>
                     <tr>
                         <td><?= $index + 1 ?></td>
-                        <td><?= $item->foto ?></td>
+                        <td><img src="<?= base_url('uploads/img/pelaporan/' . $item->foto) ?>" height="150px" alt=""></td>
                         <td><?= ($item->tanggal == '0000-00-00' ? '' : date('d-M-Y', strtotime($item->tanggal))) ?></td>
-                        <td><?= $item->lokasi ?></td>
+                        <td><?= $item->alamat ?></td>
                         <td><?= $item->kejadian ?></td>
                         <td><?= $item->kegiatan ?></td>
                         <td><?= $item->jumlah_terdampak_kk ?></td>
