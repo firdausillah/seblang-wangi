@@ -150,8 +150,13 @@
 
                     <ul class="menu-sub">
                         <li class="menu-item">
-                            <a href="<?= base_url() ?>admin/relawan/database" class="menu-link">
-                                <div data-i18n="Database">Database</div>
+                            <a href="<?= base_url() ?>admin/relawan/relawan" class="menu-link">
+                                <div data-i18n="Relawan">Relawan</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="<?= base_url() ?>admin/relawan/unit" class="menu-link">
+                                <div data-i18n="Unit">Unit</div>
                             </a>
                         </li>
                         <li class="menu-item">

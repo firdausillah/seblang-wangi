@@ -42,8 +42,11 @@ class Profile extends CI_Controller
             // print_r($cfg); exit();
             $this->load->library('upload', $cfg);
 
-            if ($this->upload->do_upload('gambar')) $logo = $this->upload->data('file_name');
-            else exit('Error : ' . $this->upload->display_errors());
+            if ($this->upload->do_upload('gambar')){
+                $logo = $this->upload->data('file_name');
+            }else {
+                exit('Error : ' . $this->upload->display_errors());
+            }
         }
         // print_r($logo); exit();
         $data = [

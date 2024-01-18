@@ -11,7 +11,7 @@ class Aset_kendaraan extends CI_Controller
         parent::__construct();
         $this->load->model('Aset_kendaraanModel', 'defaultModel');
         $this->load->helper('slug');
-        $this->load->helper('upload_foto');
+        $this->load->helper('upload_file');
 
         if ($this->session->userdata('role') != 'superadmin') {
             $this->session->set_flashdata(['status' => 'error', 'message' => 'Anda tidak memiliki izin untuk mengakses halaman ini.']);
