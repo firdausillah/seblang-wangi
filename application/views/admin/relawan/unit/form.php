@@ -23,12 +23,12 @@
             </div>
             <div class="col-md-6">
                 <div class="mb-3">
-                    <label class="form-label" for="jenis_pmr">jenis pmr</label>
-                    <select class="form-select" name="jenis_pmr" id="jenis_pmr" width="100px">
+                    <label class="form-label" for="kategori_unit">jenis pmr</label>
+                    <select class="form-select" name="kategori_unit" id="kategori_unit" width="100px">
                         <option value="">--Pilih--</option>
-                        <option <?= @$unit->jenis_pmr == 'MULA' ? 'selected' : '' ?> value="MULA">MULA</option>
-                        <option <?= @$unit->jenis_pmr == 'MADYA' ? 'selected' : '' ?> value="MADYA">MADYA</option>
-                        <option <?= @$unit->jenis_pmr == 'WIRA' ? 'selected' : '' ?> value="WIRA">WIRA</option>
+                        <option <?= @$unit->kategori_unit == 'MULA' ? 'selected' : '' ?> value="MULA">MULA</option>
+                        <option <?= @$unit->kategori_unit == 'MADYA' ? 'selected' : '' ?> value="MADYA">MADYA</option>
+                        <option <?= @$unit->kategori_unit == 'WIRA' ? 'selected' : '' ?> value="WIRA">WIRA</option>
                     </select>
                 </div>
             </div>

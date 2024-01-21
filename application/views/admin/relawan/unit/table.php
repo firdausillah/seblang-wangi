@@ -14,8 +14,8 @@
                     <th>Email</th>
                     <th>No Telpon</th>
                     <th>Status</th>
-                    <th>Unit</th>
                     <th>Jenis Unit</th>
+                    <th>Kategori Unit</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -29,7 +29,7 @@
                         <td><?= $item->telepon ?></td>
                         <td><?= ($item->is_active==1? '<span class="btn btn-sm btn-success">Aktif</span>': '<span class="btn btn-sm btn-danger">Nonaktif</span>') ?></td>
                         <td><?= $item->jenis_unit ?></td>
-                        <td><?= $item->jenis_pmr ?></td>
+                        <td><?= $item->kategori_unit ?></td>
                         <td>
                             <div class="dropdown">
                                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false">

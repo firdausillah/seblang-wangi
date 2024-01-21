@@ -1,111 +1,134 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Unit extends CI_Controller
+class Relawan extends CI_Controller
 {
-    public $defaultVariable = 'unit';
-    public $url_index = 'admin/relawan/unit';
-
+    public $defaultVariable = 'relawan';
+    public $url_index = 'admin/relawan/relawan';
+    
     function __construct()
     {
         parent::__construct();
-        $this->load->model('UnitModel', 'defaultModel');
+        $this->load->model('RelawanModel', 'defaultModel');
         $this->load->helper('slug');
         $this->load->helper('upload_file');
-        $this->load->helper(array('form', 'url'));
 
         if ($this->session->userdata('role') != 'superadmin') {
             $this->session->set_flashdata(['status' => 'error', 'message' => 'Anda tidak memiliki izin untuk mengakses halaman ini.']);
             redirect(base_url("login"));
         }
+
     }
 
     public function index()
     {
 
-        $page = (isset($_GET['page']) ? $_GET['page'] : 'index');
+        $page = (isset($_GET['page'])?$_GET['page']:'index');
 
-        if ($page == 'index') {
+        if($page == 'index'){
             $data = [
-                'title' => 'Unit',
-                $this->defaultVariable => $this->defaultModel->get()->result(),
-                'content' => $this->url_index . '/table'
+                'title' => 'Relawan',
+                // $this->defaultVariable => $this->defaultModel->findBy(['id_unit' => 5])->result(),
+                'content' => $this->url_index.'/table'
             ];
-
+    
             $this->load->view('layout_admin/base', $data);
-        } else if ($page == 'add') {
+
+        }else if($page == 'add'){
+            print_r($_GET); exit();
             $data = [
                 'title' => 'Tambah Data',
-                'content' => $this->url_index . '/form'
+                'content' => $this->url_index.'/form',
+                'cropper' => 'components/cropper',
+                'aspect' => '4/3'
             ];
 
             $this->load->view('layout_admin/base', $data);
-        } else if ($page == 'edit') {
+
+        }else if($page == 'edit'){
             $id = (isset($_GET['id']) ? $_GET['id'] : '');
             $data = [
                 'title' => 'Edit Data',
                 $this->defaultVariable => $this->defaultModel->findBy(['id' => $id])->row(),
-                'content' => $this->url_index . '/form'
+                'content' => $this->url_index.'/form',
+                'cropper' => 'components/cropper',
+                'aspect' => '4/3'
             ];
 
             $this->load->view('layout_admin/base', $data);
         }
+
     }
 
-    public function save_file($file,$slug, $folderPath)
-    {
-        if (!empty($file)) { // $_FILES untuk mengambil data file
-            $cfg = [
-                'upload_path' => $folderPath,
-                'allowed_types' => 'pdf',
-                'file_name' => $slug,
-                'overwrite' => (empty($file) ? FALSE : TRUE),
-                // 'max_size' => '2028',
-            ];
-            $this->load->library('upload', $cfg);
+    public function get($unit){
+        switch ($unit) {
+            case 'PMR-MULA':
+            case 'PMR-MADYA':
+            case 'PMR-WIRA':
+                ;
+                $where_kategori = ['unit_kategori' => explode('-', $unit)[1]];
+                break;
+            
+            default:
+                $where_kategori = ['unit_jenis' => $unit];
+                break;
+        }
+        
+        echo json_encode(['data' => $this->defaultModel->findBy($where_kategori)->result_array()]);
+    }
 
-            if ($this->upload->do_upload('sk')) {
-                return $file_name = $this->upload->data('file_name');
-            } else {
-                exit('Error : ' . $this->upload->display_errors());
-            }
+    public function update_status(){
+        // print_r($_POST); exit();
+        $id = $_POST['id'];
+        $is_active = $_POST['is_active'];
+
+        if ($this->defaultModel->update(['id' => $id], ['is_active' => $is_active])) {
+            echo json_encode(['status' => 'success', 'message' => 'Data berhasil diupdate']);
+        }else{
+            echo json_encode(['status' => 'error', 'message' => 'Oops! Terjadi kesalahan']);
+
         }
     }
 
     public function save()
     {
         $id = $this->input->post('id');
-        if (!$this->input->post('file_sk')) {
+        if (!$this->input->post('gambar')) {
             $slug = slugify($this->input->post('nama'));
         } else {
-            $slug = explode('.', $this->input->post('file_sk'))[0];
+            $slug = explode('.', $this->input->post('gambar'))[0];
         }
+        
+        $file_foto = $this->input->post('file_foto');
+        $folderPath = './uploads/img/'. $this->defaultVariable.'/';
+        $foto = $this->input->post('gambar'); //jika upload berhasil akan di replace oleh function save_foto()
 
-        $file_pdf = $_FILES['sk'];
-        $folderPath = './uploads/file/' . $this->defaultVariable . '/';
-        $file_name = ($this->input->post('file_sk') ? $this->input->post('file_sk') : $slug);
-
-        if ($file_pdf['name']) {
-            $file_name = $this->save_file(
-                $file_pdf,
+        if ($file_foto) {
+            $foto = save_foto(
+                $file_foto,
                 $slug,
                 $folderPath
-                // return $file -> nama file
+                // return $foto -> nama foto
             );
         }
 
         $data = [
+            'is_active' => 1,
             'nama'  => $this->input->post('nama'),
             'keterangan'  => $this->input->post('keterangan'),
-            'is_active'  => $this->input->post('is_active'),
-            'jenis_unit'  => $this->input->post('jenis_unit'),
-            'jenis_pmr'  => $this->input->post('jenis_pmr'),
-            'email'  => $this->input->post('email'),
-            'telepon'  => $this->input->post('telepon'),
-            'alamat'  => $this->input->post('alamat'),
-            'sk'  => $file_name
+            'tahun_perolehan'  => $this->input->post('tahun_perolehan'),
+            'nilai_perolehan'  => $this->input->post('nilai_perolehan'),
+            'sumber'  => $this->input->post('sumber'),
+            'merk'  => $this->input->post('merk'),
+            'type'  => $this->input->post('type'),
+            'serial_number'  => $this->input->post('serial_number'),
+            'jumlah'  => $this->input->post('jumlah'),
+            'kondisi'  => $this->input->post('kondisi'),
+            'pengguna'  => $this->input->post('pengguna'),
+            'foto'  => $foto,
+            'jenis_aset'  => 'kantor'
         ];
-
+        
         if (empty($id)) {
             unset($id);
             if ($this->defaultModel->add($data)) {

@@ -3,6 +3,10 @@ $(document).ready(function () {
   $('#datatables_table').DataTable({
     responsive: true
   });
+  // var dataTable = $('#datatables_table').DataTable({
+  //   responsive: true
+
+  // });
   
   // highlight navbar
   var path = location.pathname.split('/');
@@ -30,6 +34,7 @@ if (flashData) {
         icon: flashDataStatus,
         title: flashDataStatus,
         text: flashData,
+        timer: 2000
     });
 }
 
