@@ -10,6 +10,7 @@ class Relawan extends CI_Controller
     {
         parent::__construct();
         $this->load->model('RelawanModel', 'defaultModel');
+        $this->load->model('UnitModel');
         $this->load->helper('slug');
         $this->load->helper('upload_file');
 
@@ -35,24 +36,37 @@ class Relawan extends CI_Controller
             $this->load->view('layout_admin/base', $data);
 
         }else if($page == 'add'){
-            print_r($_GET); exit();
+            $unit = explode('-', (isset($_GET['unit']) ? $_GET['unit'] : ''));
+            $filter = [
+                'jenis' => isset($unit[0]) ? $unit[0] : '', 
+                'kategori' => isset($unit[1])?$unit[1]:''
+            ];
+            
             $data = [
                 'title' => 'Tambah Data',
+                'unit' => $this->UnitModel->findBy($filter)->result(),
                 'content' => $this->url_index.'/form',
                 'cropper' => 'components/cropper',
-                'aspect' => '4/3'
+                'aspect' => '3/4'
             ];
 
             $this->load->view('layout_admin/base', $data);
 
         }else if($page == 'edit'){
             $id = (isset($_GET['id']) ? $_GET['id'] : '');
+            $unit = explode('-', (isset($_GET['unit']) ? $_GET['unit'] : ''));
+            $filter = [
+                'jenis' => isset($unit[0]) ? $unit[0] : '',
+                'kategori' => isset($unit[1]) ? $unit[1] : ''
+            ];
+            
             $data = [
                 'title' => 'Edit Data',
+                'unit' => $this->UnitModel->findBy($filter)->result(),
                 $this->defaultVariable => $this->defaultModel->findBy(['id' => $id])->row(),
                 'content' => $this->url_index.'/form',
                 'cropper' => 'components/cropper',
-                'aspect' => '4/3'
+                'aspect' => '3/4'
             ];
 
             $this->load->view('layout_admin/base', $data);

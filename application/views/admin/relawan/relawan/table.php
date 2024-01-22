@@ -77,7 +77,7 @@
                             is_active = 'Aktif';
                         } else if (data == 2) {
                             bg = 'warning';
-                            is_active = 'Calon Anggota';
+                            is_active = 'Registrasi';
                         } else {
                             bg = 'danger';
                             is_active = 'Nonaktif';
@@ -91,7 +91,7 @@
                                         <ul class='dropdown-menu' style='position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(0px, 39.5px, 0px);' data-popper-placement='bottom-start'>
                                             <li><a class='dropdown-item' href='javascript:void(0);' onClick='update_status(` + id + `,1)'>Aktif</a></li>
                                             <li><a class='dropdown-item' href='javascript:void(0);' onClick='update_status(` + id + `,0)'>Nonaktif</a></li>
-                                            <li><a class='dropdown-item' href='javascript:void(0);' onClick='update_status(` + id + `,2)'>Calon Anggota</a></li>
+                                            <li><a class='dropdown-item' href='javascript:void(0);' onClick='update_status(` + id + `,2)'>Registrasi</a></li>
                                         </ul>
                                     </div>`;
                         } else {
@@ -122,14 +122,15 @@
                 },
                 {
                     data: "id",
-                    render: function(data) {
+                    render: function(data, type, row) {
+                        var unit = row.unit_jenis + '-' + row.unit_kategori;
                         if (data != '') {
                             return '<div class="dropdown">' +
                                 '<button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false">' +
                                 '<i class="bx bx-dots-vertical-rounded"></i>' +
                                 '</button>' +
                                 '<div class="dropdown-menu" style="relative">' +
-                                '<a class="dropdown-item" href="<?= base_url('admin/relawan/relawan?page=edit&id=') ?>' + data + '"><i class="bx bx-edit-alt me-1"></i> Edit</a>' +
+                                '<a class="dropdown-item" href="<?= base_url() ?>admin/relawan/relawan?page=edit&id=' + data + '&unit=' + unit + '"><i class="bx bx-edit-alt me-1"></i> Edit</a>' +
                                 '<a class="dropdown-item" onclick="confirmDelete(\'<?= base_url('admin/relawan/relawan/nonaktif/') ?>' + data + '\')"><i class="bx bx-trash me-1"></i> Delete</a>' +
                                 '</div>' +
                                 '</div>';
@@ -155,14 +156,17 @@
         // Tangkap peristiwa klik pada tombol tab
         $('.nav-link').on('click', function() {
 
-                // Dapatkan ID tab yang terkait dengan tombol yang diklik
-                var tabId = $(this).data('bs-target');
+            // Dapatkan ID tab yang terkait dengan tombol yang diklik
+            var tabId = $(this).data('bs-target');
 
-                // Mengambil data dari server menggunakan metode ajax DataTables
-                dataTable.ajax.url('<?= base_url('admin/relawan/relawan/get/') ?>' + tabId.substring(1)).load();
+            // Mengambil data dari server menggunakan metode ajax DataTables
+            dataTable.ajax.url('<?= base_url('admin/relawan/relawan/get/') ?>' + tabId.substring(1)).load();
 
-                $('#add_btn').removeClass('disabled');
-                $('#add_btn').attr('href', '<?= base_url('admin/relawan/relawan?page=add&relawan=') ?>' + tabId.substring(1));
+            $('#add_btn').removeClass('disabled');
+            $('#add_btn').attr('href', '<?= base_url('admin/relawan/relawan?page=add&unit=') ?>' + tabId.substring(1));
+            
+            window.location.hash = 'xyz';
+            return false;
         });
 
     });
@@ -181,7 +185,7 @@
                 // notify(json.message, json.status);
                 dataTable.ajax.reload();
                 Swal.fire({
-                    position: "top-end",
+                    // position: "top-end",
                     icon: json.status,
                     title: json.status,
                     text: json.message,

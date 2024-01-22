@@ -5,94 +5,88 @@
     <div class="card-body">
         <?= form_open_multipart(base_url('admin/relawan/relawan/save')) ?>
         <input type="hidden" name="id" value="<?= @$relawan->id ?>">
-        <div class="mb-3">
-            <label class="form-label" for="nama">Nama <span class="text-danger">*</span></label>
-            <div class="input-group input-group-merge">
-                <input type="text" name="nama" id="nama" value="<?= @$relawan->nama ?>" class="form-control" required>
-            </div>
-        </div>
         <div class="row">
-            <div class="col-lg-6">
+            <div class="col-md-6">
                 <div class="mb-3">
-                    <label class="form-label" for="tahun_perolehan">Tahun Perolehan</label>
+                    <label class="form-label" for="nama">nama <span class="text-danger">*</span></label>
                     <div class="input-group input-group-merge">
-                        <input type="number" name="tahun_perolehan" id="tahun_perolehan" value="<?= @$relawan->tahun_perolehan ?>" class="form-control" placeholder="Masukan Angka. Contoh: 2024">
+                        <input type="text" name="nama" id="nama" value="<?= @$relawan->nama ?>" class="form-control" required>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6">
+            <div class="col-md-6">
                 <div class="mb-3">
-                    <label class="form-label" for="nilai_perolehan">Nilai Perolehan</label>
+                    <label class="form-label" for="kode">kode Anggota</label>
                     <div class="input-group input-group-merge">
-                        <input type="number" name="nilai_perolehan" id="nilai_perolehan" value="<?= @$relawan->nilai_perolehan ?>" class="form-control" placeholder="Masukan Angka. Contoh: 200000000">
+                        <input type="text" name="kode" id="kode" value="<?= @$relawan->kode ?>" class="form-control">
                     </div>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-6">
+            <div class="col-md-6">
                 <div class="mb-3">
-                    <label class="form-label" for="sumber">Sumber</label>
-                    <div class="input-group input-group-merge">
-                        <input type="text" name="sumber" id="sumber" value="<?= @$relawan->sumber ?>" class="form-control">
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="mb-3">
-                    <label class="form-label" for="merk">Merk</label>
-                    <div class="input-group input-group-merge">
-                        <input type="text" name="merk" id="merk" value="<?= @$relawan->merk ?>" class="form-control">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="mb-3">
-                    <label class="form-label" for="type">Type</label>
-                    <div class="input-group input-group-merge">
-                        <input type="text" name="type" id="type" value="<?= @$relawan->type ?>" class="form-control">
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="mb-3">
-                    <label class="form-label" for="serial_number">Serial Number</label>
-                    <div class="input-group input-group-merge">
-                        <input type="text" name="serial_number" id="serial_number" value="<?= @$relawan->serial_number ?>" class="form-control">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="mb-3">
-                    <label class="form-label" for="jumlah">Jumlah</label>
-                    <div class="input-group input-group-merge">
-                        <input type="number" name="jumlah" id="jumlah" value="<?= @$relawan->jumlah ?>" class="form-control" placeholder="Masukan angka. Contoh: 20">
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="mb-3">
-                    <label class="form-label" for="kondisi">Kondisi</label>
-                    <select class="form-select" name="kondisi" id="kondisi">
+                    <label class="form-label" for="id_unit">Unit</label>
+                    <select class="form-select" name="id_unit" id="id_unit" width="100px">
                         <option value="">--Pilih--</option>
-                        <option <?= @$relawan->kondisi == 'Baik' ? 'selected' : '' ?> value="Baik">Baik</option>
-                        <option <?= @$relawan->kondisi == 'Rusak' ? 'selected' : '' ?> value="Rusak">Rusak</option>
+                        <?php foreach ($unit as $key => $value) : ?>
+                            <option <?= @$relawan->id_unit == $value->id ? 'selected' : '' ?> value="<?= $value->id ?>"><?= $value->nama ?></option>
+                        <?php endforeach ?>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label class="form-label" for="is_active">Status</label>
+                    <select class="form-select" name="is_active" id="is_active" width="100px">
+                        <option value="">--Pilih--</option>
+                        <option <?= @$relawan->is_active == '1' ? 'selected' : '' ?> value="1">Aktif</option>
+                        <option <?= @$relawan->is_active == '0' ? 'selected' : '' ?> value="0">Nonaktif</option>
+                        <option <?= @$relawan->is_active == '2' ? 'selected' : '' ?> value="2">Registrasi</option>
                     </select>
                 </div>
             </div>
         </div>
-        <div class="mb-3">
-            <label class="form-label" for="pengguna">Pengguna</label>
-            <div class="input-group input-group-merge">
-                <input type="text" name="pengguna" id="pengguna" value="<?= @$relawan->pengguna ?>" class="form-control">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label class="form-label" for="angkatan">Angkatan</label>
+                    <div class="input-group input-group-merge">
+                        <input type="text" name="angkatan" id="angkatan" value="<?= (@$relawan->angkatan != null ? @$relawan->angkatan : date('Y')) ?>" class="form-control" placeholder="Masukan Tahun. Contoh: 2024">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label class="form-label" for="expired_year">Aktif Sampai -</label>
+                    <div class="input-group input-group-merge">
+                        <input type="text" name="expired_year" id="expired_year" value="<?= (@$relawan->expired_year != null ? @$relawan->expired_year : date('Y')+3) ?>" class="form-control" placeholder="Masukan Tahun. Contoh: 2027">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label class="form-label" for="jenis_kelamin">Jenis Kelamin</label>
+                    <select class="form-select" name="jenis_kelamin" id="jenis_kelamin" width="100px">
+                        <option value="">--Pilih--</option>
+                        <option <?= @$relawan->jenis_kelamin == 'Laki-laki' ? 'selected' : '' ?> value="Laki-laki">Laki-laki</option>
+                        <option <?= @$relawan->jenis_kelamin == 'Perempuan' ? 'selected' : '' ?> value="Perempuan">Perempuan</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label class="form-label" for="nomor_telepon">Nomor Telepon</label>
+                    <div class="input-group input-group-merge">
+                        <input type="number" name="nomor_telepon" id="nomor_telepon" value="<?= @$relawan->nomor_telepon ?>" class="form-control" placeholder="Masukan Nomor Telepon. Contoh: 085245123554">
+                    </div>
+                </div>
             </div>
         </div>
         <div class="mb-3">
-            <label class="form-label" for="keterangan">Keterangan</label>
+            <label class="form-label" for="keterangan">keterangan</label>
             <div class="input-group input-group-merge">
                 <input type="text" name="keterangan" id="keterangan" value="<?= @$relawan->keterangan ?>" class="form-control">
             </div>

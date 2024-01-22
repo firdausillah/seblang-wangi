@@ -25,6 +25,11 @@
  		return $this->db->get('unit');
  	}
 
+ 	function findByLike($id){
+ 		$this->db->like($id);
+ 		return $this->db->get('unit');
+ 	}
+
  	function add($data){
 		$additional_data = $this->add_additional();
  		return $this->db->insert('unit', $additional_data + $data);
