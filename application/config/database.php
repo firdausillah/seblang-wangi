@@ -75,7 +75,7 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'https://pmibanyuwangi.or.id/',
+	'hostname' => 'pmibanyuwangi.or.id',
 	'username' => 'u767547842_seblang_wangi',
 	'password' => 'Pm1B4nyuw4ng1',
 	'database' => 'u767547842_seblang_wangi',
