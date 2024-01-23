@@ -1,7 +1,7 @@
 <div class="nav-align-top mb-4">
     <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item">
-            <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#PMR-MULA" aria-controls="PMR-MULA" aria-selected="true">
+            <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#PMR-MULA" aria-controls="PMR-MULA" aria-selected="fasle">
                 PMR MULA
             </button>
         </li>
@@ -57,7 +57,8 @@
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 
 <script type="text/javascript">
-    var dataTable = '';
+    var dataTable, url = '';
+
     $(document).ready(function() {
         dataTable = $('#datatables_table1').DataTable({
             responsive: true,
@@ -123,7 +124,8 @@
                 {
                     data: "id",
                     render: function(data, type, row) {
-                        var unit = row.unit_jenis + '-' + row.unit_kategori;
+                        var kategori = (row.unit_kategori ? ('-' + row.unit_kategori) : '');
+                        var unit = row.unit_jenis + kategori;
                         if (data != '') {
                             return '<div class="dropdown">' +
                                 '<button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false">' +
@@ -153,48 +155,70 @@
                 [4, 'asc']
             ]
         });
-        // Tangkap peristiwa klik pada tombol tab
+
+
+        var queryString = window.location.search;
+
+        var parameterName = 'unit';
+        var urlParams = new URLSearchParams(queryString);
+        var parameterValue = '#' + urlParams.get(parameterName);
+
+        $('button.nav-link').each(function() {
+            var targetValue = $(this).data('bs-target');
+            if (targetValue == parameterValue) {
+                $(this).attr('aria-selected', 'true');
+                $(this).addClass('active');
+            } else {
+                $(this).attr('aria-selected', 'false');
+                $(this).removeClass('active');
+            }
+        });
+
+        ambil_data(parameterValue);
+
+
         $('.nav-link').on('click', function() {
+            ambil_data($(this).data('bs-target'));
 
-            // Dapatkan ID tab yang terkait dengan tombol yang diklik
-            var tabId = $(this).data('bs-target');
-
-            // Mengambil data dari server menggunakan metode ajax DataTables
-            dataTable.ajax.url('<?= base_url('admin/relawan/relawan/get/') ?>' + tabId.substring(1)).load();
-
-            $('#add_btn').removeClass('disabled');
-            $('#add_btn').attr('href', '<?= base_url('admin/relawan/relawan?page=add&unit=') ?>' + tabId.substring(1));
-            
-            window.location.hash = 'xyz';
-            return false;
         });
 
     });
 
+    function ambil_data(tabId) {
+        Loading.fire({})
+        dataTable.ajax.url('<?= base_url('admin/relawan/relawan/get/') ?>' + tabId.substring(1)).load(function() {
+            Swal.close()
+        });
+
+        $('#add_btn').removeClass('disabled');
+        $('#add_btn').attr('href', '<?= base_url('admin/relawan/relawan?page=add&unit=') ?>' + tabId.substring(1));
+
+
+        history.replaceState(null, null, '?unit=' + tabId.substring(1));
+
+        return false;
+    }
+
     function update_status(id, is_active) {
+        Loading.fire({})
         $.ajax({
             url: '<?= base_url('admin/relawan/relawan/update_status') ?>',
-            type: 'POST', // atau 'POST', 'PUT', dll.
-            dataType: 'json', // tipe data yang diharapkan dari respons server
+            type: 'POST',
+            dataType: 'json',
             data: {
                 id: id,
                 is_active: is_active
-                // data lain yang ingin Anda kirim ke server
             },
             success: function(json) {
-                // notify(json.message, json.status);
-                dataTable.ajax.reload();
-                Swal.fire({
-                    // position: "top-end",
-                    icon: json.status,
-                    title: json.status,
-                    text: json.message,
-                    showConfirmButton: false,
-                    timer: 1000
+                dataTable.ajax.reload(function() {
+                    Swal.close();
+                    Toast.fire({
+                        icon: json.status,
+                        title: json.message
+                    });
                 });
             },
             error: function(xhr, status, error) {
-                // Fungsi ini akan dipanggil jika permintaan gagal
                 console.error('Error:', status, error);
                 dataTable.ajax.reload();
             }

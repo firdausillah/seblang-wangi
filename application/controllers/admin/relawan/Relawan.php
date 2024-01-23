@@ -106,6 +106,7 @@ class Relawan extends CI_Controller
 
     public function save()
     {
+        $unit = $_GET['unit'];
         $id = $this->input->post('id');
         if (!$this->input->post('gambar')) {
             $slug = slugify($this->input->post('nama'));
@@ -126,34 +127,39 @@ class Relawan extends CI_Controller
             );
         }
 
+        $id_unit = $this->input->post('id_unit');
+        $unit_data = $this->UnitModel->findBy(['id' => $id_unit])->row();
+
         $data = [
             'is_active' => 1,
+            'id_unit'  => $id_unit,
             'nama'  => $this->input->post('nama'),
+            'kode'  => $this->input->post('kode'),
             'keterangan'  => $this->input->post('keterangan'),
-            'tahun_perolehan'  => $this->input->post('tahun_perolehan'),
-            'nilai_perolehan'  => $this->input->post('nilai_perolehan'),
-            'sumber'  => $this->input->post('sumber'),
-            'merk'  => $this->input->post('merk'),
-            'type'  => $this->input->post('type'),
-            'serial_number'  => $this->input->post('serial_number'),
-            'jumlah'  => $this->input->post('jumlah'),
-            'kondisi'  => $this->input->post('kondisi'),
-            'pengguna'  => $this->input->post('pengguna'),
-            'foto'  => $foto,
-            'jenis_aset'  => 'kantor'
+            'is_active'  => $this->input->post('is_active'),
+            'angkatan'  => $this->input->post('angkatan'),
+            'expired_year'  => $this->input->post('expired_year'),
+            'jenis_kelamin'  => $this->input->post('jenis_kelamin'),
+
+            'unit_kategori'  => $unit_data->kategori,
+            'unit_jenis'  => $unit_data->jenis,
+            'unit_nama'  => $unit_data->nama,
+
+            'nomor_telepon'  => $this->input->post('nomor_telepon'),
+            'foto'  => $foto
         ];
         
         if (empty($id)) {
             unset($id);
             if ($this->defaultModel->add($data)) {
                 $this->session->set_flashdata(['status' => 'success', 'message' => 'Data berhasil dimasukan']);
-                redirect(base_url($this->url_index));
+                redirect(base_url($this->url_index.'?unit='.$unit));
             }
             exit($this->session->set_flashdata(['status' => 'error', 'message' => 'Oops! Terjadi kesalahan']));
         } else {
             if ($this->defaultModel->update(['id' => $id], $data)) {
                 $this->session->set_flashdata(['status' => 'success', 'message' => 'Data berhasil diupdate']);
-                redirect(base_url($this->url_index));
+                redirect(base_url($this->url_index.'?unit='.$unit));
             }
             exit($this->session->set_flashdata(['status' => 'error', 'message' => 'Oops! Terjadi kesalahan']));
         }

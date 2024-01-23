@@ -3,7 +3,7 @@
         <h5 class="mb-0"><?= $title ? $title : '' ?></h5>
     </div>
     <div class="card-body">
-        <?= form_open_multipart(base_url('admin/relawan/relawan/save')) ?>
+        <?= form_open_multipart(base_url('admin/relawan/relawan/save?unit=' . $_GET['unit'])) ?>
         <input type="hidden" name="id" value="<?= @$relawan->id ?>">
         <div class="row">
             <div class="col-md-6">
@@ -16,9 +16,9 @@
             </div>
             <div class="col-md-6">
                 <div class="mb-3">
-                    <label class="form-label" for="kode">kode Anggota</label>
+                    <label class="form-label" for="kode">kode Anggota <span class="text-danger">*</span></label>
                     <div class="input-group input-group-merge">
-                        <input type="text" name="kode" id="kode" value="<?= @$relawan->kode ?>" class="form-control">
+                        <input type="text" name="kode" id="kode" value="<?= @$relawan->kode ?>" class="form-control" required>
                     </div>
                 </div>
             </div>
@@ -26,8 +26,8 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="mb-3">
-                    <label class="form-label" for="id_unit">Unit</label>
-                    <select class="form-select" name="id_unit" id="id_unit" width="100px">
+                    <label class="form-label" for="id_unit">Unit <span class="text-danger">*</span></label>
+                    <select class="form-select" name="id_unit" id="id_unit" width="100px" required>
                         <option value="">--Pilih--</option>
                         <?php foreach ($unit as $key => $value) : ?>
                             <option <?= @$relawan->id_unit == $value->id ? 'selected' : '' ?> value="<?= $value->id ?>"><?= $value->nama ?></option>
@@ -60,7 +60,7 @@
                 <div class="mb-3">
                     <label class="form-label" for="expired_year">Aktif Sampai -</label>
                     <div class="input-group input-group-merge">
-                        <input type="text" name="expired_year" id="expired_year" value="<?= (@$relawan->expired_year != null ? @$relawan->expired_year : date('Y')+3) ?>" class="form-control" placeholder="Masukan Tahun. Contoh: 2027">
+                        <input type="text" name="expired_year" id="expired_year" value="<?= (@$relawan->expired_year != null ? @$relawan->expired_year : date('Y') + 3) ?>" class="form-control" placeholder="Masukan Tahun. Contoh: 2027">
                     </div>
                 </div>
             </div>
@@ -106,7 +106,7 @@
                 </div>
             </div>
         </div>
-        <a href="<?= base_url() ?>admin/relawan/relawan" class="btn btn-secondary">Batal</a>
+        <a href="<?= base_url('admin/relawan/relawan?unit=' . $_GET['unit']) ?>" class="btn btn-secondary">Batal</a>
         <button type="submit" class="btn btn-primary">Simpan</button>
         </form>
     </div>

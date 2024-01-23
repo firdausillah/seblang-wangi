@@ -150,7 +150,7 @@
 
                     <ul class="menu-sub">
                         <li class="menu-item">
-                            <a href="<?= base_url() ?>admin/relawan/relawan" class="menu-link">
+                            <a href="<?= base_url() ?>admin/relawan/relawan?unit=PMR-MULA" class="menu-link">
                                 <div data-i18n="Relawan">Relawan</div>
                             </a>
                         </li>
