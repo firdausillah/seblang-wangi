@@ -12,23 +12,23 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="mb-3">
-                    <label class="form-label" for="jenis_unit">jenis unit</label>
-                    <select class="form-select" name="jenis_unit" id="jenis_unit" width="100px">
+                    <label class="form-label" for="jenis">jenis unit</label>
+                    <select class="form-select" name="jenis" id="jenis" width="100px">
                         <option value="">--Pilih--</option>
-                        <option <?= @$unit->jenis_unit == 'PMR' ? 'selected' : '' ?> value="PMR">PMR</option>
-                        <option <?= @$unit->jenis_unit == 'KSR' ? 'selected' : '' ?> value="KSR">KSR</option>
-                        <option <?= @$unit->jenis_unit == 'TSR' ? 'selected' : '' ?> value="TSR">TSR</option>
+                        <option <?= @$unit->jenis == 'PMR' ? 'selected' : '' ?> value="PMR">PMR</option>
+                        <option <?= @$unit->jenis == 'KSR' ? 'selected' : '' ?> value="KSR">KSR</option>
+                        <option <?= @$unit->jenis == 'TSR' ? 'selected' : '' ?> value="TSR">TSR</option>
                     </select>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="mb-3">
-                    <label class="form-label" for="kategori_unit">jenis pmr</label>
-                    <select class="form-select" name="kategori_unit" id="kategori_unit" width="100px">
+                    <label class="form-label" for="kategori">jenis pmr</label>
+                    <select class="form-select" name="kategori" id="kategori" width="100px">
                         <option value="">--Pilih--</option>
-                        <option <?= @$unit->kategori_unit == 'MULA' ? 'selected' : '' ?> value="MULA">MULA</option>
-                        <option <?= @$unit->kategori_unit == 'MADYA' ? 'selected' : '' ?> value="MADYA">MADYA</option>
-                        <option <?= @$unit->kategori_unit == 'WIRA' ? 'selected' : '' ?> value="WIRA">WIRA</option>
+                        <option <?= @$unit->kategori == 'MULA' ? 'selected' : '' ?> value="MULA">MULA</option>
+                        <option <?= @$unit->kategori == 'MADYA' ? 'selected' : '' ?> value="MADYA">MADYA</option>
+                        <option <?= @$unit->kategori == 'WIRA' ? 'selected' : '' ?> value="WIRA">WIRA</option>
                     </select>
                 </div>
             </div>
