@@ -27,7 +27,7 @@
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>Login | SEBLANG WANGI</title>
+    <title>Registrasi | SEBLANG WANGI</title>
 
     <meta name="description" content="" />
 
@@ -85,58 +85,42 @@
                 </a>
               </div>
               <!-- /Logo -->
-              <h5 class="mb-2">Selamat datang di Sistem E-mobile Palang Merah Indonesia Banyuwangi! 👋</h5>
-              <!-- <p class="mb-4">Silahkan login untuk melanjutkan</p> -->
-              <?php if ($this->session->flashdata('message')) :?>
-              <div class="alert alert-dark alert-dismissible mb-2" role="alert">
-                <?= $this->session->flashdata('message')?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-              </div>
-              <?php endif ?>
-              <form id="formAuthentication" class="mb-3" action="<?= base_url('login/auth') ?>" method="POST">
+              <h5 class="mb-4">Registrasi Unit</h5>
+
+              <form id="formAuthentication" class="mb-3" action="<?= base_url('register/register_unit') ?>" method="POST">
                 <div class="mb-3">
-                  <label for="username" class="form-label">Username</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="username"
-                    name="username"
-                    placeholder="Masukan username"
-                    autofocus
-                  />
-                </div>
-                <div class="mb-3 form-password-toggle">
-                  <div class="d-flex justify-content-between">
-                    <label class="form-label" for="password">Password</label>
-                  </div>
-                  <div class="input-group input-group-merge">
-                    <input
-                      type="password"
-                      id="password"
-                      class="form-control"
-                      name="password"
-                      placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                      aria-describedby="password"
-                    />
-                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-                  </div>
+                  <label for="nama" class="form-label">Nama Unit</label>
+                  <input type="text" class="form-control" id="nama" name="nama" placeholder="" autofocus required/>
                 </div>
                 <div class="mb-3">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="is_admin" id="admin" />
-                    <label class="form-check-label" for="admin"> Admin </label>
-                  </div>
+                  <label for="telepon" class="form-label">Nomor Telepon</label>
+                  <input type="number" class="form-control" id="telepon" name="telepon" placeholder="Masukan Angka. Contoh: 08561426576" required/>
                 </div>
                 <div class="mb-3">
-                  <button class="btn btn-primary d-grid w-100" type="submit">Login</button>
+                  <label for="jenis" class="form-label">Jenis Unit</label>
+                    <select class="form-select" name="jenis" id="jenis" width="100px" required>
+                        <option value="">--Pilih--</option>
+                        <option value="PMR">PMR</option>
+                        <option value="KSR">KSR</option>
+                        <option value="TSR">TSR</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                  <label for="kategori" class="form-label">Kategori Unit</label>
+                    <select class="form-select" name="kategori" id="kategori" width="100px">
+                        <option value="">--Pilih--</option>
+                        <option value="MULA">MULA</option>
+                        <option value="MADYA">MADYA</option>
+                        <option value="WIRA">WIRA</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                  <button class="btn btn-primary d-grid w-100" type="submit">Register</button>
+                </div>
+                <div class="mb-3">
+                  <a class="btn btn-secondary d-grid w-100" type="" href="<?=base_url('login')?>">Batal</a>
                 </div>
               </form>
-              <p class="text-center">
-                <span>Belum register Unit?</span>
-                <a href="<?= base_url('register/unit') ?>">
-                  <span>Registrasi Unit</span>
-                </a>
-              </p>
 
             </div>
           </div>

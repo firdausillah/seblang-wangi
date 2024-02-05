@@ -1,64 +1,79 @@
-<?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-?><!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="light-style" dir="ltr" data-theme="theme-default" data-assets-path="<?= base_url() ?>/assets/" data-template="vertical-menu-template-free">
+
 <head>
-<meta charset="utf-8">
-<title>404 Page Not Found</title>
-<style type="text/css">
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-::selection { background-color: #E13300; color: white; }
-::-moz-selection { background-color: #E13300; color: white; }
+	<title>Page Not Found | Seblang Wangi</title>
 
-body {
-	background-color: #fff;
-	margin: 40px;
-	font: 13px/20px normal Helvetica, Arial, sans-serif;
-	color: #4F5155;
-}
+	<meta name="description" content="" />
 
-a {
-	color: #003399;
-	background-color: transparent;
-	font-weight: normal;
-}
+	<!-- Favicon -->
+	<link rel="icon" type="image/x-icon" href="<?= base_url() ?>/assets/img/favicon/favicon.ico" />
 
-h1 {
-	color: #444;
-	background-color: transparent;
-	border-bottom: 1px solid #D0D0D0;
-	font-size: 19px;
-	font-weight: normal;
-	margin: 0 0 14px 0;
-	padding: 14px 15px 10px 15px;
-}
+	<!-- Fonts -->
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
 
-code {
-	font-family: Consolas, Monaco, Courier New, Courier, monospace;
-	font-size: 12px;
-	background-color: #f9f9f9;
-	border: 1px solid #D0D0D0;
-	color: #002166;
-	display: block;
-	margin: 14px 0 14px 0;
-	padding: 12px 10px 12px 10px;
-}
+	<!-- Icons. Uncomment required icon fonts -->
+	<link rel="stylesheet" href="<?= base_url() ?>/assets/vendor/fonts/boxicons.css" />
 
-#container {
-	margin: 10px;
-	border: 1px solid #D0D0D0;
-	box-shadow: 0 0 8px #D0D0D0;
-}
+	<!-- Core CSS -->
+	<link rel="stylesheet" href="<?= base_url() ?>/assets/vendor/css/core.css" class="template-customizer-core-css" />
+	<link rel="stylesheet" href="<?= base_url() ?>/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+	<link rel="stylesheet" href="<?= base_url() ?>/assets/css/demo.css" />
 
-p {
-	margin: 12px 15px 12px 15px;
-}
-</style>
+	<!-- Vendors CSS -->
+	<link rel="stylesheet" href="<?= base_url() ?>/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+
+	<!-- Page CSS -->
+	<!-- Page -->
+	<link rel="stylesheet" href="<?= base_url() ?>/assets/vendor/css/pages/page-misc.css" />
+	<!-- Helpers -->
+	<script src="<?= base_url() ?>/assets/vendor/js/helpers.js"></script>
+
+	<!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+	<!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+	<script src="<?= base_url() ?>/assets/js/config.js"></script>
 </head>
+
 <body>
-	<div id="container">
-		<h1><?php echo $heading; ?></h1>
-		<?php echo $message; ?>
+	<!-- Content -->
+
+	<!-- Error -->
+	<div class="container-xxl container-p-y">
+		<div class="misc-wrapper">
+			<h2 class="mb-2 mx-2">Page Not Found :(</h2>
+			<p class="mb-4 mx-2">Oops! 😖 Halaman yang anda cari tidak ada.</p>
+			<a href="<?= base_url('login') ?>" class="btn btn-primary">Kembali ke Home</a>
+			<div class="mt-3">
+				<img src="<?= base_url() ?>/assets/img/illustrations/page-misc-error-light.png" alt="page-misc-error-light" width="500" class="img-fluid" data-app-dark-img="illustrations/page-misc-error-dark.png" data-app-light-img="illustrations/page-misc-error-light.png" />
+			</div>
+		</div>
 	</div>
+	<!-- /Error -->
+
+	<!-- / Content -->
+	<!-- Core JS -->
+	<!-- build:js assets/vendor/js/core.js -->
+	<script src="<?= base_url() ?>/assets/vendor/libs/jquery/jquery.js"></script>
+	<script src="<?= base_url() ?>/assets/vendor/libs/popper/popper.js"></script>
+	<script src="<?= base_url() ?>/assets/vendor/js/bootstrap.js"></script>
+	<script src="<?= base_url() ?>/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+
+	<script src="<?= base_url() ?>/assets/vendor/js/menu.js"></script>
+	<!-- endbuild -->
+
+	<!-- Vendors JS -->
+
+	<!-- Main JS -->
+	<script src="<?= base_url() ?>/assets/js/main.js"></script>
+
+	<!-- Page JS -->
+
+	<!-- Place this tag in your head or just before your close body tag. -->
+	<script async defer src="https://buttons.github.io/buttons.js"></script>
 </body>
+
 </html>

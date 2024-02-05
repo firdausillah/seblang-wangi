@@ -137,6 +137,7 @@
   <script src="<?= base_url() ?>assets/vendor/js/datatables.min.js"></script>
 
   <script src="<?= base_url() ?>assets/js/myScript.js"></script>
+  <script src="<?= base_url() ?>assets/js/ui-modals.js"></script>
 
   <!-- Cropper -->
   <?php @$cropper ? $this->load->view($cropper) : "" ?>

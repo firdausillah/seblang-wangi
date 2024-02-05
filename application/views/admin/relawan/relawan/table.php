@@ -177,7 +177,7 @@
         ambil_data(parameterValue);
 
 
-        $('.nav-link').on('click', function() {
+        $('button.nav-link').on('click', function() {
             ambil_data($(this).data('bs-target'));
 
         });

@@ -28,18 +28,49 @@ class Login extends CI_Controller
 
 	public function auth()
 	{
-		
+		// print_r($_POST); exit();
 		$username = $this->input->post('username');
 		$password = $this->input->post('password');
+		$is_admin = $this->input->post('is_admin');
 
-		$where = [
-			'username' => $username,
-			'password' => $password
-		];
+		// $where = [
+		// 	'username' => $username,
+		// 	'password' => $password,
+		// 	'is_active' => 1
+		// ];
+		// print_r($this->AuthModel->cekLogin('users', $where)->row());
+		// exit();
 
-		$cek = $this->AuthModel->cekLogin('users', $where)->row();
-		$test = $this->AuthModel->cekLogin('users', $where)->num_rows();
+		
+		if($is_admin){
+			$where = [
+				'username' => $username,
+				'password' => $password,
+				'is_active' => 1
+			];
+			$cek = $this->AuthModel->cekLogin('users', $where)->row();
+			$test = $this->AuthModel->cekLogin('users', $where)->num_rows();
 
+			$redirect = 'admin/dashboard';
+		}else{
+			$where = [
+				'telepon' => $username,
+				'telepon' => $password,
+				'is_active' => 1
+			];
+			$cek = $this->AuthModel->cekLogin('unit', $where)->row();
+			$test = $this->AuthModel->cekLogin('unit', $where)->num_rows();
+			
+			if($test>0){
+				$cek->username = $cek->telepon;
+				$cek->password = $cek->telepon;
+				$cek->role = 'unit';
+	
+				$redirect = 'unit/dashboard';
+			}
+			
+		}
+		
 		if ($test > 0) {
 			$data_session = [
 				'id'	=> $cek->id,
@@ -49,15 +80,12 @@ class Login extends CI_Controller
 				'role'	=> $cek->role,
 				'status'	=> 'login'
 			];
-			// print_r($cek);
-			// print_r($test);
-			// exit();
 
 			$this->session->set_userdata($data_session);
 			$this->session->set_flashdata(['status' => 'success', 'message' => 'Anda berhasil login']);
 			//https://youtu.be/ubLmRj8eojA jika flashdata tidak hilang otomatis
 
-			redirect('admin/dashboard');
+			redirect($redirect);
 		} else {
 			// $this->session->set_flashdata('error', 'Username atau Password salah!');
 			$this->session->set_flashdata( ['status'=>'error', 'message'=>'Username atau Password salah!']);

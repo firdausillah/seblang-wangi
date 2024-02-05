@@ -10,6 +10,8 @@ class Unit extends CI_Controller
     {
         parent::__construct();
         $this->load->model('UnitModel', 'defaultModel');
+        $this->load->model('Unit_kordinatorModel');
+        $this->load->model('RelawanModel');
         $this->load->helper('slug');
         $this->load->helper('upload_file');
         $this->load->helper(array('form', 'url'));
@@ -46,6 +48,17 @@ class Unit extends CI_Controller
                 'title' => 'Edit Data',
                 $this->defaultVariable => $this->defaultModel->findBy(['id' => $id])->row(),
                 'content' => $this->url_index . '/form'
+            ];
+
+            $this->load->view('layout_admin/base', $data);
+        } else if ($page == 'detail') {
+            $id = (isset($_GET['id']) ? $_GET['id'] : '');
+            $data = [
+                'title' => 'Detail Data',
+                'unit' => $this->defaultModel->findBy(['id' => $id])->row(),
+                'relawan' => $this->RelawanModel->findBy(['id_unit' => $id])->result(),
+                'unit_kordinator' => $this->Unit_kordinatorModel->get()->result(),
+                'content' => $this->url_index . '/detail'
             ];
 
             $this->load->view('layout_admin/base', $data);
@@ -98,8 +111,8 @@ class Unit extends CI_Controller
             'nama'  => $this->input->post('nama'),
             'keterangan'  => $this->input->post('keterangan'),
             'is_active'  => $this->input->post('is_active'),
-            'jenis_unit'  => $this->input->post('jenis_unit'),
-            'jenis_pmr'  => $this->input->post('jenis_pmr'),
+            'jenis'  => $this->input->post('jenis'),
+            'kategori'  => $this->input->post('kategori'),
             'email'  => $this->input->post('email'),
             'telepon'  => $this->input->post('telepon'),
             'alamat'  => $this->input->post('alamat'),

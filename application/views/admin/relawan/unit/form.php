@@ -23,7 +23,7 @@
             </div>
             <div class="col-md-6">
                 <div class="mb-3">
-                    <label class="form-label" for="kategori">jenis pmr</label>
+                    <label class="form-label" for="kategori">kategori unit</label>
                     <select class="form-select" name="kategori" id="kategori" width="100px">
                         <option value="">--Pilih--</option>
                         <option <?= @$unit->kategori == 'MULA' ? 'selected' : '' ?> value="MULA">MULA</option>

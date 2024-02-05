@@ -16,7 +16,7 @@
 	}
 
  	function get(){
-		$this->db->where(['is_active !=' => 0]);
+		$this->db->where(['is_active' => 1]);
  		return $this->db->get('unit');
  	}
 
