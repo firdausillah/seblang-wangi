@@ -24,12 +24,13 @@ class Register extends CI_Controller
 			'nama'  => $this->input->post('nama'),
 			'is_active'  => 2,
 			'telepon'  => $this->input->post('telepon'),
+			'email'  => $this->input->post('email'),
 			'jenis'  => $this->input->post('jenis'),
 			'kategori'  => $this->input->post('kategori')
 		];
 
 		if ($this->defaultModel->add($data)) {
-			$this->session->set_flashdata(['status' => 'success', 'message' => 'Registrasi berhasil, silahkan masuk menggunakan nomor telepon sebagai username dan password untuk melengkapi data anggota unit.']);
+			$this->session->set_flashdata(['status' => 'success', 'message' => 'Registrasi berhasil, silahkan masuk menggunakan email dan nomor telepon sebagai password untuk melengkapi data anggota unit.']);
 			redirect(base_url('login'));
 		}
 		exit($this->session->set_flashdata(['status' => 'error', 'message' => 'Oops! Terjadi kesalahan, silahkan menghubungi admin']));

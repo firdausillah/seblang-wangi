@@ -87,15 +87,22 @@
               <!-- /Logo -->
               <h5 class="mb-2">Selamat datang di Sistem E-mobile Palang Merah Indonesia Banyuwangi! 👋</h5>
               <!-- <p class="mb-4">Silahkan login untuk melanjutkan</p> -->
-              <?php if ($this->session->flashdata('message')) :?>
+              <?php if ($this->session->flashdata('message')) : ?>
               <div class="alert alert-dark alert-dismissible mb-2" role="alert">
-                <?= $this->session->flashdata('message')?>
+                <?= $this->session->flashdata('message') ?>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
               </div>
               <?php endif ?>
               <form id="formAuthentication" class="mb-3" action="<?= base_url('login/auth') ?>" method="POST">
                 <div class="mb-3">
-                  <label for="username" class="form-label">Username</label>
+                  <label for="is_admin" class="form-label">Login Sebagai</label>
+                  <select class="form-select" name="is_admin" id="is_admin">
+                    <option value="0">Unit</option>
+                    <option value="1">Admin</option>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label for="username" class="form-label">Username/Email</label>
                   <input
                     type="text"
                     class="form-control"
@@ -119,12 +126,6 @@
                       aria-describedby="password"
                     />
                     <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-                  </div>
-                </div>
-                <div class="mb-3">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="is_admin" id="admin" />
-                    <label class="form-check-label" for="admin"> Admin </label>
                   </div>
                 </div>
                 <div class="mb-3">

@@ -22,6 +22,7 @@
 
  	function findBy($id){
  		$this->db->where($id);
+		$this->db->where(['is_active' => 1]);
  		return $this->db->get('unit_kordinator');
  	}
 

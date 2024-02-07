@@ -3,7 +3,7 @@
         <h5 class="mb-0"><?= $title ? $title : '' ?></h5>
     </div>
     <div class="card-body">
-        <?= form_open_multipart(base_url('admin/relawan/unit/save')) ?>
+        <?= form_open_multipart(base_url('unit/relawan/unit/save')) ?>
         <input type="hidden" name="id" value="<?= @$unit->id ?>">
         <div class="mb-3">
             <label class="form-label" for="nama">nama <span class="text-danger">*</span></label>
@@ -67,17 +67,10 @@
             </div>
         </div>
         <div class="mb-3">
-            <label class="form-label" for="is_active">is active</label>
-            <select class="form-select" name="is_active" id="is_active" width="100px">
-                <option <?= @$unit->unit == '1' ? 'selected' : '' ?> value="1">Aktif</option>
-                <option <?= @$unit->unit == '0' ? 'selected' : '' ?> value="0">Tidak Aktif</option>
-            </select>
-        </div>
-        <div class="mb-3">
             <label class="form-label" for="keterangan">keterangan</label>
             <input type="text" class="form-control" name="keterangan" id="keterangan" value="<?= @$unit->keterangan ?>">
         </div>
-        <a href="<?= base_url() ?>admin/relawan/unit" class="btn btn-secondary">Batal</a>
+        <a href="<?= base_url() ?>unit/relawan/unit?page=detail" class="btn btn-secondary">Batal</a>
         <button type="submit" class="btn btn-primary">Simpan</button>
         </form>
     </div>

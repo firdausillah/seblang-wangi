@@ -6,7 +6,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Relawan extends CI_Controller
 {
     public $defaultVariable = 'relawan';
-    public $url_index = 'admin/relawan/relawan';
+    public $url_index = 'unit/relawan/relawan';
     
     function __construct()
     {
@@ -16,7 +16,7 @@ class Relawan extends CI_Controller
         $this->load->helper('slug');
         $this->load->helper('upload_file');
 
-        if ($this->session->userdata('role') != 'superadmin') {
+        if ($this->session->userdata('role') != 'unit') {
             $this->session->set_flashdata(['status' => 'error', 'message' => 'Anda tidak memiliki izin untuk mengakses halaman ini.']);
             redirect(base_url("login"));
         }

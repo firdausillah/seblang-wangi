@@ -89,15 +89,19 @@
 
               <form id="formAuthentication" class="mb-3" action="<?= base_url('register/register_unit') ?>" method="POST">
                 <div class="mb-3">
-                  <label for="nama" class="form-label">Nama Unit</label>
+                  <label for="nama" class="form-label">Nama Unit <span class="text-danger">*</span></label>
                   <input type="text" class="form-control" id="nama" name="nama" placeholder="" autofocus required/>
                 </div>
                 <div class="mb-3">
-                  <label for="telepon" class="form-label">Nomor Telepon</label>
+                  <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                  <input type="email" class="form-control" id="email" name="email" required/>
+                </div>
+                <div class="mb-3">
+                  <label for="telepon" class="form-label">Nomor Telepon <span class="text-danger">*</span></label>
                   <input type="number" class="form-control" id="telepon" name="telepon" placeholder="Masukan Angka. Contoh: 08561426576" required/>
                 </div>
                 <div class="mb-3">
-                  <label for="jenis" class="form-label">Jenis Unit</label>
+                  <label for="jenis" class="form-label">Jenis Unit <span class="text-danger">*</span></label>
                     <select class="form-select" name="jenis" id="jenis" width="100px" required>
                         <option value="">--Pilih--</option>
                         <option value="PMR">PMR</option>

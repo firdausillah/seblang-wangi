@@ -23,11 +23,11 @@
                 <?php foreach ($unit as $index => $item) : ?>
                     <tr>
                         <td><?= $index + 1 ?></td>
-                        <td><?= $item->nama ?></td>
+                        <td><a href="<?= base_url('admin/relawan/unit?page=detail&id=' . $item->id) ?>" class="text-black"><?= $item->nama ?></a></td>
                         <td><?= $item->alamat ?></td>
                         <td><?= $item->email ?></td>
                         <td><?= $item->telepon ?></td>
-                        <td><?= ($item->is_active==1? '<span class="btn btn-sm btn-success">Aktif</span>':($item->is_active == 0 ? '<span class="btn btn-sm btn-danger">Nonaktif</span>': '<span class="btn btn-sm btn-warning">Register</span>')) ?></td>
+                        <td><?= ($item->is_active == 1 ? '<span class="btn btn-sm btn-success">Aktif</span>' : ($item->is_active == 0 ? '<span class="btn btn-sm btn-danger">Nonaktif</span>' : '<span class="btn btn-sm btn-warning">Register</span>')) ?></td>
                         <td><?= $item->jenis ?></td>
                         <td><?= $item->kategori ?></td>
                         <td>

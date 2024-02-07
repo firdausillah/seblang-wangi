@@ -34,15 +34,15 @@ class Login extends CI_Controller
 		$is_admin = $this->input->post('is_admin');
 
 		// $where = [
-		// 	'username' => $username,
-		// 	'password' => $password,
-		// 	'is_active' => 1
+		// 	'email' => $username,
+		// 	'telepon' => $password
 		// ];
-		// print_r($this->AuthModel->cekLogin('users', $where)->row());
+		// print_r($this->AuthModel->cekLogin('unit', $where)->row());
+		// print_r($where);
 		// exit();
 
 		
-		if($is_admin){
+		if($is_admin==1){
 			$where = [
 				'username' => $username,
 				'password' => $password,
@@ -54,21 +54,19 @@ class Login extends CI_Controller
 			$redirect = 'admin/dashboard';
 		}else{
 			$where = [
-				'telepon' => $username,
-				'telepon' => $password,
-				'is_active' => 1
+				'email' => $username,
+				'telepon' => $password
 			];
 			$cek = $this->AuthModel->cekLogin('unit', $where)->row();
 			$test = $this->AuthModel->cekLogin('unit', $where)->num_rows();
 			
 			if($test>0){
-				$cek->username = $cek->telepon;
+				$cek->username = $cek->email;
 				$cek->password = $cek->telepon;
 				$cek->role = 'unit';
 	
 				$redirect = 'unit/dashboard';
 			}
-			
 		}
 		
 		if ($test > 0) {

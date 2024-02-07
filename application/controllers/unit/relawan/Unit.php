@@ -4,7 +4,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Unit extends CI_Controller
 {
     public $defaultVariable = 'unit';
-    public $url_index = 'admin/relawan/unit';
+    public $url_index = 'unit/relawan/unit';
 
     function __construct()
     {
@@ -16,7 +16,7 @@ class Unit extends CI_Controller
         $this->load->helper('upload_file');
         $this->load->helper(array('form', 'url'));
 
-        if ($this->session->userdata('role') != 'superadmin') {
+        if ($this->session->userdata('role') != 'unit') {
             $this->session->set_flashdata(['status' => 'error', 'message' => 'Anda tidak memiliki izin untuk mengakses halaman ini.']);
             redirect(base_url("login"));
         }
@@ -45,7 +45,7 @@ class Unit extends CI_Controller
             $this->load->view('layout_admin/base', $data);
 
         } else if ($page == 'edit') {
-            $id = (isset($_GET['id']) ? $_GET['id'] : '');
+            $id = $this->session->userdata('id');
             $data = [
                 'title' => 'Edit Data',
                 $this->defaultVariable => $this->defaultModel->findBy(['id' => $id])->row(),
@@ -55,7 +55,7 @@ class Unit extends CI_Controller
             $this->load->view('layout_admin/base', $data);
 
         } else if ($page == 'detail') {
-            $id = (isset($_GET['id']) ? $_GET['id'] : '');
+            $id = $this->session->userdata('id');
             $data = [
                 'title' => 'Detail Data',
                 'unit' => $this->defaultModel->findBy(['id' => $id])->row(),
@@ -69,17 +69,17 @@ class Unit extends CI_Controller
         } else if ($page == 'add_kordinator') {
             $data = [
                 'title' => 'Tambah Data',
-                'content' => 'admin/relawan/unit_kordinator/form'
+                'content' => 'unit/relawan/unit_kordinator/form'
             ];
 
             $this->load->view('layout_admin/base', $data);
 
         } else if ($page == 'edit_kordinator') {
-            $id = (isset($_GET['id']) ? $_GET['id'] : '');
+            $id = $_GET['id'];
             $data = [
                 'title' => 'Edit Data',
                 'unit_kordinator' => $this->Unit_kordinatorModel->findBy(['id' => $id])->row(),
-                'content' => 'admin/relawan/unit_kordinator/form'
+                'content' => 'unit/relawan/unit_kordinator/form'
             ];
 
             $this->load->view('layout_admin/base', $data);
@@ -91,7 +91,7 @@ class Unit extends CI_Controller
             $data = [
                 'title' => 'Tambah Data',
                 'unit' => $this->defaultModel->findBy(['id' => $id_unit])->row(),
-                'content' => 'admin/relawan/relawan/form',
+                'content' => 'unit/relawan/relawan/form',
                 'cropper' => 'components/cropper',
                 'aspect' => '3/4'
             ];
@@ -99,11 +99,11 @@ class Unit extends CI_Controller
             $this->load->view('layout_admin/base', $data);
 
         } else if ($page == 'edit_relawan') {
-            $id = (isset($_GET['id']) ? $_GET['id'] : '');
+            $id = $this->session->userdata('id');
             $data = [
                 'title' => 'Edit Data',
                 'unit_kordinator' => $this->Unit_kordinatorModel->findBy(['id' => $id])->row(),
-                'content' => 'admin/relawan/unit_kordinator/form'
+                'content' => 'unit/relawan/unit_kordinator/form'
             ];
 
             $this->load->view('layout_admin/base', $data);
@@ -155,7 +155,6 @@ class Unit extends CI_Controller
         $data = [
             'nama'  => $this->input->post('nama'),
             'keterangan'  => $this->input->post('keterangan'),
-            'is_active'  => $this->input->post('is_active'),
             'jenis'  => $this->input->post('jenis'),
             'kategori'  => $this->input->post('kategori'),
             'email'  => $this->input->post('email'),
@@ -168,13 +167,13 @@ class Unit extends CI_Controller
             unset($id);
             if ($this->defaultModel->add($data)) {
                 $this->session->set_flashdata(['status' => 'success', 'message' => 'Data berhasil dimasukan']);
-                redirect(base_url($this->url_index));
+                redirect(base_url($this->url_index. '?page=detail'));
             }
             exit($this->session->set_flashdata(['status' => 'error', 'message' => 'Oops! Terjadi kesalahan']));
         } else {
             if ($this->defaultModel->update(['id' => $id], $data)) {
                 $this->session->set_flashdata(['status' => 'success', 'message' => 'Data berhasil diupdate']);
-                redirect(base_url($this->url_index));
+                redirect(base_url($this->url_index. '?page=detail'));
             }
             exit($this->session->set_flashdata(['status' => 'error', 'message' => 'Oops! Terjadi kesalahan']));
         }
@@ -183,7 +182,7 @@ class Unit extends CI_Controller
     public function save_kordinator()
     {
         $id = $this->input->post('id');
-        $id_unit = $this->input->post('id_unit');
+        $id_unit = $this->session->userdata('id');
 
         $data = [
             'nama'  => $this->input->post('nama'),
@@ -197,13 +196,13 @@ class Unit extends CI_Controller
             unset($id);
             if ($this->Unit_kordinatorModel->add($data)) {
                 $this->session->set_flashdata(['status' => 'success', 'message' => 'Data berhasil dimasukan']);
-                redirect(base_url('admin/relawan/unit?page=detail&id='.$id_unit));
+                redirect(base_url('unit/relawan/unit?page=detail'));
             }
             exit($this->session->set_flashdata(['status' => 'error', 'message' => 'Oops! Terjadi kesalahan']));
         } else {
             if ($this->Unit_kordinatorModel->update(['id' => $id], $data)) {
                 $this->session->set_flashdata(['status' => 'success', 'message' => 'Data berhasil diupdate']);
-                redirect(base_url('admin/relawan/unit?page=detail&id='.$id_unit));
+                redirect(base_url('unit/relawan/unit?page=detail'));
             }
             exit($this->session->set_flashdata(['status' => 'error', 'message' => 'Oops! Terjadi kesalahan']));
         }
@@ -216,7 +215,7 @@ class Unit extends CI_Controller
         } else {
             $this->session->set_flashdata(['status' => 'error', 'message' => 'Oops! Terjadi kesalahan']);
         }
-        redirect($this->url_index);
+        redirect($this->url_index. '?page=detail');
     }
 
     public function nonaktif($id)
@@ -226,7 +225,7 @@ class Unit extends CI_Controller
         } else {
             $this->session->set_flashdata(['status' => 'error', 'message' => 'Oops! Terjadi kesalahan']);
         }
-        redirect($this->url_index);
+        redirect($this->url_index. '?page=detail');
     }
 
     public function nonaktif_kordinator($id)
@@ -236,6 +235,6 @@ class Unit extends CI_Controller
         } else {
             $this->session->set_flashdata(['status' => 'error', 'message' => 'Oops! Terjadi kesalahan']);
         }
-        redirect($this->url_index);
+        redirect($this->url_index. '?page=detail');
     }
 }

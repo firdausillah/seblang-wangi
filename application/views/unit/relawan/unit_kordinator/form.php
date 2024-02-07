@@ -3,7 +3,7 @@
         <h5 class="mb-0"><?= $title ? $title : '' ?></h5>
     </div>
     <div class="card-body">
-        <?= form_open_multipart(base_url('admin/relawan/unit/save_kordinator')) ?>
+        <?= form_open_multipart(base_url('unit/relawan/unit/save_kordinator')) ?>
         <input type="hidden" name="id_unit" value="<?= @$_GET['id_unit'] ?>">
         <input type="hidden" name="id" value="<?= @$unit_kordinator->id ?>">
         <div class="mb-3">
@@ -22,7 +22,7 @@
                 <input type="text" name="tahun_selesai" id="tahun_selesai" value="<?= (@$unit_kordinator->tahun_selesai != null ? @$unit_kordinator->tahun_selesai : date('Y') + 3) ?>" class="form-control" placeholder="Masukan Tahun. Contoh: 2027">
             </div>
         </div>
-        <a href="<?= base_url('admin/relawan/unit?page=detail&id='.@$_GET['id_unit']) ?>" class=" btn btn-secondary">Batal</a>
+        <a href="<?= base_url('unit/relawan/unit?page=detail') ?>" class=" btn btn-secondary">Batal</a>
         <button type="submit" class="btn btn-primary">Simpan</button>
         </form>
     </div>
