@@ -14,7 +14,7 @@
 
             <div class="menu-inner-shadow"></div>
 
-            <?php if($this->session->userdata('role') == 'superadmin'):?>
+            <?php if ($this->session->userdata('role') == 'superadmin') : ?>
                 <ul class="menu-inner py-1">
                     <!-- Dashboard -->
                     <li class="menu-item">
@@ -178,7 +178,7 @@
                         </ul>
                     </li>
                 </ul>
-            <?php else: ?>
+            <?php else : ?>
                 <ul class="menu-inner py-1">
                     <!-- Dashboard -->
                     <li class="menu-item">
@@ -189,38 +189,12 @@
                     </li>
                     <!-- E-Relawan -->
                     <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons bx bx-user-plus"></i>
-                            <div data-i18n="E-Relawan">E-Relawan</div>
+                        <a href="<?= base_url() ?>unit/relawan/unit?page=detail" class="menu-link">
+                            <!-- <i class="menu-icon tf-icons bx bx-shield-plus"></i> -->
+                            <i class='menu-icon tf-icons bx bx-unite'></i>
+                            <!-- <i class='bx bx-shield-plus'></i> -->
+                            <div data-i18n="Analytics">Unit</div>
                         </a>
-    
-                        <ul class="menu-sub">
-                            <li class="menu-item">
-                                <a href="<?= base_url() ?>unit/relawan/unit?page=detail" class="menu-link">
-                                    <div data-i18n="Unit">Unit</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="<?= base_url() ?>unit/relawan/relawan?unit=PMR-MULA" class="menu-link">
-                                    <div data-i18n="Relawan">Relawan</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="<?= base_url() ?>unit/relawan/kinerja" class="menu-link">
-                                    <div data-i18n="Kinerja">Kinerja</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="<?= base_url() ?>unit/relawan/tugas" class="menu-link">
-                                    <div data-i18n="Tugas">Tugas</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="<?= base_url() ?>unit/relawan/daftar_tilik" class="menu-link">
-                                    <div data-i18n="Daftar Tilik">Daftar Tilik</div>
-                                </a>
-                            </li>
-                        </ul>
                     </li>
                 </ul>
             <?php endif ?>

@@ -35,7 +35,7 @@ class Relawan extends CI_Controller
                 'content' => $this->url_index.'/table'
             ];
     
-            $this->load->view('layout_admin/base', $data);
+            $this->load->view('layout_unit/base', $data);
 
         }else if($page == 'add'){
             $unit = explode('-', (isset($_GET['unit']) ? $_GET['unit'] : ''));
@@ -52,7 +52,7 @@ class Relawan extends CI_Controller
                 'aspect' => '3/4'
             ];
 
-            $this->load->view('layout_admin/base', $data);
+            $this->load->view('layout_unit/base', $data);
 
         }else if($page == 'edit'){
             $id = (isset($_GET['id']) ? $_GET['id'] : '');
@@ -71,7 +71,7 @@ class Relawan extends CI_Controller
                 'aspect' => '3/4'
             ];
 
-            $this->load->view('layout_admin/base', $data);
+            $this->load->view('layout_unit/base', $data);
         }
 
     }
@@ -114,8 +114,6 @@ class Relawan extends CI_Controller
 
     public function save()
     {
-
-        $redirect_to = (isset($_GET['unit']) ? 'admin/relawan/relawan?unit='. $_GET['unit'] : 'admin/relawan/unit?page=detail&id='. $_GET['id_unit']);
         $id = $this->input->post('id');
         if (!$this->input->post('gambar')) {
             $slug = slugify($this->input->post('nama'));
@@ -163,13 +161,13 @@ class Relawan extends CI_Controller
             unset($id);
             if ($this->defaultModel->add($data)) {
                 $this->session->set_flashdata(['status' => 'success', 'message' => 'Data berhasil dimasukan']);
-                redirect(base_url($redirect_to));
+                redirect(base_url('unit/relawan/unit?page=detail'));
             }
             exit($this->session->set_flashdata(['status' => 'error', 'message' => 'Oops! Terjadi kesalahan']));
         } else {
             if ($this->defaultModel->update(['id' => $id], $data)) {
                 $this->session->set_flashdata(['status' => 'success', 'message' => 'Data berhasil diupdate']);
-                redirect(base_url($redirect_to));
+                redirect(base_url('unit/relawan/unit?page=detail'));
             }
             exit($this->session->set_flashdata(['status' => 'error', 'message' => 'Oops! Terjadi kesalahan']));
         }

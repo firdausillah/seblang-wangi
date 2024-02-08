@@ -86,7 +86,7 @@ class Unit extends CI_Controller
 
         } else if ($page == 'add_relawan') {
 
-            $id_unit = (isset($_GET['id_unit']) ? $_GET['id_unit'] : '');
+            $id_unit = $this->session->userdata('id');
 
             $data = [
                 'title' => 'Tambah Data',

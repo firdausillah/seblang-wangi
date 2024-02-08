@@ -1,10 +1,9 @@
 <div class="card mb-4">
     <div class="card-header d-flex justify-content-between align-items-center">
         <h5 class="mb-0"><?= $title ? $title : '' ?></h5>
-        <h5 class="mb-0"><?= isset($_GET['unit']) ?></h5>
     </div>
     <div class="card-body">
-        <?= form_open_multipart(base_url((isset($_GET['unit']) ? 'admin/relawan/relawan/save?unit=' . $_GET['unit'] : 'admin/relawan/relawan/save?id_unit=' . $_GET['id_unit']))) ?>
+        <?= form_open_multipart(base_url('unit/relawan/relawan/save')) ?>
         <input type="hidden" name="id" value="<?= @$relawan->id ?>">
         <div class="row">
             <div class="col-md-6">
@@ -29,14 +28,7 @@
                 <div class="mb-3">
                     <label class="form-label" for="id_unit">Unit <span class="text-danger">*</span></label>
                     <select class="form-select" name="id_unit" id="id_unit" width="100px" required>
-                        <?php if ($_GET['page'] == 'add_relawan') : ?>
-                            <option value="<?= $unit->id ?>" selected><?= $unit->nama ?></option>
-                        <?php else : ?>
-                            <option value="">--Pilih--</option>
-                            <?php foreach ($unit as $key => $value) : ?>
-                                <option <?= @$relawan->id_unit == $value->id ? 'selected' : '' ?> value="<?= $value->id ?>"><?= $value->nama ?></option>
-                            <?php endforeach ?>
-                        <?php endif ?>
+                        <option value="<?= $unit->id ?>" selected><?= $unit->nama ?></option>
                     </select>
                 </div>
             </div>
@@ -44,10 +36,11 @@
                 <div class="mb-3">
                     <label class="form-label" for="is_active">Status</label>
                     <select class="form-select" name="is_active" id="is_active" width="100px">
-                        <option value="">--Pilih--</option>
+                        <!-- <option value="">--Pilih--</option>
                         <option <?= @$relawan->is_active == '1' ? 'selected' : '' ?> value="1">Aktif</option>
-                        <option <?= @$relawan->is_active == '0' ? 'selected' : '' ?> value="0">Nonaktif</option>
-                        <option <?= @$relawan->is_active == '2' ? 'selected' : '' ?> value="2">Registrasi</option>
+                        <option <?= @$relawan->is_active == '0' ? 'selected' : '' ?> value="0">Nonaktif</option> -->
+                        <!-- <option <?= @$relawan->is_active == '2' ? 'selected' : '' ?> value="2">Registrasi</option> -->
+                        <option selected value="2">Registrasi</option>
                     </select>
                 </div>
             </div>
@@ -111,7 +104,7 @@
                 </div>
             </div>
         </div>
-        <a href="<?= base_url((isset($_GET['unit']) ? 'admin/relawan/relawan?unit=' . $_GET['unit'] : 'admin/relawan/unit?page=detail&id=' . $_GET['id_unit'])) ?>" class="btn btn-secondary">Batal</a>
+        <a href="<?= base_url('unit/relawan/unit?page=detail') ?>" class="btn btn-secondary">Batal</a>
         <button type="submit" class="btn btn-primary">Simpan</button>
         </form>
     </div>

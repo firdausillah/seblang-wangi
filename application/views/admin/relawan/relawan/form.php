@@ -1,7 +1,6 @@
 <div class="card mb-4">
     <div class="card-header d-flex justify-content-between align-items-center">
         <h5 class="mb-0"><?= $title ? $title : '' ?></h5>
-        <h5 class="mb-0"><?= isset($_GET['unit']) ?></h5>
     </div>
     <div class="card-body">
         <?= form_open_multipart(base_url((isset($_GET['unit']) ? 'admin/relawan/relawan/save?unit=' . $_GET['unit'] : 'admin/relawan/relawan/save?id_unit=' . $_GET['id_unit']))) ?>
