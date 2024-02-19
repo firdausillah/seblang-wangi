@@ -61,15 +61,8 @@
                         <td><?= $item->fpp_o ?></td>
                         <td><?= $item->keterangan ?></td>
                         <td>
-                            <div class="dropdown">
-                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="bx bx-dots-vertical-rounded"></i>
-                                </button>
-                                <div class="dropdown-menu" style="relative">
-                                    <a class="dropdown-item" href="<?= base_url('admin/donor/stok_donor?page=edit&id=' . $item->id) ?>"><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                                    <a class="dropdown-item" onclick="confirmDelete('<?= base_url('admin/donor/stok_donor/nonaktif/' . $item->id) ?>')"><i class="bx bx-trash me-1"></i> Delete</a>
-                                </div>
-                            </div>
+                            <a class="text-info" href="<?= base_url('admin/donor/stok_donor?page=edit&id=' . $item->id) ?>"><i class="bx bx-edit-alt me-1"></i></a>
+                            <a class="text-danger" href="#" onclick="confirmDelete('<?= base_url('admin/donor/stok_donor/nonaktif/' . $item->id) ?>')"><i class="bx bx-trash me-1"></i></a>
                         </td>
                     </tr>
                 <?php endforeach ?>

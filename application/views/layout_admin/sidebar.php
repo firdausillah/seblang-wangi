@@ -142,6 +142,7 @@
                             </li>
                         </ul>
                     </li>
+
                     <!-- E-Relawan -->
                     <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -173,6 +174,26 @@
                             <li class="menu-item">
                                 <a href="<?= base_url() ?>admin/relawan/daftar_tilik" class="menu-link">
                                     <div data-i18n="Daftar Tilik">Daftar Tilik</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- E-Yankes -->
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons bx bx-plus-medical"></i>
+                            <div data-i18n="E-Yankes">E-Pelayanan Kesehatan</div>
+                        </a>
+
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a href="<?= base_url() ?>admin/yankes/ambulance" class="menu-link">
+                                    <div data-i18n="Ambulance">Ambulance</div>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="<?= base_url() ?>admin/yankes/baksos" class="menu-link">
+                                    <div data-i18n="Baksos">Baksos</div>
                                 </a>
                             </li>
                         </ul>
