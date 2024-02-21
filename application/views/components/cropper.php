@@ -38,6 +38,9 @@
     var cropper, reader, file;
     var aspect = <?= @$aspect ? @$aspect : '1/1' ?>;
 
+    // var image_w = (<?= @$size['w'] ?> ? <?= @$size['w'] ?> : '500');
+    // var image_h = (<?= @$size['h'] ?> ? <?= @$size['h'] ?> : '500');
+
     $("body").on("change", ".foto", function(e) {
         var files = e.target.files;
         var done = function(url) {
@@ -78,6 +81,7 @@
             width: 500,
             height: 500,
         });
+
         canv = cropper.getCroppedCanvas();
 
         canvas.toBlob(function(blob) {

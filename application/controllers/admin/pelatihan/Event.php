@@ -10,6 +10,8 @@ class Event extends CI_Controller
     {
         parent::__construct();
         $this->load->model('EventModel', 'defaultModel');
+        $this->load->helper('slug');
+        $this->load->helper('upload_file');
 
         if ($this->session->userdata('role') != 'superadmin') {
             $this->session->set_flashdata(['status' => 'error', 'message' => 'Anda tidak memiliki izin untuk mengakses halaman ini.']);
@@ -24,7 +26,7 @@ class Event extends CI_Controller
 
         if ($page == 'index') {
             $data = [
-                'title' => 'Mobile Unit',
+                'title' => 'Event',
                 $this->defaultVariable => $this->defaultModel->get()->result(),
                 'content' => $this->url_index . '/table'
             ];
@@ -33,17 +35,29 @@ class Event extends CI_Controller
         } else if ($page == 'add') {
             $data = [
                 'title' => 'Tambah Data',
-                'content' => $this->url_index . '/form'
+                'content' => $this->url_index . '/form',
+                'cropper' => 'components/cropper',
+                'aspect' => '3/4',
             ];
 
             $this->load->view('layout_admin/base', $data);
         } else if ($page == 'edit') {
             $id = (isset($_GET['id']) ? $_GET['id'] : '');
-            // print_r(isset($_GET['id'])); exit();
             $data = [
                 'title' => 'Edit Data',
                 $this->defaultVariable => $this->defaultModel->findBy(['id' => $id])->row(),
-                'content' => $this->url_index . '/form'
+                'content' => $this->url_index . '/form',
+                'cropper' => 'components/cropper',
+                'aspect' => '3/4',
+            ];
+
+            $this->load->view('layout_admin/base', $data);
+        } else if ($page == 'detail') {
+            $id = (isset($_GET['id']) ? $_GET['id'] : '');
+            $data = [
+                'title' => 'Detail Data',
+                $this->defaultVariable => $this->defaultModel->findBy(['id' => $id])->row(),
+                'content' => $this->url_index . '/detail'
             ];
 
             $this->load->view('layout_admin/base', $data);
@@ -53,18 +67,36 @@ class Event extends CI_Controller
     public function save()
     {
         $id = $this->input->post('id');
+        if (!$this->input->post('gambar')) {
+            $slug = slugify($this->input->post('nama'));
+        } else {
+            $slug = explode('.', $this->input->post('gambar'))[0];
+        }
+
+        $file_foto = $this->input->post('file_foto');
+        $folderPath = './uploads/img/' . $this->defaultVariable . '/';
+        $foto = ($this->input->post('gambar') ? $this->input->post('gambar') : $slug); //jika upload berhasil akan di replace oleh function save_foto()
+
+        if ($file_foto) {
+            $foto = save_foto(
+                $file_foto,
+                $slug,
+                $folderPath
+                // return $foto -> nama foto
+            );
+        }
+
         $data = [
-            'tanggal'   => $this->input->post('tanggal'),
-            'nama_lembaga'  => $this->input->post('nama_lembaga'),
-            'lokasi'    => $this->input->post('lokasi'),
-            'jumlah_kantong'    => $this->input->post('jumlah_kantong'),
             'is_active' => 1,
-            'keterangan'    => $this->input->post('keterangan'),
-            'jumlah_a'  => $this->input->post('jumlah_a'),
-            'jumlah_b'  => $this->input->post('jumlah_b'),
-            'jumlah_ab' => $this->input->post('jumlah_ab'),
-            'jumlah_o'  => $this->input->post('jumlah_o')
+            'nama'  => $this->input->post('nama'),
+            'tanggal_buka_pendaftaran'  => $this->input->post('tanggal_buka_pendaftaran'),
+            'tanggal_tutup_pendaftaran'  => $this->input->post('tanggal_tutup_pendaftaran'),
+            'keterangan'  => $this->input->post('keterangan'),
+            'jenis'  => 'Pelatihan',
+            'foto'  => $foto
         ];
+
+        // print_r($data); exit();
 
         if (empty($id)) {
             unset($id);

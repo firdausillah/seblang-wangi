@@ -97,8 +97,9 @@
                 <div class="mb-3">
                   <label for="is_admin" class="form-label">Login Sebagai</label>
                   <select class="form-select" name="is_admin" id="is_admin">
-                    <option value="0">Unit</option>
-                    <option value="1">Admin</option>
+                    <option value="relawan">Relawan</option>
+                    <option value="unit">Unit</option>
+                    <option value="admin">Admin</option>
                   </select>
                 </div>
                 <div class="mb-3">

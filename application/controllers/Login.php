@@ -28,21 +28,12 @@ class Login extends CI_Controller
 
 	public function auth()
 	{
-		// print_r($_POST); exit();
 		$username = $this->input->post('username');
 		$password = $this->input->post('password');
 		$is_admin = $this->input->post('is_admin');
-
-		// $where = [
-		// 	'email' => $username,
-		// 	'telepon' => $password
-		// ];
-		// print_r($this->AuthModel->cekLogin('unit', $where)->row());
-		// print_r($where);
-		// exit();
-
+		print_r($is_admin);
 		
-		if($is_admin==1){
+		if($is_admin=='superadmin'){
 			$where = [
 				'username' => $username,
 				'password' => $password,
@@ -52,7 +43,22 @@ class Login extends CI_Controller
 			$test = $this->AuthModel->cekLogin('users', $where)->num_rows();
 
 			$redirect = 'admin/dashboard';
-		}else{
+		}elseif($is_admin=='unit'){
+			$where = [
+				'email' => $username,
+				'telepon' => $password
+			];
+			$cek = $this->AuthModel->cekLogin('unit', $where)->row();
+			$test = $this->AuthModel->cekLogin('unit', $where)->num_rows();
+			
+			if($test>0){
+				$cek->username = $cek->email;
+				$cek->password = $cek->telepon;
+				$cek->role = 'unit';
+	
+				$redirect = 'unit/dashboard';
+			}
+		}elseif($is_admin=='relawan'){
 			$where = [
 				'email' => $username,
 				'telepon' => $password

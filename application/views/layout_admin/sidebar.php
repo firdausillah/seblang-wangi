@@ -59,6 +59,11 @@
 
                         <ul class="menu-sub">
                             <li class="menu-item">
+                                <a href="<?= base_url() ?>admin/pelatihan/event" class="menu-link">
+                                    <div data-i18n="Event">Event</div>
+                                </a>
+                            </li>
+                            <li class="menu-item">
                                 <a href="<?= base_url() ?>admin/pelatihan/pengajuan" class="menu-link">
                                     <div data-i18n="Pengajuan">Pengajuan</div>
                                 </a>
@@ -197,6 +202,25 @@
                                 </a>
                             </li>
                         </ul>
+                    </li>
+                </ul>
+            <?php elseif ($this->session->userdata('role') == 'unit') : ?>
+                <ul class="menu-inner py-1">
+                    <!-- Dashboard -->
+                    <li class="menu-item">
+                        <a href="<?= base_url() ?>unit/dashboard" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                            <div data-i18n="Analytics">Dashboard</div>
+                        </a>
+                    </li>
+                    <!-- E-Relawan -->
+                    <li class="menu-item">
+                        <a href="<?= base_url() ?>unit/relawan/unit?page=detail" class="menu-link">
+                            <!-- <i class="menu-icon tf-icons bx bx-shield-plus"></i> -->
+                            <i class='menu-icon tf-icons bx bx-unite'></i>
+                            <!-- <i class='bx bx-shield-plus'></i> -->
+                            <div data-i18n="Analytics">Unit</div>
+                        </a>
                     </li>
                 </ul>
             <?php else : ?>

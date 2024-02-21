@@ -153,7 +153,7 @@ class Relawan extends CI_Controller
             'unit_jenis'  => $unit_data->jenis,
             'unit_nama'  => $unit_data->nama,
 
-            'nomor_telepon'  => $this->input->post('nomor_telepon'),
+            'telepon'  => $this->input->post('telepon'),
             'foto'  => $foto
         ];
         

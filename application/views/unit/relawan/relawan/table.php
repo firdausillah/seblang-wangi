@@ -113,7 +113,7 @@
                     data: 'jenis_kelamin'
                 },
                 {
-                    data: 'nomor_telepon'
+                    data: 'telepon'
                 },
                 {
                     data: 'unit_jenis'

@@ -43,6 +43,7 @@
                             <th>Angkatan</th>
                             <th>Jenis Kelamin</th>
                             <th>Nomor Telepon</th>
+                            <th>Email</th>
                             <th>Nama Unit</th>
                             <th>Jenis Unit</th>
                             <th>Actions</th>
@@ -113,7 +114,10 @@
                     data: 'jenis_kelamin'
                 },
                 {
-                    data: 'nomor_telepon'
+                    data: 'telepon'
+                },
+                {
+                    data: 'email'
                 },
                 {
                     data: 'unit_jenis'

@@ -76,9 +76,9 @@
             </div>
             <div class="col-md-6">
                 <div class="mb-3">
-                    <label class="form-label" for="nomor_telepon">Nomor Telepon</label>
+                    <label class="form-label" for="telepon">Nomor Telepon</label>
                     <div class="input-group input-group-merge">
-                        <input type="number" name="nomor_telepon" id="nomor_telepon" value="<?= @$relawan->nomor_telepon ?>" class="form-control" placeholder="Masukan Nomor Telepon. Contoh: 085245123554">
+                        <input type="number" name="telepon" id="telepon" value="<?= @$relawan->telepon ?>" class="form-control" placeholder="Masukan Nomor Telepon. Contoh: 085245123554">
                     </div>
                 </div>
             </div>
