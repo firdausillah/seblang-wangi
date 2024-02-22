@@ -23,7 +23,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                <button type="button" class="btn btn-primary" id="crop">Simpan</button>
+                <button type="button" class="btn btn-primary" id="crop">Potong</button>
             </div>
         </div>
     </div>

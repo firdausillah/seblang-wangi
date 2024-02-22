@@ -18,9 +18,14 @@ class Login extends CI_Controller
 		// 	'title' => $this->ProfileModel->findBy(['id' => 1])->row()
 		// ];
 
-		// print_r($this->session->flashdata());
 		if (isset($_SESSION['nama'])) {
-			redirect('admin/dashboard');
+			if ($_SESSION['role'] == 'superadmin') {
+				redirect('admin/dashboard');
+			}elseif($_SESSION['role'] == 'unit'){
+				redirect('unit/dashboard');
+			}elseif($_SESSION['role'] == 'relawan'){
+				redirect('relawan/dashboard');
+			}
 		}else{
 			$this->load->view('login');
 		}
@@ -31,9 +36,9 @@ class Login extends CI_Controller
 		$username = $this->input->post('username');
 		$password = $this->input->post('password');
 		$is_admin = $this->input->post('is_admin');
-		print_r($is_admin);
+		// print_r($is_admin);
 		
-		if($is_admin=='superadmin'){
+		if($is_admin=='admin'){
 			$where = [
 				'username' => $username,
 				'password' => $password,
@@ -41,7 +46,7 @@ class Login extends CI_Controller
 			];
 			$cek = $this->AuthModel->cekLogin('users', $where)->row();
 			$test = $this->AuthModel->cekLogin('users', $where)->num_rows();
-
+			
 			$redirect = 'admin/dashboard';
 		}elseif($is_admin=='unit'){
 			$where = [
@@ -63,15 +68,15 @@ class Login extends CI_Controller
 				'email' => $username,
 				'telepon' => $password
 			];
-			$cek = $this->AuthModel->cekLogin('unit', $where)->row();
-			$test = $this->AuthModel->cekLogin('unit', $where)->num_rows();
+			$cek = $this->AuthModel->cekLogin('relawan', $where)->row();
+			$test = $this->AuthModel->cekLogin('relawan', $where)->num_rows();
 			
 			if($test>0){
 				$cek->username = $cek->email;
 				$cek->password = $cek->telepon;
-				$cek->role = 'unit';
+				$cek->role = 'relawan';
 	
-				$redirect = 'unit/dashboard';
+				$redirect = 'relawan/dashboard';
 			}
 		}
 		

@@ -227,18 +227,18 @@
                 <ul class="menu-inner py-1">
                     <!-- Dashboard -->
                     <li class="menu-item">
-                        <a href="<?= base_url() ?>unit/dashboard" class="menu-link">
+                        <a href="<?= base_url() ?>relawan/dashboard" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-home-circle"></i>
                             <div data-i18n="Analytics">Dashboard</div>
                         </a>
                     </li>
                     <!-- E-Relawan -->
                     <li class="menu-item">
-                        <a href="<?= base_url() ?>unit/relawan/unit?page=detail" class="menu-link">
+                        <a href="<?= base_url() ?>relawan/profile" class="menu-link">
                             <!-- <i class="menu-icon tf-icons bx bx-shield-plus"></i> -->
-                            <i class='menu-icon tf-icons bx bx-unite'></i>
+                            <i class='menu-icon tf-icons bx bx-user'></i>
                             <!-- <i class='bx bx-shield-plus'></i> -->
-                            <div data-i18n="Analytics">Unit</div>
+                            <div data-i18n="Analytics">Profile</div>
                         </a>
                     </li>
                 </ul>

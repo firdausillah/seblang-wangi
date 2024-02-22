@@ -109,7 +109,7 @@
                     class="form-control"
                     id="username"
                     name="username"
-                    placeholder="Masukan username"
+                    placeholder="Masukan username / email"
                     autofocus
                   />
                 </div>
