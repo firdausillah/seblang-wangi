@@ -75,7 +75,7 @@
                 <div class="mb-3">
                     <label class="form-label" for="angkatan">Angkatan</label>
                     <div class="input-group input-group-merge">
-                        <input type="text" name="angkatan" id="angkatan" value="<?= (@$relawan->angkatan != null ? @$relawan->angkatan : date('Y')) ?>" class="form-control" placeholder="Masukan Tahun. Contoh: 2024">
+                        <input type="text" name="angkatan" id="angkatan" value="<?= (@$relawan->angkatan != null ? @$relawan->angkatan : date('Y')) ?>" class="form-control" placeholder="Masukan Tahun. Contoh: 2024" readonly>
                     </div>
                 </div>
             </div>
@@ -83,7 +83,7 @@
                 <div class="mb-3">
                     <label class="form-label" for="expired_year">Aktif Sampai -</label>
                     <div class="input-group input-group-merge">
-                        <input type="text" name="expired_year" id="expired_year" value="<?= (@$relawan->expired_year != null ? @$relawan->expired_year : date('Y') + 3) ?>" class="form-control" placeholder="Masukan Tahun. Contoh: 2027">
+                        <input type="text" name="expired_year" id="expired_year" value="<?= (@$relawan->expired_year != null ? @$relawan->expired_year : date('Y') + 3) ?>" class="form-control" placeholder="Masukan Tahun. Contoh: 2027" readonly>
                     </div>
                 </div>
             </div>

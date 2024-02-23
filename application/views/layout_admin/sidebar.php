@@ -232,14 +232,48 @@
                             <div data-i18n="Analytics">Dashboard</div>
                         </a>
                     </li>
-                    <!-- E-Relawan -->
+
                     <li class="menu-item">
                         <a href="<?= base_url() ?>relawan/profile" class="menu-link">
-                            <!-- <i class="menu-icon tf-icons bx bx-shield-plus"></i> -->
                             <i class='menu-icon tf-icons bx bx-user'></i>
-                            <!-- <i class='bx bx-shield-plus'></i> -->
                             <div data-i18n="Analytics">Profile</div>
                         </a>
+                    </li>
+
+                    <!-- E-Pelatihan -->
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons bx bx-chalkboard"></i>
+                            <div data-i18n="E-Pelatihan">E-Pelatihan</div>
+                        </a>
+
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a href="<?= base_url() ?>relawan/pelatihan/event" class="menu-link">
+                                    <div data-i18n="Event">Event</div>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="<?= base_url() ?>relawan/pelatihan/pengajuan" class="menu-link">
+                                    <div data-i18n="Pengajuan">Pengajuan</div>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="<?= base_url() ?>relawan/pelatihan/sertifikat" class="menu-link">
+                                    <div data-i18n="Sertifikat">Sertifikat</div>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="<?= base_url() ?>relawan/pelatihan/history" class="menu-link">
+                                    <div data-i18n="History">History</div>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="<?= base_url() ?>relawan/pelatihan/simpel" class="menu-link">
+                                    <div data-i18n="Simpel">Simpel</div>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             <?php endif ?>

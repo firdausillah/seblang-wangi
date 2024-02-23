@@ -4,7 +4,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Event extends CI_Controller
 {
     public $defaultVariable = 'event';
-    public $url_index = 'admin/pelatihan/event';
+    public $url_index = 'relawan/pelatihan/event';
 
     function __construct()
     {
@@ -13,7 +13,7 @@ class Event extends CI_Controller
         $this->load->helper('slug');
         $this->load->helper('upload_file');
 
-        if ($this->session->userdata('role') != 'superadmin') {
+        if ($this->session->userdata('role') != 'relawan') {
             $this->session->set_flashdata(['status' => 'error', 'message' => 'Anda tidak memiliki izin untuk mengakses halaman ini.']);
             redirect(base_url("login"));
         }
@@ -64,26 +64,6 @@ class Event extends CI_Controller
         }
     }
 
-    public function save_file($file, $slug, $folderPath)
-    {
-        if (!empty($file)) { // $_FILES untuk mengambil data file
-            $cfg = [
-                'upload_path' => $folderPath,
-                'allowed_types' => 'pdf',
-                'file_name' => $slug,
-                'overwrite' => (empty($file) ? FALSE : TRUE),
-                // 'max_size' => '2028',
-            ];
-            $this->load->library('upload', $cfg);
-
-            if ($this->upload->do_upload('file_info')) {
-                return $file_name = $this->upload->data('file_name');
-            } else {
-                exit('Error : ' . $this->upload->display_errors());
-            }
-        }
-    }
-
     public function save()
     {
         $id = $this->input->post('id');
@@ -91,12 +71,6 @@ class Event extends CI_Controller
             $slug = slugify($this->input->post('nama'));
         } else {
             $slug = explode('.', $this->input->post('gambar'))[0];
-        }
-
-        if (!$this->input->post('file_info')) {
-            $slug_file = slugify($this->input->post('nama'));
-        } else {
-            $slug_file = explode('.', $this->input->post('file_info'))[0];
         }
 
         $file_foto = $this->input->post('file_foto');
@@ -112,19 +86,6 @@ class Event extends CI_Controller
             );
         }
 
-        $file_pdf = $_FILES['file_info'];
-        $folderPath_file = './uploads/file/' . $this->defaultVariable . '/';
-        $file_name = ($this->input->post('file_info_name') ? $this->input->post('file_info_name') : $slug);
-
-        if ($file_pdf['name']) {
-            $file_name = $this->save_file(
-                $file_pdf,
-                $slug_file,
-                $folderPath_file
-                // return $file -> nama file
-            );
-        }
-
         $data = [
             'is_active' => 1,
             'nama'  => $this->input->post('nama'),
@@ -132,8 +93,7 @@ class Event extends CI_Controller
             'tanggal_tutup_pendaftaran'  => $this->input->post('tanggal_tutup_pendaftaran'),
             'keterangan'  => $this->input->post('keterangan'),
             'jenis'  => 'Pelatihan',
-            'foto'  => $foto,
-            'file_info'  => $file_pdf
+            'foto'  => $foto
         ];
 
         // print_r($data); exit();

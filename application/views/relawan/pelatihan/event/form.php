@@ -33,20 +33,6 @@
             </div>
         </div>
         <div class="mb-3">
-            <label class="form-label" for="file_info">File Informasi</label>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="input-group input-group-merge">
-                        <input class="form-control file_info" type="file" name="file_info">
-                    </div>
-                    <input type="hidden" class="form-control" value="<?= @$event->file_info ?>" name="file_info_name">
-                </div>
-                <div class="col-md-6">
-                    <a href="<?= base_url('uploads/file/event/' . @$event->file_info) ?>" target="_blank" class="text-black">File Informasi : <span class="text-info"><?= @$event->file_info ?></span></a>
-                </div>
-            </div>
-        </div>
-        <div class="mb-3">
             <label class="form-label" for="keterangan">Keterangan</label>
             <div class="input-group input-group-merge">
                 <input type="text" name="keterangan" id="keterangan" value="<?= @$event->keterangan ?>" class="form-control">

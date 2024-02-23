@@ -37,7 +37,7 @@
             </table>
         </div>
         <div class="d-flex justify-content-end">
-            <a href="<?= base_url('admin/relawan/unit') ?>" class=" btn btn-secondary">Kembali</a>
+            <a href="<?= base_url('admin/pelatihan/event') ?>" class=" btn btn-secondary">Kembali</a>
         </div>
     </div>
 </div>
@@ -47,7 +47,7 @@
         <div class="card p-3">
             <div class="d-flex justify-content-between">
                 <h5 class="my-auto">Peserta <?= @$event->nama ?></h5>
-                <a href="<?= base_url('admin/relawan/unit?page=add_relawan&id_unit=' . ($_GET['id'] ? $_GET['id'] : '')) ?>" class="btn btn-sm btn-success my-auto">Tambah data</a>
+                <!-- <a href="<?= base_url('admin/relawan/unit?page=add_relawan&id_unit=' . ($_GET['id'] ? $_GET['id'] : '')) ?>" class="btn btn-sm btn-success my-auto">Tambah data</a> -->
                 <!-- <a href="" class="btn btn-info">Tambah data</a> -->
             </div>
             <div class="table-responsive text-nowrap mt-2">
