@@ -42,13 +42,29 @@
     </div>
 </div>
 
-<div class="row">
-    <div class="col-md-12">
-        <div class="card p-3">
+<div class="nav-align-top mb-4">
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#AKTIF" aria-controls="AKTIF" aria-selected="true">
+                AKTIF
+            </button>
+        </li>
+        <li class="nav-item">
+            <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#REGISTER" aria-controls="REGISTER" aria-selected="fasle">
+                REGISTER
+            </button>
+        </li>
+        <li class="nav-item">
+            <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#NONAKTIF" aria-controls="NONAKTIF" aria-selected="fasle">
+                NONAKTIF
+            </button>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane fade active show" id="tab" role="tabpanel">
             <div class="d-flex justify-content-between">
                 <h5 class="my-auto">Peserta <?= @$event->nama ?></h5>
-                <!-- <a href="<?= base_url('admin/relawan/unit?page=add_relawan&id_unit=' . ($_GET['id'] ? $_GET['id'] : '')) ?>" class="btn btn-sm btn-success my-auto">Tambah data</a> -->
-                <!-- <a href="" class="btn btn-info">Tambah data</a> -->
+                <!-- <a href="#" class="btn btn-sm btn-success my-auto disabled" id="add_btn">Tambah data</a> -->
             </div>
             <div class="table-responsive text-nowrap mt-2">
                 <table id="datatables_table1" class="table table-hover">
@@ -57,12 +73,7 @@
                             <th>No.</th>
                             <th>Status</th>
                             <th>Nama</th>
-                            <th>Kode Anggota</th>
-                            <th>Angkatan</th>
-                            <th>Jenis Kelamin</th>
-                            <th>Nomor Telepon</th>
                             <th>Nama Unit</th>
-                            <th>Jenis Unit</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -117,78 +128,47 @@
                     }
                 },
                 {
-                    data: 'nama'
+                    data: 'relawan_nama'
                 },
                 {
-                    data: 'kode'
+                    data: 'unit_nama'
                 },
                 {
-                    data: 'angkatan'
-                },
-                {
-                    data: 'jenis_kelamin'
-                },
-                {
-                    data: 'telepon'
-                },
-                {
-                    data: 'unit_jenis'
-                },
-                {
-                    data: 'unit_kategori'
-                },
-                {
-                    data: "id",
-                    render: function(data, type, row) {
-                        var kategori = (row.unit_kategori ? ('-' + row.unit_kategori) : '');
-                        var unit = row.unit_jenis + kategori;
-                        if (data != '') {
-                            return '<div class="dropdown">' +
-                                '<button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false">' +
-                                '<i class="bx bx-dots-vertical-rounded"></i>' +
-                                '</button>' +
-                                '<div class="dropdown-menu" style="relative">' +
-                                '<a class="dropdown-item" href="<?= base_url() ?>admin/relawan/relawan?page=edit&id=' + data + '&unit=' + unit + '"><i class="bx bx-edit-alt me-1"></i> Edit</a>' +
-                                '<a class="dropdown-item" onclick="confirmDelete(\'<?= base_url('admin/relawan/relawan/nonaktif/') ?>' + data + '\')"><i class="bx bx-trash me-1"></i> Delete</a>' +
-                                '</div>' +
-                                '</div>';
-                        } else {
-                            return '';
-                        }
-                    }
+                    data: 'unit_nama'
                 }
             ],
             columnDefs: [{
                 orderable: false,
                 className: 'select-checkbox',
                 targets: 0
-            }],
-            select: {
-                style: 'os',
-                selector: 'td:first-child'
-            },
-            order: [
-                [4, 'asc']
-            ]
+            }]
         });
 
-        // BEGIN Ambil query string dari URL
-        var queryString = window.location.search;
-        var urlParams = new URLSearchParams(queryString);
-        var id = urlParams.get('id');
-        // END Ambil query string dari URL
+        ambil_data('#AKTIF');
 
-        Loading.fire({})
-        dataTable.ajax.url('<?= base_url('admin/relawan/relawan/getById/') ?>' + id).load(function() {
-            Swal.close()
+        $('button.nav-link').on('click', function() {
+            ambil_data($(this).data('bs-target'));
         });
 
     });
 
+    function ambil_data(tabId) {
+        Loading.fire({})
+        dataTable.ajax.url('<?= base_url('admin/pelatihan/event/getById?id=' . $event->id) . '&is_active=' ?>' + tabId.substring(1)).load(function() {
+            Swal.close()
+        });
+
+        // $('#add_btn').removeClass('disabled');
+        // $('#add_btn').attr('href', '<?= base_url('admin/pelatihan/event?page=add&is_active=') ?>' + tabId.substring(1));
+
+
+        return false;
+    }
+
     function update_status(id, is_active) {
         Loading.fire({})
         $.ajax({
-            url: '<?= base_url('admin/relawan/relawan/update_status') ?>',
+            url: '<?= base_url('admin/pelatihan/event/update_status') ?>',
             type: 'POST',
             dataType: 'json',
             data: {

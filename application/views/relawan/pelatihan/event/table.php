@@ -23,8 +23,6 @@
                         <td><?= ((date('Y-m-d') >  $item->tanggal_buka_pendaftaran && date('Y-m-d') <  $item->tanggal_tutup_pendaftaran) ? '<span class="btn btn-sm btn-success">Tersedia</span>' : '<span class="btn btn-sm btn-warning">Tidak Tersedia</span>') ?></td>
                         <td>
                             <a class="text-success" href="<?= base_url('relawan/pelatihan/event?page=detail&id=' . $item->id) ?>"><i class="bx bx-detail me-1"></i></a>
-                            <a class="text-info" href="<?= base_url('relawan/pelatihan/event?page=edit&id=' . $item->id) ?>"><i class="bx bx-edit-alt me-1"></i></a>
-                            <a class="text-danger" href="#" onclick="confirmDelete('<?= base_url('relawan/pelatihan/event/nonaktif/' . $item->id) ?>')"><i class="bx bx-trash me-1"></i></a>
                         </td>
                     </tr>
                 <?php endforeach ?>

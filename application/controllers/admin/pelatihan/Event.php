@@ -10,6 +10,7 @@ class Event extends CI_Controller
     {
         parent::__construct();
         $this->load->model('EventModel', 'defaultModel');
+        $this->load->model('Event_pesertaModel');
         $this->load->helper('slug');
         $this->load->helper('upload_file');
 
@@ -57,10 +58,46 @@ class Event extends CI_Controller
             $data = [
                 'title' => 'Detail Data',
                 $this->defaultVariable => $this->defaultModel->findBy(['id' => $id])->row(),
+                'event_peserta' => $this->Event_pesertaModel->findBy(['id_event' => $id, 'is_active != ' => 0])->row(),
                 'content' => $this->url_index . '/detail'
             ];
 
             $this->load->view('layout_admin/base', $data);
+        }
+    }
+
+    public function getById()
+    {
+        switch ($_GET['is_active']) {
+            case 'AKTIF':
+                $is_active = 1;
+                break;
+            case 'REGISTER':
+                $is_active = 2;
+                break;
+            
+            default:
+                $is_active = 0;
+                break;
+        }
+        $data = [
+                'id_event' => $_GET['id'], 
+                'is_active' => $is_active
+            ];
+
+        echo json_encode(['data' => $this->Event_pesertaModel->findBy($data)->result_array()]);
+    }
+
+    public function update_status()
+    {
+        // print_r($_POST); exit();
+        $id = $_POST['id'];
+        $is_active = $_POST['is_active'];
+
+        if ($this->Event_pesertaModel->update(['id' => $id], ['is_active' => $is_active])) {
+            echo json_encode(['status' => 'success', 'message' => 'Data berhasil diupdate']);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Oops! Terjadi kesalahan']);
         }
     }
 
