@@ -50,36 +50,31 @@
                         </ul>
                     </li>
 
-                    <!-- E-Pelatihan -->
+                    <!-- E-Event -->
                     <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons bx bx-chalkboard"></i>
-                            <div data-i18n="E-Pelatihan">E-Pelatihan</div>
+                            <div data-i18n="E-Event">E-Event</div>
                         </a>
 
                         <ul class="menu-sub">
                             <li class="menu-item">
-                                <a href="<?= base_url() ?>admin/pelatihan/event" class="menu-link">
+                                <a href="<?= base_url() ?>admin/event/event" class="menu-link">
                                     <div data-i18n="Event">Event</div>
                                 </a>
                             </li>
                             <li class="menu-item">
-                                <a href="<?= base_url() ?>admin/pelatihan/pengajuan" class="menu-link">
-                                    <div data-i18n="Pengajuan">Pengajuan</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="<?= base_url() ?>admin/pelatihan/sertifikat" class="menu-link">
+                                <a href="<?= base_url() ?>admin/event/sertifikat" class="menu-link">
                                     <div data-i18n="Sertifikat">Sertifikat</div>
                                 </a>
                             </li>
                             <li class="menu-item">
-                                <a href="<?= base_url() ?>admin/pelatihan/history" class="menu-link">
+                                <a href="<?= base_url() ?>admin/event/history" class="menu-link">
                                     <div data-i18n="History">History</div>
                                 </a>
                             </li>
                             <li class="menu-item">
-                                <a href="<?= base_url() ?>admin/pelatihan/simpel" class="menu-link">
+                                <a href="<?= base_url() ?>admin/event/simpel" class="menu-link">
                                     <div data-i18n="Simpel">Simpel</div>
                                 </a>
                             </li>
@@ -282,36 +277,36 @@
                         </a>
                     </li>
 
-                    <!-- E-Pelatihan -->
+                    <!-- E-Event -->
                     <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons bx bx-chalkboard"></i>
-                            <div data-i18n="E-Pelatihan">E-Pelatihan</div>
+                            <div data-i18n="E-Event">E-Event</div>
                         </a>
 
                         <ul class="menu-sub">
                             <li class="menu-item">
-                                <a href="<?= base_url() ?>relawan/pelatihan/event" class="menu-link">
+                                <a href="<?= base_url() ?>relawan/event/event" class="menu-link">
                                     <div data-i18n="Event">Event</div>
                                 </a>
                             </li>
                             <li class="menu-item">
-                                <a href="<?= base_url() ?>relawan/pelatihan/pengajuan" class="menu-link">
+                                <a href="<?= base_url() ?>relawan/event/pengajuan" class="menu-link">
                                     <div data-i18n="Pengajuan">Pengajuan</div>
                                 </a>
                             </li>
                             <li class="menu-item">
-                                <a href="<?= base_url() ?>relawan/pelatihan/sertifikat" class="menu-link">
+                                <a href="<?= base_url() ?>relawan/event/sertifikat" class="menu-link">
                                     <div data-i18n="Sertifikat">Sertifikat</div>
                                 </a>
                             </li>
                             <li class="menu-item">
-                                <a href="<?= base_url() ?>relawan/pelatihan/history" class="menu-link">
+                                <a href="<?= base_url() ?>relawan/event/history" class="menu-link">
                                     <div data-i18n="History">History</div>
                                 </a>
                             </li>
                             <li class="menu-item">
-                                <a href="<?= base_url() ?>relawan/pelatihan/simpel" class="menu-link">
+                                <a href="<?= base_url() ?>relawan/event/simpel" class="menu-link">
                                     <div data-i18n="Simpel">Simpel</div>
                                 </a>
                             </li>

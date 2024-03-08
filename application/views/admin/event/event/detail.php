@@ -25,7 +25,14 @@
                         <td>Poster</td>
                         <td>:</td>
                         <td>
-                            <a href="<?= base_url('uploads/img/event/' . @$event->foto) ?>" target="_blank"><img src="<?= base_url('uploads/img/event/' . @$event->foto) ?>" height="200px" alt=""></a>
+                            <a href="<?= base_url('uploads/img/event/admin/' . @$event->foto) ?>" target="_blank"><img src="<?= base_url('uploads/img/event/admin/' . @$event->foto) ?>" height="200px" alt=""></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>File Informasi</td>
+                        <td>:</td>
+                        <td>
+                            <a href="<?= base_url('uploads/file/event/admin/' . @$event->file_info) ?>" target="_blank" class="text-black"><span class="text-info"><?= @$event->file_info ?></span></a>
                         </td>
                     </tr>
                     <tr>
@@ -37,7 +44,7 @@
             </table>
         </div>
         <div class="d-flex justify-content-end">
-            <a href="<?= base_url('admin/pelatihan/event') ?>" class=" btn btn-secondary">Kembali</a>
+            <a href="<?= base_url('admin/event/event') ?>" class=" btn btn-secondary">Kembali</a>
         </div>
     </div>
 </div>
@@ -154,12 +161,12 @@
 
     function ambil_data(tabId) {
         Loading.fire({})
-        dataTable.ajax.url('<?= base_url('admin/pelatihan/event/getById?id=' . $event->id) . '&is_active=' ?>' + tabId.substring(1)).load(function() {
+        dataTable.ajax.url('<?= base_url('admin/event/event/getById?id=' . $event->id) . '&is_active=' ?>' + tabId.substring(1)).load(function() {
             Swal.close()
         });
 
         // $('#add_btn').removeClass('disabled');
-        // $('#add_btn').attr('href', '<?= base_url('admin/pelatihan/event?page=add&is_active=') ?>' + tabId.substring(1));
+        // $('#add_btn').attr('href', '<?= base_url('admin/event/event?page=add&is_active=') ?>' + tabId.substring(1));
 
 
         return false;
@@ -168,7 +175,7 @@
     function update_status(id, is_active) {
         Loading.fire({})
         $.ajax({
-            url: '<?= base_url('admin/pelatihan/event/update_status') ?>',
+            url: '<?= base_url('admin/event/event/update_status') ?>',
             type: 'POST',
             dataType: 'json',
             data: {

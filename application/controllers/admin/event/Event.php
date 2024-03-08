@@ -4,7 +4,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Event extends CI_Controller
 {
     public $defaultVariable = 'event';
-    public $url_index = 'admin/pelatihan/event';
+    public $url_index = 'admin/event/event';
 
     function __construct()
     {
@@ -137,7 +137,7 @@ class Event extends CI_Controller
         }
 
         $file_foto = $this->input->post('file_foto');
-        $folderPath = './uploads/img/' . $this->defaultVariable . '/';
+        $folderPath = './uploads/img/' . $this->defaultVariable . `/admin/`;
         $foto = ($this->input->post('gambar') ? $this->input->post('gambar') : $slug); //jika upload berhasil akan di replace oleh function save_foto()
 
         if ($file_foto) {
@@ -150,7 +150,7 @@ class Event extends CI_Controller
         }
 
         $file_pdf = $_FILES['file_info'];
-        $folderPath_file = './uploads/file/' . $this->defaultVariable . '/';
+        $folderPath_file = './uploads/file/' . $this->defaultVariable . `/admin/`;
         $file_name = ($this->input->post('file_info_name') ? $this->input->post('file_info_name') : $slug);
 
         if ($file_pdf['name']) {
@@ -168,7 +168,7 @@ class Event extends CI_Controller
             'tanggal_buka_pendaftaran'  => $this->input->post('tanggal_buka_pendaftaran'),
             'tanggal_tutup_pendaftaran'  => $this->input->post('tanggal_tutup_pendaftaran'),
             'keterangan'  => $this->input->post('keterangan'),
-            'jenis'  => 'Pelatihan',
+            'jenis'  => $this->input->post('jenis'),
             'foto'  => $foto,
             'file_info'  => $file_pdf
         ];
