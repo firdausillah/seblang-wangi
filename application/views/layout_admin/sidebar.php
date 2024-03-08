@@ -187,18 +187,18 @@
                     <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons bx bx-plus-medical"></i>
-                            <div data-i18n="E-Yankes">E-Pelayanan Kesehatan</div>
+                            <div data-i18n="E-Yankes">E-Pelayanan Sosial & Kesehatan</div>
                         </a>
 
                         <ul class="menu-sub">
                             <li class="menu-item">
-                                <a href="<?= base_url() ?>admin/yankes/ambulance" class="menu-link">
-                                    <div data-i18n="Ambulance">Ambulance</div>
+                                <a href="<?= base_url() ?>admin/yankes/sosial" class="menu-link">
+                                    <div data-i18n="Pelayanan Sosial">Pelayanan Sosial</div>
                                 </a>
                             </li>
                             <li class="menu-item">
-                                <a href="<?= base_url() ?>admin/yankes/baksos" class="menu-link">
-                                    <div data-i18n="Baksos">Baksos</div>
+                                <a href="<?= base_url() ?>admin/yankes/kesehatan" class="menu-link">
+                                    <div data-i18n="Pelayanan Kesehatan">Pelayanan Kesehatan</div>
                                 </a>
                             </li>
                         </ul>
