@@ -203,6 +203,13 @@
                             </li>
                         </ul>
                     </li>
+                    <!-- E-User -->
+                    <li class="menu-item">
+                        <a href="<?= base_url() ?>admin/user" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-user"></i>
+                            <div data-i18n="Users">Users</div>
+                        </a>
+                    </li>
                 </ul>
             <?php elseif ($this->session->userdata('role') == 'unit') : ?>
                 <ul class="menu-inner py-1">
@@ -221,6 +228,41 @@
                             <!-- <i class='bx bx-shield-plus'></i> -->
                             <div data-i18n="Analytics">Unit</div>
                         </a>
+                    </li>
+                </ul>
+            <?php elseif ($this->session->userdata('role') == 'udd') : ?>
+                <ul class="menu-inner py-1">
+                    <!-- Dashboard -->
+                    <li class="menu-item">
+                        <a href="<?= base_url() ?>admin/dashboard/udd" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                            <div data-i18n="Analytics">Dashboard</div>
+                        </a>
+                    </li>
+                    <!-- E-Donor -->
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons bx bx-donate-blood"></i>
+                            <div data-i18n="E-Donor">E-Donor</div>
+                        </a>
+
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a href="<?= base_url() ?>admin/donor/stok_donor" class="menu-link">
+                                    <div data-i18n="Stok Donor">Stok Donor</div>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="<?= base_url() ?>admin/donor/mobile_unit" class="menu-link">
+                                    <div data-i18n="Mobile Unit">Mobile Unit</div>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="<?= base_url() ?>admin/donor/penghargaan" class="menu-link">
+                                    <div data-i18n="Penghargaan">Penghargaan</div>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             <?php else : ?>

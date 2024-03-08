@@ -7,25 +7,25 @@
 	}
  	
  	function get(){
- 		return $this->db->get('user');
+ 		return $this->db->get('users');
  	}
 
  	function findBy($id){
  		$this->db->where($id);
- 		return $this->db->get('user');
+ 		return $this->db->get('users');
  	}
 
  	function add($data){
- 		return $this->db->insert('user',$data);
+ 		return $this->db->insert('users',$data);
  	}
  	
  	function update($id,$data){
  		$this->db->where($id);
- 		return $this->db->update('user',$data);
+ 		return $this->db->update('users',$data);
  	}
 
  	function delete($id){
  		$this->db->where($id);
- 		return $this->db->delete('user');
+ 		return $this->db->delete('users');
  	}
  }

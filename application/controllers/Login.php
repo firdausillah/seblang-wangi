@@ -47,7 +47,11 @@ class Login extends CI_Controller
 			$cek = $this->AuthModel->cekLogin('users', $where)->row();
 			$test = $this->AuthModel->cekLogin('users', $where)->num_rows();
 			
-			$redirect = 'admin/dashboard';
+			if($cek == 'superadmin'){
+				$redirect = 'admin/dashboard';
+			}else{
+				$redirect = 'admin/dashboard/udd';
+			}
 		}elseif($is_admin=='unit'){
 			$where = [
 				'email' => $username,

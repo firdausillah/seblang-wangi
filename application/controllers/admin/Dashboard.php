@@ -8,7 +8,7 @@ class Dashboard extends CI_Controller
         parent::__construct();
         $this->load->model('ProfileModel');
 
-        if ($this->session->userdata('role') != 'superadmin') {
+        if ($this->session->userdata('role') != 'superadmin' && $this->session->userdata('role') != 'udd') {
             redirect(base_url("login"));
         }
     }
@@ -19,6 +19,17 @@ class Dashboard extends CI_Controller
             'title' => 'Dashboard',
             'profile' => $this->ProfileModel->findBy(['id' => 1])->row(),
             'content' => 'admin/dashboard'
+        ];
+
+        $this->load->view('layout_admin/base', $data);
+    }
+
+    public function udd()
+    {
+        $data = [
+            'title' => 'Dashboard',
+            'profile' => $this->ProfileModel->findBy(['id' => 1])->row(),
+            'content' => 'admin/udd_dashboard'
         ];
 
         $this->load->view('layout_admin/base', $data);

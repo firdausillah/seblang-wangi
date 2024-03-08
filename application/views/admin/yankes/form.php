@@ -3,16 +3,27 @@
         <h5 class="mb-0"><?= $title ? $title : '' ?></h5>
     </div>
     <div class="card-body">
-        <?= form_open_multipart(base_url('admin/yankes/'.$jenis_pelayanan.'/save')) ?>
+        <?= form_open_multipart(base_url('admin/yankes/' . $jenis_pelayanan . '/save')) ?>
         <input type="hidden" name="id" value="<?= @$pelayanan_kesehatan_sosial->id ?>">
-        <div class="mb-3">
-            <label class="form-label" for="kategori_pelayanan">Kategori Pelayanan <span class="text-danger">*</span></label>
-            <select class="form-select" name="kategori_pelayanan" id="kategori_pelayanan" width="100px" required>
-                <option value="">--Pilih--</option>
-                <?php foreach ($kategori_pelayanan as $value) : ?>
-                    <option <?= @$pelayanan_kesehatan_sosial->kategori_pelayanan == $value ? 'selected' : '' ?> value='<?=$value?>'><?=$value?></option>
-                <?php endforeach?>
-            </select>
+
+        <div class="row">
+            <div class="col-6">
+                <div class="mb-3">
+                    <label class="form-label" for="kategori_pelayanan">Kategori Pelayanan <span class="text-danger">*</span></label>
+                    <select class="form-select" name="kategori_pelayanan" id="kategori_pelayanan" width="100px" required>
+                        <option value="">--Pilih--</option>
+                        <?php foreach ($kategori_pelayanan as $value) : ?>
+                            <option <?= @$pelayanan_kesehatan_sosial->kategori_pelayanan == $value ? 'selected' : '' ?> value='<?= $value ?>'><?= $value ?></option>
+                        <?php endforeach ?>
+                    </select>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="mb-3">
+                    <label class="form-label" for="tempat">tempat <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" name="tempat" id="tempat" value="<?= @$pelayanan_kesehatan_sosial->tempat ?>" required>
+                </div>
+            </div>
         </div>
         <div class="row">
             <div class="col-6">
@@ -82,22 +93,28 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-6 col-lg-4">
+            <div class="col-sm-6 col-lg-3">
                 <div class="mb-3">
                     <label class="form-label" for="jumlah_dewasa">jumlah dewasa</label>
                     <input type="text" class="form-control" name="jumlah_dewasa" id="jumlah_dewasa" value="<?= @$pelayanan_kesehatan_sosial->jumlah_dewasa ?>">
                 </div>
             </div>
-            <div class="col-sm-6 col-lg-4">
+            <div class="col-sm-6 col-lg-3">
                 <div class="mb-3">
                     <label class="form-label" for="jumlah_lansia">jumlah lansia</label>
                     <input type="text" class="form-control" name="jumlah_lansia" id="jumlah_lansia" value="<?= @$pelayanan_kesehatan_sosial->jumlah_lansia ?>">
                 </div>
             </div>
-            <div class="col-sm-6 col-lg-4">
+            <div class="col-sm-6 col-lg-3">
                 <div class="mb-3">
-                    <label class="form-label" for="tempat">tempat <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" name="tempat" id="tempat" value="<?= @$pelayanan_kesehatan_sosial->tempat ?>" required>
+                    <label class="form-label" for="jumlah_disabilitas">jumlah disabilitas</label>
+                    <input type="text" class="form-control" name="jumlah_disabilitas" id="jumlah_disabilitas" value="<?= @$pelayanan_kesehatan_sosial->jumlah_disabilitas ?>">
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="mb-3">
+                    <label class="form-label" for="jumlah_ibu_hamil">jumlah ibu hamil</label>
+                    <input type="text" class="form-control" name="jumlah_ibu_hamil" id="jumlah_ibu_hamil" value="<?= @$pelayanan_kesehatan_sosial->jumlah_ibu_hamil ?>">
                 </div>
             </div>
         </div>

@@ -31,7 +31,8 @@ class Sosial extends CI_Controller
             $data = [
                 'title' => 'Pelayanan Sosial',
                 $this->defaultVariable => $this->defaultModel->findBy(['jenis_pelayanan' => 'Sosial'])->result(),
-                'content' => 'admin/yankes/table'
+                'content' => 'admin/yankes/table',
+                'jenis_pelayanan' => 'sosial'
             ];
     
             $this->load->view('layout_admin/base', $data);
@@ -105,6 +106,8 @@ class Sosial extends CI_Controller
             'jumlah_remaja'  => $this->input->post('jumlah_remaja'),
             'jumlah_dewasa'  => $this->input->post('jumlah_dewasa'),
             'jumlah_lansia'  => $this->input->post('jumlah_lansia'),
+            'jumlah_disabilitas'  => $this->input->post('jumlah_disabilitas'),
+            'jumlah_ibu_hamil'  => $this->input->post('jumlah_ibu_hamil'),
             'tempat'  => $this->input->post('tempat'),
             'keterangan'  => $this->input->post('keterangan')
         ];

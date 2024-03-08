@@ -11,7 +11,7 @@ class Stok_donor extends CI_Controller
         parent::__construct();
         $this->load->model('StokDonorModel', 'defaultModel');
 
-        if ($this->session->userdata('role') != 'superadmin') {
+        if ($this->session->userdata('role') != 'superadmin' && $this->session->userdata('role') != 'udd') {
             $this->session->set_flashdata(['status' => 'error', 'message' => 'Anda tidak memiliki izin untuk mengakses halaman ini.']);
             redirect(base_url("login"));
         }
