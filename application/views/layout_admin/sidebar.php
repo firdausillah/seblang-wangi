@@ -73,11 +73,6 @@
                                     <div data-i18n="History">History</div>
                                 </a>
                             </li>
-                            <li class="menu-item">
-                                <a href="<?= base_url() ?>admin/event/simpel" class="menu-link">
-                                    <div data-i18n="Simpel">Simpel</div>
-                                </a>
-                            </li>
                         </ul>
                     </li>
 
@@ -303,11 +298,6 @@
                             <li class="menu-item">
                                 <a href="<?= base_url() ?>relawan/event/history" class="menu-link">
                                     <div data-i18n="History">History</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="<?= base_url() ?>relawan/event/simpel" class="menu-link">
-                                    <div data-i18n="Simpel">Simpel</div>
                                 </a>
                             </li>
                         </ul>
