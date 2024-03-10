@@ -24,6 +24,8 @@ $(document).ready(function () {
   //   $('#breadcrump').text(path);
     
   // }
+
+  $('.js-example-basic-multiple').select2();
 });
 
 const flashData = $('.flash-data').data('flashdata');
@@ -75,3 +77,4 @@ function confirmDelete(data){
     }
   });
 }
+

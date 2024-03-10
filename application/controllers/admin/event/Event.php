@@ -123,6 +123,12 @@ class Event extends CI_Controller
 
     public function save()
     {
+        // $file_foto = $this->input->post('file_foto');
+
+        // if ($file_foto) {
+        //     echo 'ini bro';
+        // }
+        // print_r($file_foto); exit();
         $id = $this->input->post('id');
         if (!$this->input->post('gambar')) {
             $slug = slugify($this->input->post('nama'));
@@ -149,11 +155,12 @@ class Event extends CI_Controller
             );
         }
 
-        $file_pdf = $_FILES['file_info'];
+        $file_pdf = (isset($_FILES['file_info'])? $_FILES['file_info']: $file_pdf['name'] = false);
         $folderPath_file = './uploads/file/' . $this->defaultVariable . `/admin/`;
         $file_name = ($this->input->post('file_info_name') ? $this->input->post('file_info_name') : $slug);
 
-        if ($file_pdf['name']) {
+        // print_r(!isset($file_pdf['name'])); exit();
+        if (!isset($file_pdf['name'])) {
             $file_name = $this->save_file(
                 $file_pdf,
                 $slug_file,
@@ -162,6 +169,7 @@ class Event extends CI_Controller
             );
         }
 
+        // print_r($_POST); exit();
         $data = [
             'is_active' => 1,
             'nama'  => $this->input->post('nama'),
@@ -169,8 +177,9 @@ class Event extends CI_Controller
             'tanggal_tutup_pendaftaran'  => $this->input->post('tanggal_tutup_pendaftaran'),
             'keterangan'  => $this->input->post('keterangan'),
             'jenis'  => $this->input->post('jenis'),
+            'unit_peserta'  => implode(',', $this->input->post('unit_peserta')),
             'foto'  => $foto,
-            'file_info'  => $file_pdf
+            'file_info'  => $file_name
         ];
 
         // print_r($data); exit();

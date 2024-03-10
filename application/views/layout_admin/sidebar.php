@@ -273,7 +273,7 @@
                     </li>
 
                     <!-- E-Event -->
-                    <li class="menu-item">
+                    <!-- <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons bx bx-chalkboard"></i>
                             <div data-i18n="E-Event">E-Event</div>
@@ -301,7 +301,7 @@
                                 </a>
                             </li>
                         </ul>
-                    </li>
+                    </li> -->
                 </ul>
             <?php endif ?>
         </aside>
