@@ -56,10 +56,11 @@ class Login extends CI_Controller
 			$where = [
 				'email' => $username,
 				'telepon' => $password,
-				'is_active' => 1
+				'is_active !=' => '0'
 			];
 			$cek = $this->AuthModel->cekLogin('unit', $where)->row();
 			$test = $this->AuthModel->cekLogin('unit', $where)->num_rows();
+			// print_r($cek); exit();
 			
 			if($test>0){
 				$cek->username = $cek->email;

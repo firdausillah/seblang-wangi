@@ -4,6 +4,8 @@ ada statusnya dan keterangan / catatan dari admin
 
 relawan belum menjadi anggota 
 
+relawan aktif berdasarkan rentang waktu
+
 download data
 
 action ditampilkan iconnya *
@@ -14,9 +16,7 @@ pelayanan ambulan dan baksos *
 
 status + disetujui
 
-
 persyaratan pendaftaran event di compile jadi 1 pdf dan di upload saat daftar/ketika melengkapi pendaftaran
-
 
 nonaktif/belum daftar
 daftar -> registrasi
@@ -26,12 +26,12 @@ aktif
 username password dipastikan
 
 wajib upload SK di registrasi untuk proses approval oleh admin sebelum bisa login
-kode anggota (MIS)
+kode anggota (MIS) 
 
 approval untuk kordinator unit relawan 
 
 tanggal mulai-selesai  *
-SMK / Standart Minimum Kelulusan
+SMK / Standart Minimum Kelulusan *
 
 kategori usia *
     bayi 0-11 bulan
@@ -41,9 +41,11 @@ kategori usia *
     dewasa 17-56
     lansia 56 >
 
-penerima manfaat + disabilitas & ibu hamil
+penerima manfaat + disabilitas & ibu hamil *
 
 pendaftaran hanya bisa melalui unit
 id card otomatis generate
-persyaratan per unit : surat tugas, kordinator/pembina, kontak
+persyaratan per unit : surat tugas, kordinator/pembina, kontak 
 persyaratan per peserta : foto, file persyaratan
+
+unit register masih bisa masuk tapi perlu menghubungi admin untuk verifikasi

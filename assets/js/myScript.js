@@ -78,3 +78,19 @@ function confirmDelete(data){
   });
 }
 
+function confirmSignIn(data){
+  Swal.fire({
+    title: "Anda yakin?",
+    text: "Anda akan mendaftar di Event ini",
+    icon: "question",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Daftar!"
+  }).then((result) => {
+    if (result.isConfirmed) {
+      window.location.href = data;
+    }
+  });
+}
+

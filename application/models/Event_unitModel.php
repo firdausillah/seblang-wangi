@@ -1,5 +1,5 @@
 <?php
- class EventModel extends CI_Model{
+ class Event_unitModel extends CI_Model{
 
 	function __construct()
 	{
@@ -17,33 +17,26 @@
 
  	function get(){
 		$this->db->where(['is_active' => 1]);
- 		return $this->db->get('event');
+ 		return $this->db->get('event_unit_t');
  	}
 
  	function findBy($id){
  		$this->db->where($id);
- 		return $this->db->get('event');
+ 		return $this->db->get('event_unit_t');
  	}
-
-	function findByLike($id)
-	{
-		$this->db->where(['is_active' => 1]);
-		$this->db->like($id);
-		return $this->db->get('event');
-	}
 
  	function add($data){
 		$additional_data = $this->add_additional();
- 		return $this->db->insert('event', $additional_data + $data);
+ 		return $this->db->insert('event_unit_t', $additional_data + $data);
  	}
  	
  	function update($id,$data){
  		$this->db->where($id);
- 		return $this->db->update('event',$data);
+ 		return $this->db->update('event_unit_t',$data);
  	}
 
  	function delete($id){
  		$this->db->where($id);
- 		return $this->db->delete('event');
+ 		return $this->db->delete('event_unit_t');
  	}
  }

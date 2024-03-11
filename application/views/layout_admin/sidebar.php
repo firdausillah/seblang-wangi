@@ -219,6 +219,36 @@
                             <div data-i18n="Analytics">Unit</div>
                         </a>
                     </li>
+                    <!-- E-Event -->
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons bx bx-chalkboard"></i>
+                            <div data-i18n="E-Event">E-Event</div>
+                        </a>
+
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a href="<?= base_url() ?>unit/event/event" class="menu-link">
+                                    <div data-i18n="Event">Event</div>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="<?= base_url() ?>unit/event/pengajuan" class="menu-link">
+                                    <div data-i18n="Pengajuan">Pengajuan</div>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="<?= base_url() ?>unit/event/sertifikat" class="menu-link">
+                                    <div data-i18n="Sertifikat">Sertifikat</div>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="<?= base_url() ?>unit/event/history" class="menu-link">
+                                    <div data-i18n="History">History</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
             <?php elseif ($this->session->userdata('role') == 'udd') : ?>
                 <ul class="menu-inner py-1">

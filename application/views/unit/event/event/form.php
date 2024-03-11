@@ -3,7 +3,7 @@
         <h5 class="mb-0"><?= $title ? $title : '' ?></h5>
     </div>
     <div class="card-body">
-        <?= form_open_multipart(base_url('admin/event/event/save')) ?>
+        <?= form_open_multipart(base_url('unit/event/event/save')) ?>
         <input type="hidden" name="id" value="<?= @$event->id ?>">
         <div class="mb-3">
             <label class="form-label" for="nama">Nama Event <span class="text-danger">*</span></label>
@@ -29,9 +29,7 @@
                         <select class="js-example-basic-multiple form-select" name="unit_peserta[]" id="unit_peserta" multiple="multiple" required>
                             <option value="">--Pilih--</option>
                             <?php $unit_pesertas = explode(',', @$event->unit_peserta) ?>
-                            <option <?= in_array("PMR MULA", $unit_pesertas) ? 'selected' : '' ?> value="PMR MULA">PMR MULA</option>
-                            <option <?= in_array("PMR MADYA", $unit_pesertas) ? 'selected' : '' ?> value="PMR MADYA">PMR MADYA</option>
-                            <option <?= in_array("PMR WIRA", $unit_pesertas) ? 'selected' : '' ?> value="PMR WIRA">PMR WIRA</option>
+                            <option <?= in_array("PMR", $unit_pesertas) ? 'selected' : '' ?> value="PMR">PMR</option>
                             <option <?= in_array("KSR", $unit_pesertas) ? 'selected' : '' ?> value="KSR">KSR</option>
                             <option <?= in_array("TSR", $unit_pesertas) ? 'selected' : '' ?> value="TSR">TSR</option>
                         </select>
@@ -64,7 +62,7 @@
                     <input type="hidden" class="form-control" value="<?= @$event->foto ?>" name="gambar">
                 </div>
                 <div class="col-md-6">
-                    <img src="<?= base_url('uploads/img/event/admin/' . @$event->foto) ?>" height="200px" alt="">
+                    <img src="<?= base_url('uploads/img/event/unit/' . @$event->foto) ?>" height="200px" alt="">
                 </div>
             </div>
         </div>
@@ -78,7 +76,7 @@
                     <input type="hidden" class="form-control" value="<?= @$event->file_info ?>" name="file_info_name">
                 </div>
                 <div class="col-md-6">
-                    <a href="<?= base_url('uploads/file/event/admin/' . @$event->file_info) ?>" target="_blank" class="text-black">File Informasi : <span class="text-info"><?= @$event->file_info ?></span></a>
+                    <a href="<?= base_url('uploads/file/event/unit/' . @$event->file_info) ?>" target="_blank" class="text-black">File Informasi : <span class="text-info"><?= @$event->file_info ?></span></a>
                 </div>
             </div>
         </div>
@@ -88,7 +86,7 @@
                 <input type="text" name="keterangan" id="keterangan" value="<?= @$event->keterangan ?>" class="form-control">
             </div>
         </div>
-        <a href="<?= base_url() ?>admin/event/event" class="btn btn-secondary">Batal</a>
+        <a href="<?= base_url() ?>unit/event/event" class="btn btn-secondary">Batal</a>
         <button type="submit" class="btn btn-primary">Simpan</button>
         </form>
     </div>
