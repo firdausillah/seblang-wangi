@@ -49,3 +49,5 @@ persyaratan per unit : surat tugas, kordinator/pembina, kontak
 persyaratan per peserta : foto, file persyaratan
 
 unit register masih bisa masuk tapi perlu menghubungi admin untuk verifikasi
+
+is active 2 ganti jadi is approve

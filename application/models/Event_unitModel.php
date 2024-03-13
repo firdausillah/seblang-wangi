@@ -39,4 +39,9 @@
  		$this->db->where($id);
  		return $this->db->delete('event_unit_t');
  	}
+
+	function getUnitTerdaftar($where){
+		$query = $this->db->query('SELECT a.id, a.is_approve, a.event_nama AS nama, a.kordinator_nama, a.is_active, b.foto, b.file_info FROM event_unit_t a LEFT JOIN `event` b ON a.id_event = b.id '. $where);
+		return $query;
+	}
  }

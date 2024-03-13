@@ -11,6 +11,7 @@ class Event extends CI_Controller
         parent::__construct();
         $this->load->model('EventModel', 'defaultModel');
         $this->load->model('Event_pesertaModel');
+        $this->load->model('Event_unitModel');
         $this->load->helper('slug');
         $this->load->helper('upload_file');
 
@@ -58,39 +59,49 @@ class Event extends CI_Controller
             $data = [
                 'title' => 'Detail Data',
                 $this->defaultVariable => $this->defaultModel->findBy(['id' => $id])->row(),
-                'event_peserta' => $this->Event_pesertaModel->findBy(['id_event' => $id, 'is_active != ' => 0])->row(),
+                'unit_peserta' => $this->Event_unitModel->findBy(['id_event' => $id, 'is_active != ' => 0])->result(),
                 'content' => $this->url_index . '/detail'
             ];
+            // print_r($data['unit_peserta']);
+            // exit();
 
             $this->load->view('layout_admin/base', $data);
         }
     }
 
-    public function getById()
+    public function getPeserta()
     {
-        switch ($_GET['is_active']) {
-            case 'AKTIF':
-                $is_active = 1;
-                break;
-            case 'REGISTER':
-                $is_active = 2;
-                break;
-            
-            default:
-                $is_active = 0;
-                break;
-        }
-        $data = [
-                'id_event' => $_GET['id'], 
-                'is_active' => $is_active
+        // print_r($_GET);
+        // exit();
+        if($_GET['id_event_unit']!=null){
+            $data = [
+                    'id_event_unit' => $_GET['id_event_unit'], 
+                    'is_active' => 1
             ];
+            echo json_encode(['data' => $this->Event_pesertaModel->findBy($data)->result_array()]);
+        }else{
+            echo json_encode([]);
+        }
 
-        echo json_encode(['data' => $this->Event_pesertaModel->findBy($data)->result_array()]);
+    }
+
+    public function getUnit()
+    {
+        if($_GET['id_event_unit']!=null){
+            $data = [
+                    'id' => $_GET['id_event_unit'], 
+                    'is_active' => 1
+            ];
+            echo json_encode(['data' => $this->Event_unitModel->findBy($data)->row()]);
+        }else{
+            echo json_encode([]);
+        }
+
     }
 
     public function update_status()
     {
-        // print_r($_POST); exit();
+        print_r($_POST); exit();
         $id = $_POST['id'];
         $is_active = $_POST['is_active'];
 

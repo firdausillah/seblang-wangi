@@ -11,6 +11,7 @@
                     <th>No.</th>
                     <th>Nama Event</th>
                     <th>Periode Pendaftaran</th>
+                    <th>Peserta</th>
                     <th>Keterangan</th>
                     <th>Status</th>
                     <th>Poster</th>
@@ -23,7 +24,14 @@
                         <td><?= $index + 1 ?></td>
                         <td><a href="<?= base_url('admin/event/event?page=detail&id=' . $item->id) ?>" class="text-black"><?= $item->nama ?></a></td>
                         <td><?= ($item->tanggal_buka_pendaftaran == '0000-00-00' ? '' : date('d M Y', strtotime($item->tanggal_buka_pendaftaran))) . ' s/d ' . ($item->tanggal_tutup_pendaftaran == '0000-00-00' ? '' : date('d M Y', strtotime($item->tanggal_tutup_pendaftaran))) ?></td>
-                        <td><?= $item->keterangan ?></td>
+                        <td><?php
+                            $unit_peserta = explode(',', $item->unit_peserta);
+                            // print_r($unit_peserta);
+                            foreach ($unit_peserta as $key => $value) {
+                                echo '<span class="badge bg-label-secondary mx-1">'.$value.'</span>';
+                            }
+                            ?></td>
+                        <td><?= $item->keterangan ?> </td>
                         <td><?= ((date('Y-m-d') >  $item->tanggal_buka_pendaftaran && date('Y-m-d') <  $item->tanggal_tutup_pendaftaran) ? '<span class="btn btn-sm btn-success">Tersedia</span>' : '<span class="btn btn-sm btn-warning">Tidak Tersedia</span>') ?></td>
                         <td>
                             <a href="<?= base_url('uploads/img/event/admin/' . $item->foto) ?>" target="_blank">

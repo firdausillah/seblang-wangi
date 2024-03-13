@@ -82,7 +82,7 @@ class Event_unit extends CI_Controller
         $data = [            
             'id_event'  => $event->id,
             'id_unit'   => $unit->id,
-            'is_active' => 2,
+            'is_active' => 1,
 
             'event_nama'    => $event->nama,
 

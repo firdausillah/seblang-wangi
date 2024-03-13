@@ -143,7 +143,7 @@
                 <div class="mb-3">
                     <label class="form-label" for="nilai_akhir">nilai akhir</label>
                     <div class="input-group input-group-merge">
-                        <input type="number" name="nilai_akhir" id="nilai_akhir" value="<?= @$sertifikat->nilai_akhir ?>" class="form-control" placeholder="Masukan angka. Contoh: 85">
+                        <input type="number" step="any" name="nilai_akhir" id="nilai_akhir" value="<?= @$sertifikat->nilai_akhir ?>" class="form-control" placeholder="Masukan angka. Contoh: 85">
                     </div>
                 </div>
             </div>
@@ -169,7 +169,7 @@
         <div class="mb-3">
             <label class="form-label" for="standart_minimum_kelulusan">standart minimum kelulusan</label>
             <div class="input-group input-group-merge">
-                <input type="number" name="standart_minimum_kelulusan" id="standart_minimum_kelulusan" value="<?= @$sertifikat->standart_minimum_kelulusan ?>" class="form-control" placeholder="Masukan angka. Contoh: 85">
+                <input type="number" step="any" name="standart_minimum_kelulusan" id="standart_minimum_kelulusan" value="<?= @$sertifikat->standart_minimum_kelulusan ?>" class="form-control" placeholder="Masukan angka. Contoh: 85">
             </div>
         </div>
         <div class="mb-3">
