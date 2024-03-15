@@ -1,6 +1,8 @@
 <?php
  class Event_pesertaModel extends CI_Model{
 
+	// id_event_unit di dapat dari id table event unit
+
 	function __construct()
 	{
 		parent::__construct();

@@ -67,7 +67,7 @@
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                        <?php foreach ($unit_peserta as $index => $item) : ?>
+                        <?php foreach ($event_unit as $index => $item) : ?>
                             <tr data-id_event_unit="<?= $item->id ?>">
                                 <td><?= $index + 1 ?></td>
                                 <td><?= $item->unit_nama ?></td>
@@ -289,7 +289,6 @@
         });
         return false;
     }
-
 
     function update_status(id, is_active) {
         Loading.fire({})

@@ -47,10 +47,12 @@ class Pengajuan extends CI_Controller
             
         } else if ($page == 'detail') {
             $id = (isset($_GET['id']) ? $_GET['id'] : '');
+            $event_unit = $this->Event_unitModel->findBy(['id' => $id, 'is_active != ' => 0])->row();
             $data = [
                 'title' => 'Detail Data',
-                $this->defaultVariable => $this->defaultModel->findBy(['id' => $id])->row(),
-                'event_unit' => $this->Event_unitModel->findBy(['id_event' => $id, 'is_active != ' => 0])->row(),
+                $this->defaultVariable => $this->defaultModel->findBy(['id' => $event_unit->id_event])->row(),
+                'event_unit' => $event_unit,
+                'event_peserta' => $this->Event_pesertaModel->findBy(['id_event_unit' => $event_unit->id])->result(),
                 'content' => $this->url_index . '/detail'
             ];
 
@@ -106,37 +108,6 @@ class Pengajuan extends CI_Controller
             'is_active' => 1,
             'foto'  => $foto,
             'keterangan'  => $this->input->post('keterangan'),
-            'tanggal'  => $this->input->post('tanggal'),
-            'jalan'  => $this->input->post('jalan'),
-            'alamat'  => $this->input->post('alamat'),
-            'kab_kota'  => $this->input->post('kab_kota'),
-            'provinsi'  => $this->input->post('provinsi'),
-            'kejadian'  => $this->input->post('kejadian'),
-            'kegiatan'  => $this->input->post('kegiatan'),
-            'jumlah_terdampak_kk'  => $this->input->post('jumlah_terdampak_kk'),
-            'jumlah_terdampak_jiwa'  => $this->input->post('jumlah_terdampak_jiwa'),
-            'jumlah_mengungsi_jiwa'  => $this->input->post('jumlah_mengungsi_jiwa'),
-            'jumlah_luka_ringan'  => $this->input->post('jumlah_luka_ringan'),
-            'jumlah_luka_berat'  => $this->input->post('jumlah_luka_berat'),
-            'jumlah_meninggal'  => $this->input->post('jumlah_meninggal'),
-            'jumlah_hilang'  => $this->input->post('jumlah_hilang'),
-            'jumlah_rumah_rusak_berat'  => $this->input->post('jumlah_rumah_rusak_berat'),
-            'jumlah_rumah_rusak_sedang'  => $this->input->post('jumlah_rumah_rusak_sedang'),
-            'jumlah_rumah_rusak_ringan'  => $this->input->post('jumlah_rumah_rusak_ringan'),
-            'jumlah_jalan_rusak'  => $this->input->post('jumlah_jalan_rusak'),
-            'jumlah_jembatan'  => $this->input->post('jumlah_jembatan'),
-            'jumlah_faskes'  => $this->input->post('jumlah_faskes'),
-            'jumlah_fasilitas_pendidikan'  => $this->input->post('jumlah_fasilitas_pendidikan'),
-            'jumlah_tempat_ibadah'  => $this->input->post('jumlah_tempat_ibadah'),
-            'jumlah_fasilitas_umum'  => $this->input->post('jumlah_fasilitas_umum'),
-            'akses_telepon_internet'  => $this->input->post('akses_telepon_internet'),
-            'akses_listrik'  => $this->input->post('akses_listrik'),
-            'akses_air_bersih'  => $this->input->post('akses_air_bersih'),
-            'food_item'  => $this->input->post('food_item'),
-            'non_food_item'  => $this->input->post('non_food_item'),
-            'jumlah_penerima_manfaat'  => $this->input->post('jumlah_penerima_manfaat'),
-            'jumlah_laki_laki'  => $this->input->post('jumlah_laki_laki'),
-            'jumlah_perempuan'  => $this->input->post('jumlah_perempuan')
         ];
 
         if (empty($id)) {

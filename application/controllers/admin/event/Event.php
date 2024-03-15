@@ -59,7 +59,7 @@ class Event extends CI_Controller
             $data = [
                 'title' => 'Detail Data',
                 $this->defaultVariable => $this->defaultModel->findBy(['id' => $id])->row(),
-                'unit_peserta' => $this->Event_unitModel->findBy(['id_event' => $id, 'is_active != ' => 0])->result(),
+                'event_unit' => $this->Event_unitModel->findBy(['id_event' => $id, 'is_active != ' => 0])->result(),
                 'content' => $this->url_index . '/detail'
             ];
             // print_r($data['unit_peserta']);
