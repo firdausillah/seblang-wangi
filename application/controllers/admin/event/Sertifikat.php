@@ -78,18 +78,18 @@ class sertifikat extends CI_Controller
     public function save()
     {
         $id = $this->input->post('id');
-        if (!$this->input->post('file')) {
-            $slug = slugify($this->input->post('pelatihan_nama'). '-' .$this->input->post('nama'));
+        if (!$this->input->post('file_name')) {
+            $slug = slugify('Sertifikat'.'-'.$this->input->post('pelatihan_nama'). '-' .$this->input->post('nama'));
         } else {
-            $slug = explode('.', $this->input->post('file'))[0];
+            $slug = explode('.', $this->input->post('file_name'))[0];
         }
 
         $file_pdf = $_FILES['file'];
         $folderPath_file = './uploads/file/' . $this->defaultVariable . `/`;
-        $file_name = ($this->input->post('file_name') ? $this->input->post('file_name') : $slug);
+        $file = ($this->input->post('file_name') ? $this->input->post('file_name') : $slug);
 
         if ($file_pdf['name']) {
-            $file_name = $this->save_file(
+            $file = $this->save_file(
                 $file_pdf,
                 $slug,
                 $folderPath_file
@@ -112,7 +112,7 @@ class sertifikat extends CI_Controller
             'kegiatan_tempat'  => $this->input->post('kegiatan_tempat'),
             'kegiatan_tanggal'  => $this->input->post('kegiatan_tanggal'),
             'standart_minimum_kelulusan'  => $this->input->post('standart_minimum_kelulusan'),
-            'file'  => $file_name
+            'file'  => $file
         ];
 
         if (empty($id)) {

@@ -57,39 +57,41 @@
                 <h5 class="mb-0"><?= $title ? $title : '' ?></h5>
             </div>
             <div class="card-body">
-                <?= form_open_multipart(base_url('unit/event/event/save')) ?>
-                <input type="hidden" name="id" value="<?= @$event_unit->id ?>">
-                <div class="mb-3">
-                    <div class="row">
-                        <label class="form-label" for="">Status pendaftaran</label>
+                <?= form_open_multipart(base_url('unit/event/pengajuan/save_unit')) ?>
+                    <input type="hidden" name="id" value="<?= @$event_unit->id ?>">
+                    <input type="hidden" name="event_nama" value="<?= @$event_unit->event_nama ?>">
+                    <input type="hidden" name="unit_nama" value="<?= @$event_unit->unit_nama ?>">
+                    <div class="mb-3">
+                        <div class="row">
+                            <label class="form-label" for="">Status pendaftaran</label>
+                        </div>
+                        <div class="row">
+                            <?= (@$event_unit->is_approve == 1 ? '<span class="alert alert-success">Disetujui</span>' : '<span class="alert alert-warning">Pendaftaran sedang diperiksa, silahkan hubungi Admin untuk informasi lebih lanjut</span>') ?>
+                        </div>
                     </div>
-                    <div class="row">
-                        <?= ($event_unit->is_approve == 1 ? '<span class="alert alert-success">Disetujui</span>' : '<span class="alert alert-warning">Pendaftaran sedang diperiksa, silahkan hubungi Admin untuk informasi lebih lanjut</span>') ?>
+                    <div class="mb-3">
+                        <label class="form-label" for="">Tanggal Daftar <span class="text-danger">*</span></label>
+                        <input type="input" class="form-control" value="<?= date('d M Y', strtotime(@$event_unit->created_on)) ?>" disabled>
                     </div>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label" for="">Tanggal Daftar <span class="text-danger">*</span></label>
-                    <input type="input" class="form-control" value="<?= date('d M Y', strtotime($event_unit->created_on)) ?>" disabled>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label" for="kordinator_nama">Nama Kordinator <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" name="kordinator_nama" id="kordinator_nama" value="<?= @$event_unit->kordinator_nama ?>">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label" for="kontak">kontak <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" name="kontak" id="kontak" value="<?= @$event_unit->kontak ?>">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label" for="file_surat_tugas">File Informasi</label>
-                    <div class="input-group input-group-merge">
-                        <input class="form-control file_surat_tugas" type="file" name="file_surat_tugas">
+                    <div class="mb-3">
+                        <label class="form-label" for="kordinator_nama">Nama Kordinator <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" name="kordinator_nama" id="kordinator_nama" value="<?= @$event_unit->kordinator_nama ?>">
                     </div>
-                    <input type="hidden" class="form-control" value="<?= @$event_unit->file_surat_tugas ?>" name="file_surat_tugas_name">
-                </div>
-                <div class="mb-3">
-                    <a href="<?= base_url('uploads/file/event/unit/' . @$event_unit->file_surat_tugas) ?>" target="_blank" class="text-black">File Informasi : <span class="text-info"><?= @$event_unit->file_surat_tugas ?></span></a>
-                </div>
-                <button type="submit" class="btn btn-primary">Simpan</button>
+                    <div class="mb-3">
+                        <label class="form-label" for="kontak">kontak <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" name="kontak" id="kontak" value="<?= @$event_unit->kontak ?>">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="file">File Surat Tugas</label>
+                        <div class="input-group input-group-merge">
+                            <input class="form-control file" type="file" name="file">
+                        </div>
+                        <input type="hidden" class="form-control" value="<?= @$event_unit->file_surat_tugas ?>" name="file_name">
+                    </div>
+                    <div class="mb-3">
+                        <a href="<?= base_url('uploads/file/event/unit/' . @$event_unit->file_surat_tugas) ?>" target="_blank" class="text-black">File Surat Tugas : <span class="text-info"><?= @$event_unit->file_surat_tugas ?></span></a>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
                 </form>
             </div>
         </div>
@@ -106,7 +108,7 @@
     </div>
     <div class="table-responsive text-nowrap mt-2">
         <div class="table-responsive text-nowrap mt-2">
-            <table id="datatables_table1" class="table table-hover">
+            <table id="datatables_table" class="table table-hover">
                 <thead>
                     <tr>
                         <th>No.</th>

@@ -179,6 +179,7 @@
                     <div class="input-group input-group-merge">
                         <input class="form-control file" type="file" name="file">
                     </div>
+                    <input type="hidden" class="form-control foto" type="input" name="file_pdf" id="file_pdf">
                     <input type="hidden" class="form-control" value="<?= @$sertifikat->file ?>" name="file_name">
                 </div>
                 <div class="col-md-6">

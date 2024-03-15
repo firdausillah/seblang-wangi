@@ -24,11 +24,6 @@ class Pengajuan extends CI_Controller
 
     public function index()
     {
-
-        // print_r();
-        // print_r($this->Event_unitModel->last_query());
-        // exit();
-
         $page = (isset($_GET['page']) ? $_GET['page'] : 'index');
         $unit = $this->UnitModel->findBy(['id' => $_SESSION['id']])->row();
         $unit_peserta = $unit->jenis . ' ' . $unit->kategori; 
@@ -80,6 +75,73 @@ class Pengajuan extends CI_Controller
         ];
 
         echo json_encode(['data' => $this->Event_pesertaModel->findBy($data)->result_array()]);
+    }
+
+    public function save_file($file, $slug, $folderPath)
+    {
+        if (!empty($file)) { // $_FILES untuk mengambil data file
+            $cfg = [
+                'upload_path' => $folderPath,
+                'allowed_types' => 'pdf',
+                'file_name' => $slug,
+                'overwrite' => (empty($file) ? FALSE : TRUE),
+                // 'max_size' => '2028',
+            ];
+            $this->load->library('upload', $cfg);
+
+            if ($this->upload->do_upload('file')) {
+                return $file_name = $this->upload->data('file_name');
+            } else {
+                exit('Error : ' . $this->upload->display_errors());
+            }
+        }
+    }
+
+    public function save_unit()
+    {
+        $id = $this->input->post('id');
+        if (!$this->input->post('file_name')) {
+            $slug = slugify('surat tugas'.'-'.$this->input->post('event_nama') . '-' . $this->input->post('unit_nama'));
+        } else {
+            $slug = explode('.', $this->input->post('file_name'))[0];
+        }
+        
+        $file_pdf = $_FILES['file'];
+        $folderPath_file = './uploads/file/' . $this->defaultVariable . '/unit/';
+        $file = ($this->input->post('file_name') ? $this->input->post('file_name') : $slug);
+        // print_r($folderPath_file);
+        // exit();
+        
+        if ($file_pdf['name']) {
+            $file = $this->save_file(
+                $file_pdf,
+                $slug,
+                $folderPath_file
+                // return $file -> nama file
+            );
+        }
+
+        $data = [
+            'is_active' => 1,
+            'kordinator_nama'  => $this->input->post('kordinator_nama'),
+            'kontak'  => $this->input->post('kontak'),
+            'file_surat_tugas'  => $file
+        ];
+
+        if (empty($id)) {
+            unset($id);
+            if ($this->Event_unitModel->add($data)) {
+                $this->session->set_flashdata(['status' => 'success', 'message' => 'Data berhasil dimasukan']);
+                redirect(base_url('unit/event/pengajuan?page=detail&id='.$id));
+            }
+            exit($this->session->set_flashdata(['status' => 'error', 'message' => 'Oops! Terjadi kesalahan']));
+        } else {
+            if ($this->Event_unitModel->update(['id' => $id], $data)) {
+                $this->session->set_flashdata(['status' => 'success', 'message' => 'Data berhasil diupdate']);
+                redirect(base_url('unit/event/pengajuan?page=detail&id='.$id));
+            }
+            exit($this->session->set_flashdata(['status' => 'error', 'message' => 'Oops! Terjadi kesalahan']));
+        }
     }
 
     public function save()
