@@ -141,10 +141,10 @@ class Unit extends CI_Controller
 
         $file_pdf = $_FILES['sk'];
         $folderPath = './uploads/file/' . $this->defaultVariable . '/';
-        $file_name = ($this->input->post('file_sk') ? $this->input->post('file_sk') : $slug);
+        $file = ($this->input->post('file_sk') ? $this->input->post('file_sk') : $slug);
 
         if ($file_pdf['name']) {
-            $file_name = $this->save_file(
+            $file = $this->save_file(
                 $file_pdf,
                 $slug,
                 $folderPath
@@ -160,7 +160,7 @@ class Unit extends CI_Controller
             'email'  => $this->input->post('email'),
             'telepon'  => $this->input->post('telepon'),
             'alamat'  => $this->input->post('alamat'),
-            'sk'  => $file_name
+            'sk'  => $file
         ];
 
         if (empty($id)) {
