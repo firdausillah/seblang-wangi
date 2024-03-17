@@ -20,8 +20,20 @@
  		return $this->db->get('relawan');
  	}
 
- 	function findBy($id){
+ 	function findBy($id, $order = ''){
+		// print_r($id);
+		// print_r($order);
+		// exit();
  		$this->db->where($id);
+		$this->db->order_by($order);
+ 		return $this->db->get('relawan');
+ 	}
+
+ 	function relawanPeserta($id, $order = '', $not_in = ''){
+		// untuk option peserta event di menu even->pengajuan (menampilkan relawan selain yang sudah diinput)
+ 		$this->db->where($id);
+		$this->db->order_by($order);
+		$this->db->where_not_in('id', $not_in);
  		return $this->db->get('relawan');
  	}
 

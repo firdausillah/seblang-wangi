@@ -26,6 +26,7 @@ $(document).ready(function () {
   // }
 
   $('.js-example-basic-multiple').select2();
+  $('.js-example-basic-single').select2();
 });
 
 const flashData = $('.flash-data').data('flashdata');

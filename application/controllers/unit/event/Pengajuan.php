@@ -10,9 +10,10 @@ class Pengajuan extends CI_Controller
     {
         parent::__construct();
         $this->load->model('EventModel', 'defaultModel');
-        $this->load->model('UnitModel');
         $this->load->model('Event_pesertaModel');
         $this->load->model('Event_unitModel');
+        $this->load->model('UnitModel');
+        $this->load->model('RelawanModel');
         $this->load->helper('slug');
         $this->load->helper('upload_file');
 
@@ -43,38 +44,29 @@ class Pengajuan extends CI_Controller
         } else if ($page == 'detail') {
             $id = (isset($_GET['id']) ? $_GET['id'] : '');
             $event_unit = $this->Event_unitModel->findBy(['id' => $id, 'is_active != ' => 0])->row();
+            $event_peserta = $this->Event_pesertaModel->findBy(['id_event_unit' => $event_unit->id])->result();
+            foreach ($event_peserta as $key => $value) {
+                $id_relawan[] = $value->id_relawan;
+            }
+            
             $data = [
                 'title' => 'Detail Data',
-                $this->defaultVariable => $this->defaultModel->findBy(['id' => $event_unit->id_event])->row(),
+                'event' => $this->defaultModel->findBy(['id' => $event_unit->id_event])->row(),
                 'event_unit' => $event_unit,
-                'event_peserta' => $this->Event_pesertaModel->findBy(['id_event_unit' => $event_unit->id])->result(),
-                'content' => $this->url_index . '/detail'
+                'event_peserta' => $event_peserta,
+                'relawan' => $this->RelawanModel->relawanPeserta(['id_unit' => $event_unit->id_unit],'nama ASC', $id_relawan)->result(),
+                'content' => $this->url_index . '/detail',
+                'cropper' => 'components/cropper',
+                'aspect' => '3/4'
             ];
-
             $this->load->view('layout_admin/base', $data);
         }
     }
 
-    public function getById()
+    public function getUnitPeserta()
     {
-        switch ($_GET['is_active']) {
-            case 'AKTIF':
-                $is_active = 1;
-                break;
-            case 'REGISTER':
-                $is_active = 2;
-                break;
 
-            default:
-                $is_active = 0;
-                break;
-        }
-        $data = [
-            'id_event' => $_GET['id'],
-            'is_active' => $is_active
-        ];
-
-        echo json_encode(['data' => $this->Event_pesertaModel->findBy($data)->result_array()]);
+        echo json_encode(['data' => $this->Event_pesertaModel->findBy(['id' => $_GET['id_peserta']])->row()]);
     }
 
     public function save_file($file, $slug, $folderPath)
@@ -139,6 +131,88 @@ class Pengajuan extends CI_Controller
             if ($this->Event_unitModel->update(['id' => $id], $data)) {
                 $this->session->set_flashdata(['status' => 'success', 'message' => 'Data berhasil diupdate']);
                 redirect(base_url('unit/event/pengajuan?page=detail&id='.$id));
+            }
+            exit($this->session->set_flashdata(['status' => 'error', 'message' => 'Oops! Terjadi kesalahan']));
+        }
+    }
+
+    public function save_peserta()
+    {
+
+        $id = $this->input->post('id');
+        $relawan_data = $this->RelawanModel->findBy(['id' => $this->input->post('id_relawan')])->row();
+        $event_data = $this->Event_unitModel->findBy(['id' => $this->input->post('id_event_unit')])->row();
+
+        // begin upload pdf
+            if (!$this->input->post('file_name')) {
+                $slug = slugify('File Persyaratan'.'-'. $relawan_data->nama . '-' . $this->input->post('unit_nama'));
+            } else {
+                $slug = explode('.', $this->input->post('file_name'))[0];
+            }
+            
+            $file_pdf = $_FILES['file'];
+            $folderPath_file = './uploads/file/' . $this->defaultVariable . '/peserta/';
+            $file = ($this->input->post('file_name') ? $this->input->post('file_name') : $slug);
+
+            if ($file_pdf['name']) {
+                $file = $this->save_file(
+                    $file_pdf,
+                    $slug,
+                    $folderPath_file
+                    // return $file -> nama file
+                );
+            }
+        // end upload pdf
+
+        // begin upload foto
+        if (!$this->input->post('gambar')) {
+            $slug = slugify('foto'.'-'. $relawan_data->nama . '-' . $this->input->post('unit_nama'));
+        } else {
+            $slug = explode('.', $this->input->post('gambar'))[0];
+        }
+
+        $file_foto = $this->input->post('file_foto');
+        $folderPath = './uploads/img/' . $this->defaultVariable . '/peserta/';
+        $foto = ($this->input->post('gambar') ? $this->input->post('gambar') : $slug); //jika upload berhasil akan di replace oleh function save_foto()
+
+        if ($file_foto) {
+            $foto = save_foto(
+                $file_foto,
+                $slug,
+                $folderPath
+                // return $foto -> nama foto
+            );
+        }
+        // end upload foto
+
+        $data = [
+            'is_active' => 1,
+            'id_relawan'    =>  $this->input->post('id_relawan'),
+            'id_unit'   =>  $relawan_data->id_unit,
+            'id_event_unit' =>  $this->input->post('id_event_unit'),
+
+            'relawan_kode'  =>  $relawan_data->kode,
+            'relawan_nama'  =>  $relawan_data->nama,
+
+            'unit_nama' =>  $relawan_data->unit_nama,
+            'unit_kategori' =>  $relawan_data->unit_kategori,
+            'unit_jenis'    =>  $relawan_data->unit_jenis,
+
+            'file_persyaratan'  => $file,
+            'foto'  => $foto
+        ];
+
+        if (empty($id)) {
+            unset($id);
+            if ($this->Event_pesertaModel->add($data)) {
+                $this->session->set_flashdata(['status' => 'success', 'message' => 'Data berhasil dimasukan']);
+                redirect(base_url('unit/event/pengajuan?page=detail&id='.$this->input->post('id_event_unit')));
+            }
+            exit($this->session->set_flashdata(['status' => 'error', 'message' => 'Oops! Terjadi kesalahan']));
+        } else {
+            if ($this->Event_pesertaModel->update(['id' => $id], $data)) {
+                $this->session->set_flashdata(['status' => 'success', 'message' => 'Data berhasil diupdate']);
+                redirect(base_url('unit/event/pengajuan?page=detail&id='.$this->input->post('id_event_unit')));
             }
             exit($this->session->set_flashdata(['status' => 'error', 'message' => 'Oops! Terjadi kesalahan']));
         }

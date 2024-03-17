@@ -96,19 +96,35 @@ class Event extends CI_Controller
         }else{
             echo json_encode([]);
         }
-
     }
 
-    public function update_status()
+    public function update_status_event_unit()
     {
-        print_r($_POST); exit();
-        $id = $_POST['id'];
-        $is_active = $_POST['is_active'];
-
-        if ($this->Event_pesertaModel->update(['id' => $id], ['is_active' => $is_active])) {
+        if ($this->Event_unitModel->update(['id' => $_POST['id']], ['is_approve' => $_POST['is_approve']])) {
             echo json_encode(['status' => 'success', 'message' => 'Data berhasil diupdate']);
         } else {
             echo json_encode(['status' => 'error', 'message' => 'Oops! Terjadi kesalahan']);
+        }
+    }
+
+    public function update_status_event_peserta()
+    {
+        if ($this->Event_pesertaModel->update(['id' => $_POST['id']], ['is_approve' => $_POST['is_approve']])) {
+            echo json_encode(['status' => 'success', 'message' => 'Data berhasil diupdate']);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Oops! Terjadi kesalahan']);
+        }
+    }
+
+    public function update_catatan()
+    {
+        // print_r($_POST); exit();
+        if ($this->Event_unitModel->update(['id' => $_POST['id_event_unit']], ['keterangan' => $_POST['event_peserta_keterangan']])) {
+            echo json_encode(['status' => 'success', 'message' => 'Data berhasil diupdate']);
+            // redirect(base_url('admin/event/event?page=detail&id='.$_POST['id_event']));
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Oops! Terjadi kesalahan']);
+            // redirect(base_url('admin/event/event?page=detail&id='.$_POST['id_event']));
         }
     }
 
@@ -154,7 +170,7 @@ class Event extends CI_Controller
         }
 
         $file_foto = $this->input->post('file_foto');
-        $folderPath = './uploads/img/' . $this->defaultVariable . `/admin/`;
+        $folderPath = './uploads/img/' . $this->defaultVariable . '/admin/';
         $foto = ($this->input->post('gambar') ? $this->input->post('gambar') : $slug); //jika upload berhasil akan di replace oleh function save_foto()
 
         if ($file_foto) {
@@ -167,7 +183,7 @@ class Event extends CI_Controller
         }
 
         $file_pdf = (isset($_FILES['file_info'])? $_FILES['file_info']: $file_pdf['name'] = false);
-        $folderPath_file = './uploads/file/' . $this->defaultVariable . `/admin/`;
+        $folderPath_file = './uploads/file/' . $this->defaultVariable . '/admin/';
         $file_name = ($this->input->post('file_info_name') ? $this->input->post('file_info_name') : $slug);
 
         // print_r(!isset($file_pdf['name'])); exit();

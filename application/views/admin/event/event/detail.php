@@ -155,9 +155,16 @@
                             <td id="file_surat_tugas"></td>
                         </tr>
                         <tr>
-                            <td>Keterangan</td>
+                            <td>Catatan</td>
                             <td>:</td>
-                            <td></td>
+                            <td>
+                                <div class="input-group input-group-merge mb-2">
+                                    <input type="text" name="keterangan" id="event_peserta_keterangan" value="" class="form-control">
+                                </div>
+                                <input type="hidden" id="id_event_unit" value="" class="form-control">
+                                <button type="submit" id="btn_save_catatan" onclick="update_catatan()" class="btn btn-sm btn-primary disabled">Simpan Catatan</button>
+
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -177,32 +184,31 @@
                     visible: false
                 },
                 {
-                    data: 'is_active',
+                    data: 'is_approve',
                     render: function(data, type, row) {
                         var id = row.id;
                         var bg = '';
-                        var is_active = '';
+                        var is_approve = '';
 
                         if (data == 1) {
                             bg = 'success';
-                            is_active = 'Aktif';
-                        } else if (data == 2) {
+                            is_approve = 'Disetujui';
+                        } else if (data == 0) {
                             bg = 'warning';
-                            is_active = 'Registrasi';
+                            is_approve = 'Diperiksa';
                         } else {
                             bg = 'danger';
-                            is_active = 'Nonaktif';
+                            is_approve = 'Nonaktif';
                         }
 
                         if (data != '') {
                             return `<div class='btn-group'>
                                         <button type='button' class='btn btn-sm btn-` + bg + ` dropdown-toggle' data-bs-toggle='dropdown' aria-expanded='true'>
-                                            ` + is_active + `
+                                            ` + is_approve + `
                                         </button>
                                         <ul class='dropdown-menu' style='position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(0px, 39.5px, 0px);' data-popper-placement='bottom-start'>
-                                            <li><a class='dropdown-item' href='javascript:void(0);' onClick='update_status(` + id + `,1)'>Aktif</a></li>
-                                            <li><a class='dropdown-item' href='javascript:void(0);' onClick='update_status(` + id + `,0)'>Nonaktif</a></li>
-                                            <li><a class='dropdown-item' href='javascript:void(0);' onClick='update_status(` + id + `,2)'>Registrasi</a></li>
+                                            <li><a class='dropdown-item' href='javascript:void(0);' onClick='update_status_event_peserta(` + id + `,1)'>Disetujui</a></li>
+                                            <li><a class='dropdown-item' href='javascript:void(0);' onClick='update_status_event_peserta(` + id + `,0)'>Diperiksa</a></li>
                                         </ul>
                                     </div>`;
                         } else {
@@ -248,29 +254,28 @@
 
                     var id = json.data.id;
                     var bg = '';
-                    var is_active = '';
+                    var is_approve = '';
 
                     if (json.data.is_approve == 1) {
                         bg = 'success';
-                        is_active = 'Disetujui';
+                        is_approve = 'Disetujui';
                     } else if (json.data.is_approve == 0) {
                         bg = 'warning';
-                        is_active = 'Diperiksa';
+                        is_approve = 'Diperiksa';
                     } else {
                         bg = 'danger';
-                        is_active = 'Nonaktif';
+                        is_approve = 'Nonaktif';
                     }
 
                     $('#unit_nama').html(json.data.unit_nama);
                     $('#is_approve').html(
                         `<div class='btn-group'>
                             <button type='button' class='btn btn-sm btn-` + bg + ` dropdown-toggle' data-bs-toggle='dropdown' aria-expanded='true'>
-                                ` + is_active + `
+                                ` + is_approve + `
                             </button>
                             <ul class='dropdown-menu' style='position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(0px, 39.5px, 0px);' data-popper-placement='bottom-start'>
-                                <li><a class='dropdown-item' href='javascript:void(0);' onClick='update_status(` + id + `,1)'>Aktif</a></li>
-                                <li><a class='dropdown-item' href='javascript:void(0);' onClick='update_status(` + id + `,0)'>Nonaktif</a></li>
-                                <li><a class='dropdown-item' href='javascript:void(0);' onClick='update_status(` + id + `,2)'>Registrasi</a></li>
+                                <li><a class='dropdown-item' href='javascript:void(0);' onClick='update_status_event_unit(` + id + `,1)'>Disetujui</a></li>
+                                <li><a class='dropdown-item' href='javascript:void(0);' onClick='update_status_event_unit(` + id + `,0)'>Diperiksa</a></li>
                             </ul>
                         </div>`
                     );
@@ -278,7 +283,14 @@
                     $('#kontak').html(json.data.kontak);
                     $('#unit_jenis').html(json.data.unit_jenis + ' ' + json.data.unit_kategori);
                     $('#created_on').html(json.data.created_on);
+                    $('#event_peserta_keterangan').val(json.data.keterangan);
                     $('#file_surat_tugas').html(`<a href="<?= base_url('uploads/file/event/admin/') ?>${json.data.file_surat_tugas}" target="_blank" class="text-black"><span class="text-info">${json.data.file_surat_tugas}</span></a>`);
+                    $('#id_event_unit').val(id);
+
+                    // catatan
+                    $('#btn_save_catatan').removeClass('disabled');
+                    let url = "<?= base_url('admin/event/event/save_catatan/') ?>";
+                    $('#catata_form').attr('action', url + id);
                 }
             }
         });
@@ -290,15 +302,15 @@
         return false;
     }
 
-    function update_status(id, is_active) {
+    function update_status_event_peserta(id, is_approve) {
         Loading.fire({})
         $.ajax({
-            url: '<?= base_url('admin/event/event/update_status') ?>',
+            url: '<?= base_url('admin/event/event/update_status_event_peserta') ?>',
             type: 'POST',
             dataType: 'json',
             data: {
                 id: id,
-                is_active: is_active
+                is_approve: is_approve
             },
             success: function(json) {
                 dataTable.ajax.reload(function() {
@@ -312,6 +324,59 @@
             error: function(xhr, status, error) {
                 console.error('Error:', status, error);
                 dataTable.ajax.reload();
+            }
+        });
+    }
+
+    function update_status_event_unit(id, is_approve) {
+        Loading.fire({})
+        $.ajax({
+            url: '<?= base_url('admin/event/event/update_status_event_unit') ?>',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                id: id,
+                is_approve: is_approve
+            },
+            success: function(json) {
+                Swal.close();
+                Toast.fire({
+                    icon: json.status,
+                    title: json.message
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('Error:', status, error);
+                dataTable.ajax.reload();
+            }
+        });
+    }
+
+    function update_catatan() {
+        let event_peserta_keterangan = $('#event_peserta_keterangan').val();
+        let id_event_unit = $('#id_event_unit').val();
+
+        Loading.fire({})
+        $.ajax({
+            url: '<?= base_url('admin/event/event/update_catatan') ?>',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                event_peserta_keterangan: event_peserta_keterangan,
+                id_event_unit: id_event_unit
+            },
+            success: function(json) {
+                Swal.close();
+                Toast.fire({
+                    icon: json.status,
+                    title: json.message
+                });
+
+                event_peserta_keterangan = '';
+                id_event_unit = '';
+            },
+            error: function(xhr, status, error) {
+                console.error('Error:', status, error);
             }
         });
     }
