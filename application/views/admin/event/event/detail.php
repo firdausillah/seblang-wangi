@@ -57,7 +57,7 @@
                 <h5 class="my-auto"><?= $title ? $title : '' ?></h5>
             </div>
             <div class="table-responsive text-nowrap mt-2">
-                <table id="datatables_table" class="table table-hover">
+                <table id="datatables_table_event_unit" class="table table-hover">
                     <thead>
                         <tr>
                             <th>No.</th>
@@ -66,7 +66,7 @@
                             <th>Tanggal Daftar</th>
                         </tr>
                     </thead>
-                    <tbody class="table-border-bottom-0">
+                    <!-- <tbody class="table-border-bottom-0">
                         <?php foreach ($event_unit as $index => $item) : ?>
                             <tr data-id_event_unit="<?= $item->id ?>">
                                 <td><?= $index + 1 ?></td>
@@ -75,7 +75,7 @@
                                 <td><?= date('d M Y', strtotime($item->created_on)) ?></td>
                             </tr>
                         <?php endforeach ?>
-                    </tbody>
+                    </tbody> -->
                 </table>
             </div>
         </div>
@@ -106,10 +106,12 @@
                     <thead>
                         <tr>
                             <th>No.</th>
-                            <th>Status</th>
+                            <th>Status Pendaftaran</th>
                             <th>Nama</th>
-                            <th>Nama Unit</th>
-                            <th>Actions</th>
+                            <th>File Persyaratan</th>
+                            <th>Foto</th>
+                            <th>Catatan</th>
+                            <!-- <th>Actions</th> -->
                         </tr>
                     </thead>
                 </table>
@@ -220,10 +222,23 @@
                     data: 'relawan_nama'
                 },
                 {
-                    data: 'unit_nama'
+                    data: 'file_persyaratan',
+                    render: function(data, type, row) {
+                        return '<a href="<?= base_url('uploads/file/event/peserta/') ?>' + data + '" target="_blank" class="text-black"><span class="text-info">' + data + '</span></a>'
+                    }
                 },
                 {
-                    data: 'unit_nama'
+                    data: 'foto',
+                    render: function(data, type, row) {
+                        return `
+                                <a href="<?= base_url('uploads/img/event/peserta/') ?>`+data+`" target="_blank">
+                                    <img src="<?= base_url('uploads/img/event/peserta/') ?>`+data+`" height="100px" alt="">
+                                </a>
+                            `
+                    }
+                },
+                {
+                    data: 'keterangan'
                 }
             ],
             columnDefs: [{
@@ -233,7 +248,41 @@
             }]
         });
 
-        $('#datatables_table').on('click', 'tbody tr', function(event) {
+        datatables_table_event_unit = $('#datatables_table_event_unit').DataTable({
+            responsive: true,
+            ajax: '<?= base_url('admin/event/event/getUnitArray?id_event=' . @$event->id) ?>',
+            columns: [{
+                    data: 'id',
+                    visible: false
+                },
+                {
+                    data: 'unit_nama'
+                },
+                {
+                    data: 'is_approve',
+                    render: function(data, type, row) {
+                        if (data == 1) {
+                            return '<span class="badge bg-label-success">Disetujui</span>';
+                        } else {
+                            return '<span class="badge bg-label-warning">Diperiksa</span>';
+                        }
+                    }
+                },
+                {
+                    data: 'created_on'
+                }
+            ],
+            columnDefs: [{
+                orderable: false,
+                className: 'select-checkbox',
+                targets: 0
+            }],
+            rowCallback: function(row, data) {
+                $(row).attr('data-id_event_unit', data.id);
+            }
+        });
+
+        $('#datatables_table_event_unit').on('click', 'tbody tr', function(event) {
             $(this).addClass('table-active').siblings().removeClass('table-active');
             // console.log();
             let id_event_unit = $(this).attr('data-id_event_unit');
@@ -329,7 +378,7 @@
     }
 
     function update_status_event_unit(id, is_approve) {
-        Loading.fire({})
+        // Loading.fire({})
         $.ajax({
             url: '<?= base_url('admin/event/event/update_status_event_unit') ?>',
             type: 'POST',
@@ -339,11 +388,13 @@
                 is_approve: is_approve
             },
             success: function(json) {
-                Swal.close();
+                // Swal.close();
                 Toast.fire({
                     icon: json.status,
                     title: json.message
                 });
+                ambil_data(id);
+                datatables_table_event_unit.ajax.reload(null, false);
             },
             error: function(xhr, status, error) {
                 console.error('Error:', status, error);

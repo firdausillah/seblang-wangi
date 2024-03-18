@@ -79,7 +79,7 @@
               <div class="app-brand justify-content-center">
                 <a href="index.html" class="d-flex flex-column gap-2">
                   <span class=" d-flex justify-content-center">
-                    <img src="https://ifoxsoft.com/wp-content/uploads/2022/11/PMI-Logo-Vector-PNG-%E2%80%93-IfoxSoft.Com_.webp" width="60">
+                    <img src="<?=base_url('assets/img/logo-pmi.png')?>" width="60">
                   </span>
                   <span class="app-brand-text fs-4 text-body fw-bolder">SEBLANG WANGI</span>
                 </a>

@@ -85,6 +85,19 @@ class Event extends CI_Controller
 
     }
 
+    public function getUnitArray()
+    {
+        if($_GET['id_event']!=null){
+            $data = [
+                    'id_event' => $_GET['id_event'], 
+                    'is_active' => 1
+            ];
+            echo json_encode(['data' => $this->Event_unitModel->findBy($data)->result()]);
+        }else{
+            echo json_encode([]);
+        }
+    }
+
     public function getUnit()
     {
         if($_GET['id_event_unit']!=null){
