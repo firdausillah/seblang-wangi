@@ -42,6 +42,14 @@
                                 <td>:</td>
                                 <td><?= @$event->keterangan ?></td>
                             </tr>
+                            <tr>
+                                <td>Print ID Card</td>
+                                <td>:</td>
+                                <td>
+                                    <a href="<?= base_url('admin/event/cetak/id_card_event_unit/' . @$event_unit->id) ?>" target="_blank" class="btn btn-sm <?= @$event_unit->is_approve ==1?'btn-success':'btn-secondary disabled'?>">Peserta</a>
+                                    <a href="<?= base_url('admin/event/cetak/id_card_event_unit_kordinator/' . @$event_unit->id) ?>" target="_blank" class="btn btn-sm <?= @$event_unit->is_approve ==1?'btn-success':'btn-secondary disabled'?>">Kordinator</a>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
