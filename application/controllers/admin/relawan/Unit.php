@@ -155,7 +155,8 @@ class Unit extends CI_Controller
         $data = [
             'nama'  => $this->input->post('nama'),
             'keterangan'  => $this->input->post('keterangan'),
-            'is_active'  => $this->input->post('is_active'),
+            'is_active'  => '1',
+            'is_approve'  => $this->input->post('is_approve'),
             'jenis'  => $this->input->post('jenis'),
             'kategori'  => $this->input->post('kategori'),
             'email'  => $this->input->post('email'),

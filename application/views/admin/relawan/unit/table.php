@@ -25,7 +25,7 @@
                         <td><a href="<?= base_url('admin/relawan/unit?page=detail&id=' . $item->id) ?>" class="text-black"><?= $item->nama ?></a></td>
                         <td><?= $item->email ?></td>
                         <td><?= $item->telepon ?></td>
-                        <td><?= ($item->is_active == 1 ? '<span class="btn btn-sm btn-success">Aktif</span>' : ($item->is_active == 0 ? '<span class="btn btn-sm btn-danger">Nonaktif</span>' : '<span class="btn btn-sm btn-warning">Register</span>')) ?></td>
+                        <td><?= ($item->is_approve == 1 ? '<span class="btn btn-sm btn-success">Disetujui</span>' : ($item->is_approve == 0 ? '<span class="btn btn-sm btn-warning">Diperiksa</span>' : '<span class="btn btn-sm btn-danger">Ditolak</span>')) ?></td>
                         <td><?= $item->jenis ?></td>
                         <td><?= $item->kategori ?></td>
                         <td>

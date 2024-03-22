@@ -77,10 +77,12 @@
             </div>
         </div>
         <div class="mb-3">
-            <label class="form-label" for="is_active">is active</label>
-            <select class="form-select" name="is_active" id="is_active" width="100px">
-                <option <?= @$unit->unit == '1' ? 'selected' : '' ?> value="1">Aktif</option>
-                <option <?= @$unit->unit == '0' ? 'selected' : '' ?> value="0">Tidak Aktif</option>
+            <label class="form-label" for="is_approve">Status Pendaftaran <span class="text-danger">*</span></label>
+            <select class="form-select" name="is_approve" id="is_approve" width="100px" required>
+                <option value="">--Pilih--</option>
+                <option <?= @$unit->is_approve == '1' ? 'selected' : '' ?> value="1">Disetujui</option>
+                <option <?= @$unit->is_approve == '0' ? 'selected' : '' ?> value="0">Diperiksa</option>
+                <option <?= @$unit->is_approve == '2' ? 'selected' : '' ?> value="2">Ditolak</option>
             </select>
         </div>
         <div class="mb-3">

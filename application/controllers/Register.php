@@ -22,7 +22,7 @@ class Register extends CI_Controller
 	{
 		$data = [
 			'nama'  => $this->input->post('nama'),
-			'is_active'  => 2,
+			'is_approve'  => 0,
 			'telepon'  => $this->input->post('telepon'),
 			'password'  => $this->input->post('password'),
 			'email'  => $this->input->post('email'),

@@ -1,5 +1,5 @@
 <div class="row">
-    <?= @$unit->is_approve == 1 ? '' : '<span class="alert alert-warning">Pendaftaran Unit sedang diperiksa, silahkan hubungi Admin untuk informasi lebih lanjut</span>' ?>
+    <?= @$unit->is_approve == 1 ? '' :(@$unit->is_approve == 0 ? '<span class="alert alert-warning">Pendaftaran Unit sedang diperiksa, silahkan hubungi Admin untuk informasi lebih lanjut</span>': '<span class="alert alert-danger">Pendaftaran Unit Ditolak, '. @$unit->keterangan .' silahkan hubungi Admin untuk informasi lebih lanjut</span>')  ?>
     <div class="col-lg-6">
         <div class="card mb-4">
             <div class="card-header d-flex justify-content-between align-items-center">
@@ -48,11 +48,6 @@
                                 <td>Surat Keterangan</td>
                                 <td>:</td>
                                 <td><a href="<?= base_url('uploads/file/unit/' . @$unit->sk) ?>" target="_blank" class="text-black"><span class="text-info"><?= @$unit->sk ?></span></a></td>
-                            </tr>
-                            <tr>
-                                <td>Keterangan</td>
-                                <td>:</td>
-                                <td><?= @$unit->keterangan ?></td>
                             </tr>
                         </tbody>
                     </table>
