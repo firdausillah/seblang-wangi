@@ -27,14 +27,16 @@ class Event extends CI_Controller
 
         $page = (isset($_GET['page']) ? $_GET['page'] : 'index');
         $unit = $this->UnitModel->findBy(['id' => $_SESSION['id']])->row();
-        $unit_peserta = $unit->jenis . ' ' . $unit->kategori; 
+        $unit_peserta = $unit->kategori != null ? $unit->jenis . ' ' . $unit->kategori:$unit->jenis;
 
         if ($page == 'index') {
             $data = [
                 'title' => 'Event',
                 $this->defaultVariable => $this->defaultModel->findByLike(['unit_peserta' => $unit_peserta])->result(),
+                'unit' => $unit,
                 'content' => $this->url_index . '/table'
             ];
+            // print_r($data); exit();
 
             $this->load->view('layout_admin/base', $data);
         } else if ($page == 'add') {

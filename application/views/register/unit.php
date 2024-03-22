@@ -101,6 +101,10 @@
                   <input type="number" class="form-control" id="telepon" name="telepon" placeholder="Masukan Angka. Contoh: 08561426576" required/>
                 </div>
                 <div class="mb-3">
+                  <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
+                  <input type="password" class="form-control" id="password" name="password" required/>
+                </div>
+                <div class="mb-3">
                   <label for="jenis" class="form-label">Jenis Unit <span class="text-danger">*</span></label>
                     <select class="form-select" name="jenis" id="jenis" width="100px" required>
                         <option value="">--Pilih--</option>

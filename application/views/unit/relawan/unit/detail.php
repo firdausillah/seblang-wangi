@@ -1,4 +1,5 @@
 <div class="row">
+    <?= @$unit->is_approve == 1 ? '' : '<span class="alert alert-warning">Pendaftaran Unit sedang diperiksa, silahkan hubungi Admin untuk informasi lebih lanjut</span>' ?>
     <div class="col-lg-6">
         <div class="card mb-4">
             <div class="card-header d-flex justify-content-between align-items-center">
@@ -66,7 +67,7 @@
         <div class="card mb-4">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">Kordinator Unit</h5>
-                <a href="<?= base_url('unit/relawan/unit?page=add_kordinator') ?>" class="btn btn-sm btn-success my-auto">Tambah data</a>
+                <a href="<?= base_url('unit/relawan/unit?page=add_kordinator') ?>" class="btn btn-sm btn-success my-auto<?= @$unit->is_approve == 1 ? '' : ' disabled' ?>">Tambah data</a>
             </div>
             <div class="card-body">
                 <div class="table-responsive text-nowrap mt-2">
@@ -114,7 +115,7 @@
         <div class="card p-3">
             <div class="d-flex justify-content-between">
                 <h5 class="my-auto">Anggota Unit <?= @$unit->nama ?></h5>
-                <a href="<?= base_url('unit/relawan/unit?page=add_relawan') ?>" class="btn btn-sm btn-success my-auto">Tambah data</a>
+                <a href="<?= base_url('unit/relawan/unit?page=add_relawan') ?>" class="btn btn-sm btn-success my-auto<?= @$unit->is_approve == 1 ? '' : ' disabled' ?>">Tambah data</a>
                 <!-- <a href="" class="btn btn-info">Tambah data</a> -->
             </div>
             <div class="table-responsive text-nowrap mt-2">

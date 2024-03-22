@@ -39,6 +39,11 @@
                                 <td><?= @$unit->email ?></td>
                             </tr>
                             <tr>
+                                <td>Password</td>
+                                <td>:</td>
+                                <td><?= @$unit->password ?></td>
+                            </tr>
+                            <tr>
                                 <td>Status</td>
                                 <td>:</td>
                                 <td><?= (@$unit->is_active == 1 ? '<span class="btn btn-sm btn-success">Aktif</span>' : (@$unit->is_active == 0 ? '<span class="btn btn-sm btn-danger">Nonaktif</span>' : '<span class="btn btn-sm btn-warning">Register</span>')) ?></td>

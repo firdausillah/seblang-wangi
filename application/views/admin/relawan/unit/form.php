@@ -47,9 +47,19 @@
                 </div>
             </div>
         </div>
-        <div class="mb-3">
-            <label class="form-label" for="alamat">alamat</label>
-            <input type="text" class="form-control" name="alamat" id="alamat" value="<?= @$unit->alamat ?>">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label class="form-label" for="alamat">alamat</label>
+                    <input type="text" class="form-control" name="alamat" id="alamat" value="<?= @$unit->alamat ?>">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label class="form-label" for="password">password <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" name="password" id="password" value="<?= @$unit->password ?>">
+                </div>
+            </div>
         </div>
         <div class="mb-3">
             <label class="form-label" for="sk">Surat Keputusan</label>

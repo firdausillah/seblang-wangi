@@ -55,7 +55,7 @@ class Login extends CI_Controller
 		}elseif($is_admin=='unit'){
 			$where = [
 				'email' => $username,
-				'telepon' => $password,
+				'password' => $password,
 				'is_active !=' => '0'
 			];
 			$cek = $this->AuthModel->cekLogin('unit', $where)->row();
@@ -64,7 +64,7 @@ class Login extends CI_Controller
 			
 			if($test>0){
 				$cek->username = $cek->email;
-				$cek->password = $cek->telepon;
+				$cek->password = $cek->password;
 				$cek->role = 'unit';
 	
 				$redirect = 'unit/dashboard';
@@ -72,7 +72,7 @@ class Login extends CI_Controller
 		}elseif($is_admin=='relawan'){
 			$where = [
 				'email' => $username,
-				'telepon' => $password,
+				'password' => $password,
 				'is_active' => 1
 			];
 			$cek = $this->AuthModel->cekLogin('relawan', $where)->row();

@@ -2,12 +2,6 @@ e pelatihan
 pengajuan dari unit *
 ada statusnya dan keterangan / catatan dari admin *
 
-relawan belum menjadi anggota 
-
-relawan aktif berdasarkan rentang waktu 
-
-download data 
-
 action ditampilkan iconnya *
 
 pelayanan kesehatan *
@@ -22,8 +16,6 @@ nonaktif/belum daftar
 daftar -> registrasi
 upload persyaratan -> verifikasi
 aktif
-
-username password dipastikan
 
 wajib upload SK di registrasi untuk proses approval oleh admin sebelum bisa login 
 kode anggota (MIS) 
@@ -50,8 +42,29 @@ persyaratan per peserta : foto, file persyaratan *
 
 unit register masih bisa masuk tapi perlu menghubungi admin untuk verifikasi 
 
-is active 2 ganti jadi is approve
+is active 2 ganti jadi is approve 
 
-approval event unit
+approval event unit *
 
-cek ulang upload file
+cek ulang upload file 
+
+username id siamo
+password nomor id siamo-> bisa ganti sesuai user
+
+detail event ditukar dengan unit dan poster diganti kya file dibawahnya
+
+verifikasi pendaftaran unit & peserta + status ditolak
+
+nambah catatan di peserta
+
+print id card masing masing peserta
+
+kleterangan foto peserta harus bg merah
+
+kontak kordinator unit
+
+relawan belum menjadi anggota 
+
+relawan aktif berdasarkan rentang waktu 
+
+download data 

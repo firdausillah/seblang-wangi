@@ -24,6 +24,7 @@ class Register extends CI_Controller
 			'nama'  => $this->input->post('nama'),
 			'is_active'  => 2,
 			'telepon'  => $this->input->post('telepon'),
+			'password'  => $this->input->post('password'),
 			'email'  => $this->input->post('email'),
 			'jenis'  => $this->input->post('jenis'),
 			'kategori'  => $this->input->post('kategori')

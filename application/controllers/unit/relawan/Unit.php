@@ -158,6 +158,7 @@ class Unit extends CI_Controller
             'jenis'  => $this->input->post('jenis'),
             'kategori'  => $this->input->post('kategori'),
             'email'  => $this->input->post('email'),
+            'password'  => $this->input->post('password'),
             'telepon'  => $this->input->post('telepon'),
             'alamat'  => $this->input->post('alamat'),
             'sk'  => $file
