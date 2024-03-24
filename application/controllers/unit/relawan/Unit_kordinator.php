@@ -57,30 +57,28 @@ class Unit_kordinator extends CI_Controller
     public function save()
     {
         $id = $this->input->post('id');
+        $id_unit = $this->session->userdata('id');
+
         $data = [
-            'tanggal'   => $this->input->post('tanggal'),
-            'nama_lembaga'  => $this->input->post('nama_lembaga'),
-            'lokasi'    => $this->input->post('lokasi'),
-            'jumlah_kantong'    => $this->input->post('jumlah_kantong'),
-            'is_active' => 1,
-            'keterangan'    => $this->input->post('keterangan'),
-            'jumlah_a'  => $this->input->post('jumlah_a'),
-            'jumlah_b'  => $this->input->post('jumlah_b'),
-            'jumlah_ab' => $this->input->post('jumlah_ab'),
-            'jumlah_o'  => $this->input->post('jumlah_o')
+            'nama'  => $this->input->post('nama'),
+            'is_active'  => 1,
+            'id_unit'  => $id_unit,
+            'telepon'  => $this->input->post('telepon'),
+            'tahun_mulai'  => $this->input->post('tahun_mulai'),
+            'tahun_selesai'  => $this->input->post('tahun_selesai')
         ];
 
         if (empty($id)) {
             unset($id);
             if ($this->defaultModel->add($data)) {
                 $this->session->set_flashdata(['status' => 'success', 'message' => 'Data berhasil dimasukan']);
-                redirect(base_url($this->url_index));
+                redirect(base_url('unit/relawan/unit?page=detail'));
             }
             exit($this->session->set_flashdata(['status' => 'error', 'message' => 'Oops! Terjadi kesalahan']));
         } else {
             if ($this->defaultModel->update(['id' => $id], $data)) {
                 $this->session->set_flashdata(['status' => 'success', 'message' => 'Data berhasil diupdate']);
-                redirect(base_url($this->url_index));
+                redirect(base_url('unit/relawan/unit?page=detail'));
             }
             exit($this->session->set_flashdata(['status' => 'error', 'message' => 'Oops! Terjadi kesalahan']));
         }
@@ -95,7 +93,6 @@ class Unit_kordinator extends CI_Controller
         }
         redirect($this->url_index);
     }
-
     public function nonaktif($id)
     {
         if ($this->defaultModel->update(['id' => $id], ['is_active' => 0])) {

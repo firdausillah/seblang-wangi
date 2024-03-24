@@ -42,13 +42,13 @@ persyaratan per peserta : foto, file persyaratan *
 
 unit register masih bisa masuk tapi perlu menghubungi admin untuk verifikasi 
 
-is active 2 ganti jadi is approve 
+is active 2 ganti jadi is approve *
 
 approval event unit *
 
 cek ulang upload file 
 
-username id siamo
+username id siamo 
 password nomor id siamo-> bisa ganti sesuai user
 
 detail event ditukar dengan unit dan poster diganti kya file dibawahnya
@@ -68,3 +68,7 @@ relawan belum menjadi anggota
 relawan aktif berdasarkan rentang waktu 
 
 download data 
+
+anggota unit di admin
+
+delete img

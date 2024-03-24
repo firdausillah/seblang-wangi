@@ -35,7 +35,7 @@ class Relawan extends CI_Controller
                 'content' => $this->url_index.'/table'
             ];
     
-            $this->load->view('layout_unit/base', $data);
+            $this->load->view('layout_admin/base', $data);
 
         }else if($page == 'add'){
             $unit = explode('-', (isset($_GET['unit']) ? $_GET['unit'] : ''));
@@ -52,26 +52,30 @@ class Relawan extends CI_Controller
                 'aspect' => '3/4'
             ];
 
-            $this->load->view('layout_unit/base', $data);
+            $this->load->view('layout_admin/base', $data);
 
         }else if($page == 'edit'){
             $id = (isset($_GET['id']) ? $_GET['id'] : '');
-            $unit = explode('-', (isset($_GET['unit']) ? $_GET['unit'] : ''));
-            $filter = [
-                'jenis' => isset($unit[0]) ? $unit[0] : '',
-                'kategori' => isset($unit[1]) ? $unit[1] : ''
-            ];
+            // $unit = explode('-', (isset($_GET['unit']) ? $_GET['unit'] : ''));
+            // $filter = [
+            //     'jenis' => isset($unit[0]) ? $unit[0] : '',
+            //     'kategori' => isset($unit[1]) ? $unit[1] : ''
+            // ];
+
+            $id_unit = $_GET['unit'];
+
+            $filter = ['id' => $id_unit];
             
             $data = [
                 'title' => 'Edit Data',
-                'unit' => $this->UnitModel->findBy($filter)->result(),
+                'unit' => $this->UnitModel->findBy($filter)->row(),
                 $this->defaultVariable => $this->defaultModel->findBy(['id' => $id])->row(),
                 'content' => $this->url_index.'/form',
                 'cropper' => 'components/cropper',
                 'aspect' => '3/4'
             ];
-
-            $this->load->view('layout_unit/base', $data);
+            
+            $this->load->view('layout_admin/base', $data);
         }
 
     }
@@ -144,7 +148,8 @@ class Relawan extends CI_Controller
             'nama'  => $this->input->post('nama'),
             'kode'  => $this->input->post('kode'),
             'keterangan'  => $this->input->post('keterangan'),
-            'is_active'  => $this->input->post('is_active'),
+            'is_approve'  => 0,
+            'password'  => $this->input->post('password'),
             'angkatan'  => $this->input->post('angkatan'),
             'expired_year'  => $this->input->post('expired_year'),
             'jenis_kelamin'  => $this->input->post('jenis_kelamin'),
@@ -154,8 +159,12 @@ class Relawan extends CI_Controller
             'unit_nama'  => $unit_data->nama,
 
             'telepon'  => $this->input->post('telepon'),
+            'email'  => $this->input->post('email'),
             'foto'  => $foto
         ];
+        // if($id == null){
+        //     $data['password']  = $this->input->post('telepon');
+        // }
         
         if (empty($id)) {
             unset($id);

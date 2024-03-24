@@ -180,35 +180,6 @@ class Unit extends CI_Controller
         }
     }
 
-    public function save_kordinator()
-    {
-        $id = $this->input->post('id');
-        $id_unit = $this->session->userdata('id');
-
-        $data = [
-            'nama'  => $this->input->post('nama'),
-            'is_active'  => 1,
-            'id_unit'  => $id_unit,
-            'tahun_mulai'  => $this->input->post('tahun_mulai'),
-            'tahun_selesai'  => $this->input->post('tahun_selesai')
-        ];
-
-        if (empty($id)) {
-            unset($id);
-            if ($this->Unit_kordinatorModel->add($data)) {
-                $this->session->set_flashdata(['status' => 'success', 'message' => 'Data berhasil dimasukan']);
-                redirect(base_url('unit/relawan/unit?page=detail'));
-            }
-            exit($this->session->set_flashdata(['status' => 'error', 'message' => 'Oops! Terjadi kesalahan']));
-        } else {
-            if ($this->Unit_kordinatorModel->update(['id' => $id], $data)) {
-                $this->session->set_flashdata(['status' => 'success', 'message' => 'Data berhasil diupdate']);
-                redirect(base_url('unit/relawan/unit?page=detail'));
-            }
-            exit($this->session->set_flashdata(['status' => 'error', 'message' => 'Oops! Terjadi kesalahan']));
-        }
-    }
-
     public function delete($id)
     {
         if ($this->defaultModel->delete(['id' => $id])) {
@@ -222,16 +193,6 @@ class Unit extends CI_Controller
     public function nonaktif($id)
     {
         if ($this->defaultModel->update(['id' => $id], ['is_active' => 0])) {
-            $this->session->set_flashdata(['status' => 'success', 'message' => 'Data berhasil dinonaktifkan']);
-        } else {
-            $this->session->set_flashdata(['status' => 'error', 'message' => 'Oops! Terjadi kesalahan']);
-        }
-        redirect($this->url_index. '?page=detail');
-    }
-
-    public function nonaktif_kordinator($id)
-    {
-        if ($this->Unit_kordinatorModel->update(['id' => $id], ['is_active' => 0])) {
             $this->session->set_flashdata(['status' => 'success', 'message' => 'Data berhasil dinonaktifkan']);
         } else {
             $this->session->set_flashdata(['status' => 'error', 'message' => 'Oops! Terjadi kesalahan']);

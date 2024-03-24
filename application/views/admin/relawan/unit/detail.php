@@ -93,15 +93,8 @@
                                     <td><?= $item->tahun_mulai ?></td>
                                     <td><?= $item->tahun_selesai ?></td>
                                     <td>
-                                        <div class="dropdown">
-                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="bx bx-dots-vertical-rounded"></i>
-                                            </button>
-                                            <div class="dropdown-menu" style="relative">
-                                                <a class="dropdown-item" href="<?= base_url('admin/relawan/unit?page=edit_kordinator&id=' . $item->id . '&id_unit=' . ($_GET['id'] ? $_GET['id'] : '')) ?>"><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                                                <a class="dropdown-item" onclick="confirmDelete('<?= base_url('admin/relawan/unit/nonaktif_kordinator/' . $item->id . '&id_unit=' . ($_GET['id'] ? $_GET['id'] : '')) ?>')"><i class="bx bx-trash me-1"></i> Delete</a>
-                                            </div>
-                                        </div>
+                                        <a class="text-info" href="<?= base_url('admin/relawan/unit?page=edit_kordinator&id=' . $item->id . '&id_unit=' . ($_GET['id'] ? $_GET['id'] : '')) ?>"><i class="bx bx-edit-alt me-1"></i></a>
+                                        <a class="text-danger" href="#" onclick="confirmDelete('<?= base_url('admin/relawan/unit/nonaktif_kordinator/' . $item->id . '&id_unit=' . ($_GET['id'] ? $_GET['id'] : '')) ?>')"><i class="bx bx-trash me-1"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach ?>
@@ -154,32 +147,32 @@
                     visible: false
                 },
                 {
-                    data: 'is_active',
+                    data: 'is_approve',
                     render: function(data, type, row) {
                         var id = row.id;
                         var bg = '';
-                        var is_active = '';
+                        var is_approve = '';
 
                         if (data == 1) {
                             bg = 'success';
-                            is_active = 'Aktif';
+                            is_approve = 'Aktif';
                         } else if (data == 2) {
-                            bg = 'warning';
-                            is_active = 'Registrasi';
-                        } else {
                             bg = 'danger';
-                            is_active = 'Nonaktif';
+                            is_approve = 'Ditolak';
+                        } else {
+                            bg = 'warning';
+                            is_approve = 'Diperiksa';
                         }
 
                         if (data != '') {
                             return `<div class='btn-group'>
                                         <button type='button' class='btn btn-sm btn-` + bg + ` dropdown-toggle' data-bs-toggle='dropdown' aria-expanded='true'>
-                                            ` + is_active + `
+                                            ` + is_approve + `
                                         </button>
                                         <ul class='dropdown-menu' style='position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(0px, 39.5px, 0px);' data-popper-placement='bottom-start'>
                                             <li><a class='dropdown-item' href='javascript:void(0);' onClick='update_status(` + id + `,1)'>Aktif</a></li>
-                                            <li><a class='dropdown-item' href='javascript:void(0);' onClick='update_status(` + id + `,0)'>Nonaktif</a></li>
-                                            <li><a class='dropdown-item' href='javascript:void(0);' onClick='update_status(` + id + `,2)'>Registrasi</a></li>
+                                            <li><a class='dropdown-item' href='javascript:void(0);' onClick='update_status(` + id + `,0)'>Diperiksa</a></li>
+                                            <li><a class='dropdown-item' href='javascript:void(0);' onClick='update_status(` + id + `,2)'>Ditolak</a></li>
                                         </ul>
                                     </div>`;
                         } else {
@@ -215,17 +208,17 @@
                     data: "id",
                     render: function(data, type, row) {
                         var kategori = (row.unit_kategori ? ('-' + row.unit_kategori) : '');
-                        var unit = row.unit_jenis + kategori;
+                        // var unit = row.unit_jenis + kategori;
+                        var unit = row.id_unit;
                         if (data != '') {
-                            return '<div class="dropdown">' +
-                                '<button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false">' +
-                                '<i class="bx bx-dots-vertical-rounded"></i>' +
-                                '</button>' +
-                                '<div class="dropdown-menu" style="relative">' +
-                                '<a class="dropdown-item" href="<?= base_url() ?>admin/relawan/relawan?page=edit&id=' + data + '&unit=' + unit + '"><i class="bx bx-edit-alt me-1"></i> Edit</a>' +
-                                '<a class="dropdown-item" onclick="confirmDelete(\'<?= base_url('admin/relawan/relawan/nonaktif/') ?>' + data + '\')"><i class="bx bx-trash me-1"></i> Delete</a>' +
-                                '</div>' +
-                                '</div>';
+                            return '<span>' +
+                                '<a class="text-info" href="<?= base_url() ?>admin/relawan/unit?page=edit_relawan&id=' + data + '&unit=' + unit + '">' +
+                                '<i class="bx bx-edit-alt me-1"></i>' +
+                                '</a>' +
+                                '<a class="text-danger" href="#" onclick="confirmDelete(\'<?= base_url('admin/relawan/unit/nonaktif/') ?>' + data + '\)">' +
+                                '<i class="bx bx-trash me-1"></i>' +
+                                '</a>' +
+                                '</span>';
                         } else {
                             return '';
                         }
@@ -259,7 +252,7 @@
 
     });
 
-    function update_status(id, is_active) {
+    function update_status(id, is_approve) {
         Loading.fire({})
         $.ajax({
             url: '<?= base_url('admin/relawan/relawan/update_status') ?>',
@@ -267,7 +260,7 @@
             dataType: 'json',
             data: {
                 id: id,
-                is_active: is_active
+                is_approve: is_approve
             },
             success: function(json) {
                 dataTable.ajax.reload(function() {

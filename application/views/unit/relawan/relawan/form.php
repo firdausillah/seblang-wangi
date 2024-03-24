@@ -34,37 +34,31 @@
             </div>
             <div class="col-md-6">
                 <div class="mb-3">
-                    <label class="form-label" for="is_active">Status</label>
-                    <select class="form-select" name="is_active" id="is_active" width="100px">
-                        <!-- <option value="">--Pilih--</option>
-                        <option <?= @$relawan->is_active == '1' ? 'selected' : '' ?> value="1">Aktif</option>
-                        <option <?= @$relawan->is_active == '0' ? 'selected' : '' ?> value="0">Nonaktif</option> -->
-                        <!-- <option <?= @$relawan->is_active == '2' ? 'selected' : '' ?> value="2">Registrasi</option> -->
-                        <option selected value="2">Registrasi</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="mb-3">
-                    <label class="form-label" for="angkatan">Angkatan</label>
+                    <label class="form-label" for="password">Password <span class="text-danger">*</span></label>
                     <div class="input-group input-group-merge">
-                        <input type="text" name="angkatan" id="angkatan" value="<?= (@$relawan->angkatan != null ? @$relawan->angkatan : date('Y')) ?>" class="form-control" placeholder="Masukan Tahun. Contoh: 2024">
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="mb-3">
-                    <label class="form-label" for="expired_year">Aktif Sampai -</label>
-                    <div class="input-group input-group-merge">
-                        <input type="text" name="expired_year" id="expired_year" value="<?= (@$relawan->expired_year != null ? @$relawan->expired_year : date('Y') + 3) ?>" class="form-control" placeholder="Masukan Tahun. Contoh: 2027">
+                        <input type="text" name="password" id="password" value="<?= @$relawan->password ?>" class="form-control" required>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <label class="form-label" for="angkatan">Angkatan <span class="text-danger">*</span></label>
+                    <div class="input-group input-group-merge">
+                        <input type="text" name="angkatan" id="angkatan" value="<?= (@$relawan->angkatan != null ? @$relawan->angkatan : date('Y')) ?>" class="form-control" placeholder="Masukan Tahun. Contoh: 2024" required>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <label class="form-label" for="expired_year">Aktif Sampai - <span class="text-danger">*</span></label>
+                    <div class="input-group input-group-merge">
+                        <input type="text" name="expired_year" id="expired_year" value="<?= (@$relawan->expired_year != null ? @$relawan->expired_year : date('Y') + 3) ?>" class="form-control" placeholder="Masukan Tahun. Contoh: 2027" required>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
                 <div class="mb-3">
                     <label class="form-label" for="jenis_kelamin">Jenis Kelamin</label>
                     <select class="form-select" name="jenis_kelamin" id="jenis_kelamin" width="100px">
@@ -74,11 +68,21 @@
                     </select>
                 </div>
             </div>
+        </div>
+        <div class="row">
             <div class="col-md-6">
                 <div class="mb-3">
-                    <label class="form-label" for="telepon">Nomor Telepon</label>
+                    <label class="form-label" for="email">Email <span class="text-danger">*</span></label>
                     <div class="input-group input-group-merge">
-                        <input type="number" name="telepon" id="telepon" value="<?= @$relawan->telepon ?>" class="form-control" placeholder="Masukan Nomor Telepon. Contoh: 085245123554">
+                        <input type="email" name="email" id="email" value="<?= @$relawan->email ?>" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label class="form-label" for="telepon">Nomor Telepon <span class="text-danger">*</span></label>
+                    <div class="input-group input-group-merge">
+                        <input type="number" name="telepon" id="telepon" value="<?= @$relawan->telepon ?>" class="form-control" placeholder="Masukan Nomor Telepon. Contoh: 085245123554" required>
                     </div>
                 </div>
             </div>

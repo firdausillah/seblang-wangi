@@ -100,10 +100,15 @@ class Unit extends CI_Controller
 
         } else if ($page == 'edit_relawan') {
             $id = (isset($_GET['id']) ? $_GET['id'] : '');
+            $id_unit = (isset($_GET['id_unit']) ? $_GET['id_unit'] : '');
+
             $data = [
                 'title' => 'Edit Data',
-                'unit_kordinator' => $this->Unit_kordinatorModel->findBy(['id' => $id])->row(),
-                'content' => 'admin/relawan/unit_kordinator/form'
+                'unit' => $this->defaultModel->findBy(['id' => $id_unit])->row(),
+                'relawan' => $this->RelawanModel->findBy(['id' => $id])->row(),
+                'content' => 'admin/relawan/relawan/form',
+                'cropper' => 'components/cropper',
+                'aspect' => '3/4'
             ];
 
             $this->load->view('layout_admin/base', $data);
@@ -233,6 +238,16 @@ class Unit extends CI_Controller
     public function nonaktif_kordinator($id)
     {
         if ($this->Unit_kordinatorModel->update(['id' => $id], ['is_active' => 0])) {
+            $this->session->set_flashdata(['status' => 'success', 'message' => 'Data berhasil dinonaktifkan']);
+        } else {
+            $this->session->set_flashdata(['status' => 'error', 'message' => 'Oops! Terjadi kesalahan']);
+        }
+        redirect($this->url_index);
+    }
+
+    public function nonaktif_relawan($id)
+    {
+        if ($this->RelawanModel->update(['id' => $id], ['is_active' => 0])) {
             $this->session->set_flashdata(['status' => 'success', 'message' => 'Data berhasil dinonaktifkan']);
         } else {
             $this->session->set_flashdata(['status' => 'error', 'message' => 'Oops! Terjadi kesalahan']);

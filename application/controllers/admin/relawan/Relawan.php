@@ -62,6 +62,9 @@ class Relawan extends CI_Controller
                 'kategori' => isset($unit[1]) ? $unit[1] : ''
             ];
             
+            // print_r($this->UnitModel->findBy($filter)->result());
+            // exit();
+            
             $data = [
                 'title' => 'Edit Data',
                 'unit' => $this->UnitModel->findBy($filter)->result(),
@@ -102,9 +105,9 @@ class Relawan extends CI_Controller
     public function update_status(){
         // print_r($_POST); exit();
         $id = $_POST['id'];
-        $is_active = $_POST['is_active'];
+        $is_approve = $_POST['is_approve'];
 
-        if ($this->defaultModel->update(['id' => $id], ['is_active' => $is_active])) {
+        if ($this->defaultModel->update(['id' => $id], ['is_approve' => $is_approve])) {
             echo json_encode(['status' => 'success', 'message' => 'Data berhasil diupdate']);
         }else{
             echo json_encode(['status' => 'error', 'message' => 'Oops! Terjadi kesalahan']);
@@ -146,7 +149,8 @@ class Relawan extends CI_Controller
             'nama'  => $this->input->post('nama'),
             'kode'  => $this->input->post('kode'),
             'keterangan'  => $this->input->post('keterangan'),
-            'is_active'  => $this->input->post('is_active'),
+            'is_approve'  => 0,
+            'password'  => $this->input->post('password'),
             'angkatan'  => $this->input->post('angkatan'),
             'expired_year'  => $this->input->post('expired_year'),
             'jenis_kelamin'  => $this->input->post('jenis_kelamin'),

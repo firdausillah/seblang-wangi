@@ -1,5 +1,5 @@
 <div class="row">
-    <?= @$unit->is_approve == 1 ? '' :(@$unit->is_approve == 0 ? '<span class="alert alert-warning">Pendaftaran Unit sedang diperiksa, silahkan hubungi Admin untuk informasi lebih lanjut</span>': '<span class="alert alert-danger">Pendaftaran Unit Ditolak, '. @$unit->keterangan .' silahkan hubungi Admin untuk informasi lebih lanjut</span>')  ?>
+    <?= @$unit->is_approve == 1 ? '' : (@$unit->is_approve == 0 ? '<span class="alert alert-warning">Pendaftaran Unit sedang diperiksa, silahkan hubungi Admin untuk informasi lebih lanjut</span>' : '<span class="alert alert-danger">Pendaftaran Unit Ditolak, ' . @$unit->keterangan . ' silahkan hubungi Admin untuk informasi lebih lanjut</span>')  ?>
     <div class="col-lg-6">
         <div class="card mb-4">
             <div class="card-header d-flex justify-content-between align-items-center">
@@ -42,7 +42,7 @@
                             <tr>
                                 <td>Status</td>
                                 <td>:</td>
-                                <td><?= (@$unit->is_active == 1 ? '<span class="btn btn-sm btn-success">Aktif</span>' : (@$unit->is_active == 0 ? '<span class="btn btn-sm btn-danger">Nonaktif</span>' : '<span class="btn btn-sm btn-warning">Register</span>')) ?></td>
+                                <td><?= (@$unit->is_approve == 1 ? '<span class="btn btn-sm btn-success">Aktif</span>' : (@$unit->is_approve == 0 ? '<span class="btn btn-sm btn-warning">Register</span>' : '<span class="btn btn-sm btn-danger">Ditolak</span>')) ?></td>
                             </tr>
                             <tr>
                                 <td>Surat Keterangan</td>
@@ -71,6 +71,7 @@
                             <tr>
                                 <th>No.</th>
                                 <th>Nama Unit</th>
+                                <th>Telepon</th>
                                 <th>Tahun Mulai</th>
                                 <th>Tahun Selesai</th>
                                 <th>Status</th>
@@ -82,11 +83,14 @@
                                 <tr>
                                     <td><?= $index + 1 ?></td>
                                     <td><?= $item->nama ?></td>
+                                    <td><?= $item->telepon ?></td>
                                     <td><?= $item->tahun_mulai ?></td>
                                     <td><?= $item->tahun_selesai ?></td>
                                     <td><?= ($item->tahun_selesai > date('Y') ? '<span class="btn btn-sm btn-success">Aktif</span>' : '<span class="btn btn-sm btn-danger">Nonaktif</span>') ?></td>
                                     <td>
-                                        <div class="dropdown">
+                                        <a class="text-info" href="<?= base_url('unit/relawan/unit_kordinator?page=edit&id=' . $item->id) ?>"><i class="bx bx-edit-alt me-1"></i></a>
+                                        <a class="text-danger" href="#" onclick="confirmDelete('<?= base_url('unit/relawan/unit_kordinator/nonaktif/' . $item->id) ?>')"><i class="bx bx-trash me-1"></i></a>
+                                        <!-- <div class="dropdown">
                                             <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false">
                                                 <i class="bx bx-dots-vertical-rounded"></i>
                                             </button>
@@ -94,7 +98,7 @@
                                                 <a class="dropdown-item" href="<?= base_url('unit/relawan/unit?page=edit_kordinator&id=' . $item->id) ?>"><i class="bx bx-edit-alt me-1"></i> Edit</a>
                                                 <a class="dropdown-item" onclick="confirmDelete('<?= base_url('unit/relawan/unit/nonaktif_kordinator/' . $item->id) ?>')"><i class="bx bx-trash me-1"></i> Delete</a>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </td>
                                 </tr>
                             <?php endforeach ?>
@@ -150,26 +154,26 @@
                     visible: false
                 },
                 {
-                    data: 'is_active',
+                    data: 'is_approve',
                     render: function(data, type, row) {
                         var id = row.id;
                         var bg = '';
-                        var is_active = '';
+                        var is_approve = '';
 
                         if (data == 1) {
                             bg = 'success';
-                            is_active = 'Aktif';
+                            is_approve = 'Aktif';
                         } else if (data == 2) {
-                            bg = 'warning';
-                            is_active = 'Registrasi';
-                        } else {
                             bg = 'danger';
-                            is_active = 'Nonaktif';
+                            is_approve = 'Ditolak';
+                        } else {
+                            bg = 'warning';
+                            is_approve = 'Diperiksa';
                         }
 
                         if (data != '') {
                             return `<button type='button' class='btn btn-sm btn-` + bg + `'>
-                                        ` + is_active + `
+                                        ` + is_approve + `
                                     </button>`;
                         } else {
                             return '';
@@ -198,20 +202,19 @@
                     data: 'unit_kategori'
                 },
                 {
-                    data: "id",
+                    data: 'id',
                     render: function(data, type, row) {
                         var kategori = (row.unit_kategori ? ('-' + row.unit_kategori) : '');
-                        var unit = row.unit_jenis + kategori;
+                        var unit = row.id_unit;
                         if (data != '') {
-                            return '<div class="dropdown">' +
-                                '<button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false">' +
-                                '<i class="bx bx-dots-vertical-rounded"></i>' +
-                                '</button>' +
-                                '<div class="dropdown-menu" style="relative">' +
-                                '<a class="dropdown-item" href="<?= base_url() ?>unit/relawan/relawan?page=edit&id=' + data + '&unit=' + unit + '"><i class="bx bx-edit-alt me-1"></i> Edit</a>' +
-                                '<a class="dropdown-item" onclick="confirmDelete(\'<?= base_url('unit/relawan/relawan/nonaktif/') ?>' + data + '\')"><i class="bx bx-trash me-1"></i> Delete</a>' +
-                                '</div>' +
-                                '</div>';
+                            return '<span>' +
+                                '<a class="text-info" href="<?= base_url() ?>unit/relawan/relawan?page=edit&id=' + data + '&id_unit=' + unit + '">' +
+                                '<i class="bx bx-edit-alt me-1"></i>' +
+                                '</a>' +
+                                '<a class="text-danger" href="#" onclick="confirmDelete(\'<?= base_url('unit/relawan/relawan/nonaktif/') ?>' + data + '\)">' +
+                                '<i class="bx bx-trash me-1"></i>' +
+                                '</a>' +
+                                '</span>';
                         } else {
                             return '';
                         }

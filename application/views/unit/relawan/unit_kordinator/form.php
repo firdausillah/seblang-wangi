@@ -3,12 +3,17 @@
         <h5 class="mb-0"><?= $title ? $title : '' ?></h5>
     </div>
     <div class="card-body">
-        <?= form_open_multipart(base_url('unit/relawan/unit/save_kordinator')) ?>
+        <?= form_open_multipart(base_url('unit/relawan/unit_kordinator/save')) ?>
         <input type="hidden" name="id_unit" value="<?= @$_GET['id_unit'] ?>">
         <input type="hidden" name="id" value="<?= @$unit_kordinator->id ?>">
         <div class="mb-3">
             <label class="form-label" for="nama">Nama <span class="text-danger">*</span></label>
             <input type="text" class="form-control" name="nama" id="nama" value="<?= @$unit_kordinator->nama ?>" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="telepon">telepon <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" name="telepon" id="telepon" value="<?= @$unit_kordinator->telepon ?>" required>
+            <small>silahkan update nomor telepon unit sesuai dengan kordinator Aktif</small>
         </div>
         <div class="mb-3">
             <label class="form-label" for="tahun_mulai">Tahun Mulai</label>
