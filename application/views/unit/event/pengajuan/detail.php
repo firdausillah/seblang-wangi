@@ -150,6 +150,11 @@
                             </td>
                             <td><?= $item->keterangan ?></td>
                             <td>
+                                <?php if(@$event_unit->is_approve == 1 && $item->is_approve == 1) : ?>
+                                    <a href="<?= base_url('admin/event/cetak/id_card_event_peserta/' . $item->id) ?>" target="_blank" class="text-success"><i class='bx bxs-download me-2'></i></a>
+                                <?php else : ?>
+                                    <span class="text-secondary"><i class='bx bxs-download me-2'></i></span>
+                                <?php endif ?>
                                 <button type="button" class="btn btn-sm text-info my-auto" id="edit" data-bs-toggle="modal" data-bs-target="#modalCenter" data-bs-id="<?= $item->id ?>">
                                     <i class="bx bx-edit-alt me-1"></i>
                                 </button>

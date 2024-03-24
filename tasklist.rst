@@ -66,6 +66,8 @@ nambah catatan di peserta *
 
 print id card masing masing peserta 
 
+input pendamping
+
 relawan aktif berdasarkan rentang waktu 
 
 download data 

@@ -157,6 +157,11 @@
                             <td id="file_surat_tugas"></td>
                         </tr>
                         <tr>
+                            <td>Print ID Card</td>
+                            <td>:</td>
+                            <td id="cetak_id_card"></td>
+                        </tr>
+                        <tr>
                             <td>Catatan</td>
                             <td>:</td>
                             <td>
@@ -275,7 +280,11 @@
                 {
                     data: 'id',
                     render: function(data, type, row) {
-                        return '<a href="#" onClick="edit_catatan_peserta(' + data + ')" class="text-info"><i class="bx bx-edit-alt me-1"></i></a>';
+                        return '<span>' +
+                            '<a href="<?= base_url('admin/event/cetak/id_card_event_peserta/') ?>' + data + '" target="_blank" class="text-success"><i class="bx bxs-download me-2 "></i></a>' +
+                            '<a href="#" onClick="edit_catatan_peserta(' + data + ')" class="text-info"><i class="bx bx-edit-alt me-1"></i></a>' +
+                            '</span>'
+
                     }
                 }
             ],
@@ -376,6 +385,14 @@
                     $('#event_unit_keterangan_unit').val(json.data.keterangan);
                     $('#file_surat_tugas').html(`<a href="<?= base_url('uploads/file/event/admin/') ?>${json.data.file_surat_tugas}" target="_blank" class="text-black"><span class="text-info">${json.data.file_surat_tugas}</span></a>`);
                     $('#id_event_unit').val(id);
+                    $('#cetak_id_card').html(
+                        '<span>' +
+                        '<a href = "<?= base_url('admin/event/cetak/id_card_event_unit/') ?>' + json.data.id + '" target = "_blank" class = "btn btn-sm btn-success me-2" > Peserta </a>' +
+
+                        '<a href = "<?= base_url('admin/event/cetak/id_card_event_unit_kordinator/') ?>' + json.data.id + '" target = "_blank" class = "btn btn-sm btn-success" > Kordinator </a>' +
+
+                        '</span>'
+                    );
 
                     // catatan
                     $('#btn_save_catatan').removeClass('disabled');

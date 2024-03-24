@@ -22,6 +22,18 @@ class Cetak extends CI_Controller
         $this->load->view('layout_print/base', $data);
     }
 
+    public function id_card_event_peserta($id_event_peserta)
+    {
+        $data = [
+            'title' => 'Print ID Card Event Peserta',
+            // 'event' => $this->CetakModel->get()->row(),
+            'person' => $this->CetakModel->get_person($id_event_peserta)->row(),
+            'content' => 'admin/event/print/id_card_event_peserta',
+            'base_url' => base_url('uploads/img/event/peserta/')
+        ];
+        $this->load->view('layout_print/base', $data);
+    }
+
     public function id_card_event_unit_kordinator($id)
     {
         $data = [

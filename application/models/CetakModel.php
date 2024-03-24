@@ -20,6 +20,19 @@
 		WHERE a.id_event_unit = '. $id_event_unit);
  	}
 
+ 	function get_person($id_event_peserta){
+		return $this->db->query('
+		SELECT 
+			a.relawan_nama, 
+			a.relawan_kode,  
+			CONCAT(a.unit_jenis, " ", a.unit_kategori, " ", a.unit_nama) AS unit_nama, 
+			a.foto, 
+			b.event_nama 
+		FROM event_peserta_t a 
+		LEFT JOIN event_unit_t b ON a.id_event_unit = b.id 
+		WHERE a.id = '. $id_event_peserta);
+ 	}
+
  	function get_kordinator($id_event_unit){
 		return $this->db->query('
 		SELECT 
