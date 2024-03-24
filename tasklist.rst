@@ -52,24 +52,24 @@ username id siamo , password nomor id siamo-> bisa ganti sesuai user *
 
 detail event ditukar dengan unit dan poster diganti kya file dibawahnya *
 
-cek ulang upload file 
+relawan belum menjadi anggota *
 
-pendaftar event hanya yang sudah verifikasi aktivasi
+pendaftar event hanya yang sudah verifikasi aktivasi *
 
-verifikasi pendaftaran unit & peserta + status ditolak
+verifikasi pendaftaran unit & peserta + status ditolak *
 
-nambah catatan di peserta
+kleterangan foto peserta harus bg merah *
 
-print id card masing masing peserta
+kontak kordinator unit *
 
-kleterangan foto peserta harus bg merah
+nambah catatan di peserta *
 
-kontak kordinator unit
-
-relawan belum menjadi anggota 
+print id card masing masing peserta 
 
 relawan aktif berdasarkan rentang waktu 
 
 download data 
 
-delete img
+delete img 
+
+cek ulang upload file 
