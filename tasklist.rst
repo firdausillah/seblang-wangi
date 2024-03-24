@@ -46,12 +46,15 @@ is active 2 ganti jadi is approve *
 
 approval event unit *
 
+anggota unit di admin *
+
+username id siamo , password nomor id siamo-> bisa ganti sesuai user *
+
+detail event ditukar dengan unit dan poster diganti kya file dibawahnya *
+
 cek ulang upload file 
 
-username id siamo 
-password nomor id siamo-> bisa ganti sesuai user
-
-detail event ditukar dengan unit dan poster diganti kya file dibawahnya
+pendaftar event hanya yang sudah verifikasi aktivasi
 
 verifikasi pendaftaran unit & peserta + status ditolak
 
@@ -68,7 +71,5 @@ relawan belum menjadi anggota
 relawan aktif berdasarkan rentang waktu 
 
 download data 
-
-anggota unit di admin
 
 delete img

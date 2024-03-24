@@ -71,7 +71,7 @@ class Login extends CI_Controller
 			}
 		}elseif($is_admin=='relawan'){
 			$where = [
-				'email' => $username,
+				'kode' => $username,
 				'password' => $password,
 				'is_active' => 1
 			];

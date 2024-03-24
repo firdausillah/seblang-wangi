@@ -1,5 +1,34 @@
 <div class="row mb-4">
     <div class="col-md-7 mb-3">
+        <div class="card p-3">
+            <div class="d-flex justify-content-between">
+                <h5 class="my-auto"><?= $title ? $title : '' ?></h5>
+            </div>
+            <div class="table-responsive text-nowrap mt-2">
+                <table id="datatables_table_event_unit" class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Nama Unit</th>
+                            <th>Status Pendaftaran</th>
+                            <th>Tanggal Daftar</th>
+                        </tr>
+                    </thead>
+                    <!-- <tbody class="table-border-bottom-0">
+                        <?php foreach ($event_unit as $index => $item) : ?>
+                            <tr data-id_event_unit="<?= $item->id ?>">
+                                <td><?= $index + 1 ?></td>
+                                <td><?= $item->unit_nama ?></td>
+                                <td><?= ($item->is_approve == 1 ? '<span class="badge bg-label-success">Disetujui</span>' : '<span class="badge bg-label-warning">Diperiksa</span>') ?></td>
+                                <td><?= date('d M Y', strtotime($item->created_on)) ?></td>
+                            </tr>
+                        <?php endforeach ?>
+                    </tbody> -->
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">Detail <?= @$event->nama ?></h5>
@@ -27,7 +56,7 @@
                                 <td>Poster</td>
                                 <td>:</td>
                                 <td>
-                                    <a href="<?= base_url('uploads/img/event/admin/' . @$event->foto) ?>" target="_blank"><img src="<?= base_url('uploads/img/event/admin/' . @$event->foto) ?>" height="200px" alt=""></a>
+                                    <a href="<?= base_url('uploads/img/event/admin/' . @$event->foto) ?>" target="_blank"><span class="text-info"><?= @$event->foto ?></span></a>
                                 </td>
                             </tr>
                             <tr>
@@ -48,35 +77,6 @@
                 <div class="d-flex justify-content-end">
                     <a href="<?= base_url('admin/event/event') ?>" class=" btn btn-secondary">Kembali</a>
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-5">
-        <div class="card p-3">
-            <div class="d-flex justify-content-between">
-                <h5 class="my-auto"><?= $title ? $title : '' ?></h5>
-            </div>
-            <div class="table-responsive text-nowrap mt-2">
-                <table id="datatables_table_event_unit" class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>No.</th>
-                            <th>Nama Unit</th>
-                            <th>Status Pendaftaran</th>
-                            <th>Tanggal Daftar</th>
-                        </tr>
-                    </thead>
-                    <!-- <tbody class="table-border-bottom-0">
-                        <?php foreach ($event_unit as $index => $item) : ?>
-                            <tr data-id_event_unit="<?= $item->id ?>">
-                                <td><?= $index + 1 ?></td>
-                                <td><?= $item->unit_nama ?></td>
-                                <td><?= ($item->is_approve == 1 ? '<span class="badge bg-label-success">Disetujui</span>' : '<span class="badge bg-label-warning">Diperiksa</span>') ?></td>
-                                <td><?= date('d M Y', strtotime($item->created_on)) ?></td>
-                            </tr>
-                        <?php endforeach ?>
-                    </tbody> -->
-                </table>
             </div>
         </div>
     </div>
@@ -231,8 +231,8 @@
                     data: 'foto',
                     render: function(data, type, row) {
                         return `
-                                <a href="<?= base_url('uploads/img/event/peserta/') ?>`+data+`" target="_blank">
-                                    <img src="<?= base_url('uploads/img/event/peserta/') ?>`+data+`" height="100px" alt="">
+                                <a href="<?= base_url('uploads/img/event/peserta/') ?>` + data + `" target="_blank">
+                                    <img src="<?= base_url('uploads/img/event/peserta/') ?>` + data + `" height="100px" alt="">
                                 </a>
                             `
                     }
