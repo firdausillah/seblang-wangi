@@ -119,6 +119,18 @@ class Event extends CI_Controller
             echo json_encode(['status' => 'error', 'message' => 'Oops! Terjadi kesalahan']);
         }
     }
+    
+        public function update_catatan_unit()
+        {
+            // print_r($_POST); exit();
+            if ($this->Event_unitModel->update(['id' => $_POST['id_event_unit']], ['keterangan' => $_POST['event_unit_keterangan']])) {
+                echo json_encode(['status' => 'success', 'message' => 'Data berhasil diupdate']);
+                // redirect(base_url('admin/event/event?page=detail&id='.$_POST['id_event']));
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Oops! Terjadi kesalahan']);
+                // redirect(base_url('admin/event/event?page=detail&id='.$_POST['id_event']));
+            }
+        }
 
     public function update_status_event_peserta()
     {
@@ -129,10 +141,10 @@ class Event extends CI_Controller
         }
     }
 
-    public function update_catatan()
+    public function update_catatan_peserta()
     {
         // print_r($_POST); exit();
-        if ($this->Event_unitModel->update(['id' => $_POST['id_event_unit']], ['keterangan' => $_POST['event_peserta_keterangan']])) {
+        if ($this->Event_pesertaModel->update(['id' => $_POST['id_event_peserta']], ['keterangan' => $_POST['event_peserta_keterangan']])) {
             echo json_encode(['status' => 'success', 'message' => 'Data berhasil diupdate']);
             // redirect(base_url('admin/event/event?page=detail&id='.$_POST['id_event']));
         } else {

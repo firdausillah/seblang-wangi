@@ -111,7 +111,7 @@
                             <th>File Persyaratan</th>
                             <th>Foto</th>
                             <th>Catatan</th>
-                            <!-- <th>Actions</th> -->
+                            <th>Actions</th>
                         </tr>
                     </thead>
                 </table>
@@ -161,16 +161,47 @@
                             <td>:</td>
                             <td>
                                 <div class="input-group input-group-merge mb-2">
-                                    <input type="text" name="keterangan" id="event_peserta_keterangan" value="" class="form-control">
+                                    <input type="text" name="keterangan" id="event_unit_keterangan" value="" class="form-control">
                                 </div>
                                 <input type="hidden" id="id_event_unit" value="" class="form-control">
-                                <button type="submit" id="btn_save_catatan" onclick="update_catatan()" class="btn btn-sm btn-primary disabled">Simpan Catatan</button>
+                                <button type="submit" id="btn_save_catatan" onclick="update_catatan_unit()" class="btn btn-sm btn-primary disabled">Simpan Catatan</button>
 
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- modal -->
+<div class="modal fade" id="catatanModal" tabindex="-1" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="catatanModalTitle">Form Peserta</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <!-- <form action=""> -->
+            <div class="modal-body">
+                <div class="row">
+                    <input type="hidden" id="id_event_peserta" name="id_event_peserta" value="">
+                    <div class="mb-3">
+                        <label for="event_peserta_keterangan" class="form-label">Catatan</label>
+                        <div class="input-group input-group-merge">
+                            <input type="text" name="event_peserta_keterangan" id="event_peserta_keterangan" value="" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+                <button type="button" onclick="update_catatan_peserta()" class="btn btn-primary">Save changes</button>
+            </div>
+            <!-- </form> -->
         </div>
     </div>
 </div>
@@ -200,7 +231,7 @@
                             is_approve = 'Diperiksa';
                         } else {
                             bg = 'danger';
-                            is_approve = 'Nonaktif';
+                            is_approve = 'Ditolak';
                         }
 
                         if (data != '') {
@@ -211,6 +242,7 @@
                                         <ul class='dropdown-menu' style='position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(0px, 39.5px, 0px);' data-popper-placement='bottom-start'>
                                             <li><a class='dropdown-item' href='javascript:void(0);' onClick='update_status_event_peserta(` + id + `,1)'>Disetujui</a></li>
                                             <li><a class='dropdown-item' href='javascript:void(0);' onClick='update_status_event_peserta(` + id + `,0)'>Diperiksa</a></li>
+                                            <li><a class='dropdown-item' href='javascript:void(0);' onClick='update_status_event_peserta(` + id + `,2)'>Ditolak</a></li>
                                         </ul>
                                     </div>`;
                         } else {
@@ -239,6 +271,12 @@
                 },
                 {
                     data: 'keterangan'
+                },
+                {
+                    data: 'id',
+                    render: function(data, type, row) {
+                        return '<a href="#" onClick="edit_catatan_peserta(' + data + ')" class="text-info"><i class="bx bx-edit-alt me-1"></i></a>';
+                    }
                 }
             ],
             columnDefs: [{
@@ -263,6 +301,8 @@
                     render: function(data, type, row) {
                         if (data == 1) {
                             return '<span class="badge bg-label-success">Disetujui</span>';
+                        } else if (data == 2) {
+                            return '<span class="badge bg-label-danger">Ditolak</span>';
                         } else {
                             return '<span class="badge bg-label-warning">Diperiksa</span>';
                         }
@@ -313,7 +353,7 @@
                         is_approve = 'Diperiksa';
                     } else {
                         bg = 'danger';
-                        is_approve = 'Nonaktif';
+                        is_approve = 'Ditolak';
                     }
 
                     $('#unit_nama').html(json.data.unit_nama);
@@ -325,6 +365,7 @@
                             <ul class='dropdown-menu' style='position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(0px, 39.5px, 0px);' data-popper-placement='bottom-start'>
                                 <li><a class='dropdown-item' href='javascript:void(0);' onClick='update_status_event_unit(` + id + `,1)'>Disetujui</a></li>
                                 <li><a class='dropdown-item' href='javascript:void(0);' onClick='update_status_event_unit(` + id + `,0)'>Diperiksa</a></li>
+                                <li><a class='dropdown-item' href='javascript:void(0);' onClick='update_status_event_unit(` + id + `,2)'>Ditolak</a></li>
                             </ul>
                         </div>`
                     );
@@ -332,7 +373,7 @@
                     $('#kontak').html(json.data.kontak);
                     $('#unit_jenis').html(json.data.unit_jenis + ' ' + json.data.unit_kategori);
                     $('#created_on').html(json.data.created_on);
-                    $('#event_peserta_keterangan').val(json.data.keterangan);
+                    $('#event_unit_keterangan_unit').val(json.data.keterangan);
                     $('#file_surat_tugas').html(`<a href="<?= base_url('uploads/file/event/admin/') ?>${json.data.file_surat_tugas}" target="_blank" class="text-black"><span class="text-info">${json.data.file_surat_tugas}</span></a>`);
                     $('#id_event_unit').val(id);
 
@@ -403,17 +444,17 @@
         });
     }
 
-    function update_catatan() {
-        let event_peserta_keterangan = $('#event_peserta_keterangan').val();
+    function update_catatan_unit() {
+        let event_unit_keterangan = $('#event_unit_keterangan').val();
         let id_event_unit = $('#id_event_unit').val();
 
         Loading.fire({})
         $.ajax({
-            url: '<?= base_url('admin/event/event/update_catatan') ?>',
+            url: '<?= base_url('admin/event/event/update_catatan_unit') ?>',
             type: 'POST',
             dataType: 'json',
             data: {
-                event_peserta_keterangan: event_peserta_keterangan,
+                event_unit_keterangan: event_unit_keterangan,
                 id_event_unit: id_event_unit
             },
             success: function(json) {
@@ -423,12 +464,52 @@
                     title: json.message
                 });
 
-                event_peserta_keterangan = '';
+                event_unit_keterangan = '';
                 id_event_unit = '';
             },
             error: function(xhr, status, error) {
                 console.error('Error:', status, error);
             }
         });
+    }
+
+    function edit_catatan_peserta(id_event_peserta) {
+        $("#catatanModal").modal('show');
+        $("#id_event_peserta").val(id_event_peserta);
+    }
+
+    function update_catatan_peserta() {
+        let id_event_peserta = $('#id_event_peserta').val();
+        let event_peserta_keterangan = $('#event_peserta_keterangan').val();
+
+        Loading.fire({})
+        $.ajax({
+            url: '<?= base_url('admin/event/event/update_catatan_peserta') ?>',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                id_event_peserta: id_event_peserta,
+                event_peserta_keterangan: event_peserta_keterangan
+            },
+            success: function(json) {
+                dataTable.ajax.reload(function() {
+                    Swal.close();
+                    Toast.fire({
+                        icon: json.status,
+                        title: json.message
+                    });
+                });
+
+                $("#catatanModal").modal('hide');
+
+                event_peserta_keterangan = '';
+                id_event_peserta = '';
+            },
+            error: function(xhr, status, error) {
+                console.error('Error:', status, error);
+            }
+        });
+
+        // $("#modalForm")[0].reset();
     }
 </script>

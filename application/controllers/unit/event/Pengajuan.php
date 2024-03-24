@@ -54,7 +54,8 @@ class Pengajuan extends CI_Controller
                 'event' => $this->defaultModel->findBy(['id' => $event_unit->id_event])->row(),
                 'event_unit' => $event_unit,
                 'event_peserta' => $event_peserta,
-                'relawan' => $this->RelawanModel->relawanPeserta(['id_unit' => $event_unit->id_unit],'nama ASC', $id_relawan)->result(),
+                // 'relawan' => $this->RelawanModel->relawanPeserta(['id_unit' => $event_unit->id_unit, 'is_active' => 1, 'is_approve' => 1],'nama ASC', $id_relawan)->result(),
+                'relawan' => $this->RelawanModel->relawanPeserta(['id_unit' => $event_unit->id_unit, 'is_active' => 1, 'is_approve' => 1],'nama ASC')->result(),
                 'content' => $this->url_index . '/detail',
                 'cropper' => 'components/cropper',
                 'aspect' => '3/4'

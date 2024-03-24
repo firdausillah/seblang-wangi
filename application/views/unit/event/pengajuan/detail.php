@@ -14,7 +14,7 @@
                         <label class="form-label" for="">Status pendaftaran</label>
                     </div>
                     <div class="row">
-                        <?= (@$event_unit->is_approve == 1 ? '<span class="alert alert-success">Disetujui</span>' : '<span class="alert alert-warning">Pendaftaran sedang diperiksa, silahkan hubungi Admin untuk informasi lebih lanjut</span>') ?>
+                        <?= (@$event_unit->is_approve == 1 ? '<span class="alert alert-success">Disetujui</span>' : (@$event_unit->is_approve == 0 ? '<span class="alert alert-warning">Pendaftaran sedang diperiksa, silahkan hubungi Admin untuk informasi lebih lanjut</span>' : '<span class="alert alert-danger">Ditolak</span>')) ?>
                         <div class="">
                             <label class="form-label" for="keterangan">Catatan Admin</label>
                             <!-- <input type="text" class="form-control" id="keterangan" value="<?= @$event_unit->keterangan ?>" readonly> -->
@@ -138,7 +138,7 @@
                     <?php foreach ($event_peserta as $index => $item) : ?>
                         <tr>
                             <td><?= $index + 1 ?></td>
-                            <td><?= ($item->is_approve == 1 ? '<span class="badge bg-label-success">Disetujui</span>' : '<span class="badge bg-label-warning">Diperiksa</span>') ?></td>
+                            <td><?= ($item->is_approve == 1 ? '<span class="badge bg-label-success">Disetujui</span>' : ($item->is_approve == 0 ? '<span class="badge bg-label-warning">Diperiksa</span>' : '<span class="badge bg-label-danger">Ditolak</span>')) ?></td>
                             <td><?= $item->relawan_nama ?></td>
                             <td>
                                 <a href="<?= base_url('uploads/file/event/peserta/' . $item->file_persyaratan) ?>" target="_blank" class="text-black"><span class="text-info"><?= $item->file_persyaratan ?></span></a>
@@ -193,6 +193,7 @@
                         </div>
                         <input type="hidden" class="form-control foto" type="input" name="file_foto" id="file_foto">
                         <input type="hidden" class="form-control" value="" id="gambar" name="gambar">
+                        <small class="text-primary">gunakan foto dengan background merah</small>
                     </div>
                     <div class="mb-3">
                         <img src="#" id="img_placeholder" height="200px" alt="">
