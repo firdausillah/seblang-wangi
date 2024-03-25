@@ -90,6 +90,11 @@
             </button>
         </li>
         <li class="nav-item">
+            <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#pendamping" aria-controls="pendamping" aria-selected="fasle">
+                PENDAMPING
+            </button>
+        </li>
+        <li class="nav-item">
             <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#data_unit" aria-controls="data_unit" aria-selected="fasle">
                 DATA PENDAFTARAN UNIT
             </button>
@@ -99,16 +104,34 @@
         <div class="tab-pane fade active show" id="peserta" role="tabpanel">
             <div class="d-flex justify-content-between">
                 <h5 class="my-auto">Peserta <?= @$event->nama ?></h5>
-                <!-- <a href="#" class="btn btn-sm btn-success my-auto disabled" id="add_btn">Tambah data</a> -->
             </div>
             <div class="table-responsive text-nowrap mt-2">
-                <table id="datatables_table1" class="table table-hover">
+                <table id="datatables_table1" class="table table-hover" width="100%">
                     <thead>
                         <tr>
                             <th>No.</th>
                             <th>Status Pendaftaran</th>
                             <th>Nama</th>
                             <th>File Persyaratan</th>
+                            <th>Foto</th>
+                            <th>Catatan</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="pendamping" role="tabpanel">
+            <div class="d-flex justify-content-between">
+                <h5 class="my-auto">Pendamping <?= @$event->nama ?></h5>
+            </div>
+            <div class="table-responsive text-nowrap mt-2">
+                <table id="datatables_table2" class="table table-hover" width="100%">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Status Pendaftaran</th>
+                            <th>Nama</th>
                             <th>Foto</th>
                             <th>Catatan</th>
                             <th>Actions</th>
@@ -211,6 +234,37 @@
     </div>
 </div>
 
+<!-- modal catatanModalPendamping -->
+<div class="modal fade" id="catatanModalPendamping" tabindex="-1" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="catatanModalPendampingTitle">Form Pendamping</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <!-- <form action=""> -->
+            <div class="modal-body">
+                <div class="row">
+                    <input type="hidden" id="id_event_pendamping" name="id_event_pendamping" value="">
+                    <div class="mb-3">
+                        <label for="event_pendamping_keterangan" class="form-label">Catatan</label>
+                        <div class="input-group input-group-merge">
+                            <input type="text" name="event_pendamping_keterangan" id="event_pendamping_keterangan" value="" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+                <button type="button" onclick="update_catatan_pendamping()" class="btn btn-primary">Save changes</button>
+            </div>
+            <!-- </form> -->
+        </div>
+    </div>
+</div>
+
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 
 <script type="text/javascript">
@@ -283,6 +337,80 @@
                         return '<span>' +
                             '<a href="<?= base_url('admin/event/cetak/id_card_event_peserta/') ?>' + data + '" target="_blank" class="text-success"><i class="bx bxs-download me-2 "></i></a>' +
                             '<a href="#" onClick="edit_catatan_peserta(' + data + ')" class="text-info"><i class="bx bx-edit-alt me-1"></i></a>' +
+                            '</span>'
+
+                    }
+                }
+            ],
+            columnDefs: [{
+                orderable: false,
+                className: 'select-checkbox',
+                targets: 0
+            }]
+        });
+
+        dataTable2 = $('#datatables_table2').DataTable({
+            responsive: true,
+            columns: [{
+                    data: 'id',
+                    visible: false
+                },
+                {
+                    data: 'is_approve',
+                    render: function(data, type, row) {
+                        var id = row.id;
+                        var bg = '';
+                        var is_approve = '';
+
+                        if (data == 1) {
+                            bg = 'success';
+                            is_approve = 'Disetujui';
+                        } else if (data == 0) {
+                            bg = 'warning';
+                            is_approve = 'Diperiksa';
+                        } else {
+                            bg = 'danger';
+                            is_approve = 'Ditolak';
+                        }
+
+                        if (data != '') {
+                            return `<div class='btn-group'>
+                                        <button type='button' class='btn btn-sm btn-` + bg + ` dropdown-toggle' data-bs-toggle='dropdown' aria-expanded='true'>
+                                            ` + is_approve + `
+                                        </button>
+                                        <ul class='dropdown-menu' style='position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(0px, 39.5px, 0px);' data-popper-placement='bottom-start'>
+                                            <li><a class='dropdown-item' href='javascript:void(0);' onClick='update_status_event_pendamping(` + id + `,1)'>Disetujui</a></li>
+                                            <li><a class='dropdown-item' href='javascript:void(0);' onClick='update_status_event_pendamping(` + id + `,0)'>Diperiksa</a></li>
+                                            <li><a class='dropdown-item' href='javascript:void(0);' onClick='update_status_event_pendamping(` + id + `,2)'>Ditolak</a></li>
+                                        </ul>
+                                    </div>`;
+                        } else {
+                            return '';
+                        }
+                    }
+                },
+                {
+                    data: 'nama'
+                },
+                {
+                    data: 'foto',
+                    render: function(data, type, row) {
+                        return `
+                                <a href="<?= base_url('uploads/img/event/pendamping/') ?>` + data + `" target="_blank">
+                                    <img src="<?= base_url('uploads/img/event/pendamping/') ?>` + data + `" height="100px" alt="">
+                                </a>
+                            `
+                    }
+                },
+                {
+                    data: 'keterangan'
+                },
+                {
+                    data: 'id',
+                    render: function(data, type, row) {
+                        return '<span>' +
+                            '<a href="<?= base_url('admin/event/cetak/id_card_event_pendamping/') ?>' + data + '" target="_blank" class="text-success"><i class="bx bxs-download me-2 "></i></a>' +
+                            '<a href="#" onClick="edit_catatan_pendamping(' + data + ')" class="text-info"><i class="bx bx-edit-alt me-1"></i></a>' +
                             '</span>'
 
                     }
@@ -389,7 +517,7 @@
                         '<span>' +
                         '<a href = "<?= base_url('admin/event/cetak/id_card_event_unit/') ?>' + json.data.id + '" target = "_blank" class = "btn btn-sm btn-success me-2" > Peserta </a>' +
 
-                        '<a href = "<?= base_url('admin/event/cetak/id_card_event_unit_kordinator/') ?>' + json.data.id + '" target = "_blank" class = "btn btn-sm btn-success" > Kordinator </a>' +
+                        '<a href = "<?= base_url('admin/event/cetak/id_card_event_unit_pendamping/') ?>' + json.data.id + '" target = "_blank" class = "btn btn-sm btn-success" > Kordinator </a>' +
 
                         '</span>'
                     );
@@ -406,33 +534,12 @@
         dataTable.ajax.url('<?= base_url('admin/event/event/getPeserta?id_event_unit=') ?>' + id_event_unit).load(function() {
             Swal.close()
         });
-        return false;
-    }
 
-    function update_status_event_peserta(id, is_approve) {
-        Loading.fire({})
-        $.ajax({
-            url: '<?= base_url('admin/event/event/update_status_event_peserta') ?>',
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                id: id,
-                is_approve: is_approve
-            },
-            success: function(json) {
-                dataTable.ajax.reload(function() {
-                    Swal.close();
-                    Toast.fire({
-                        icon: json.status,
-                        title: json.message
-                    });
-                });
-            },
-            error: function(xhr, status, error) {
-                console.error('Error:', status, error);
-                dataTable.ajax.reload();
-            }
+        // ambil data pendamping
+        dataTable2.ajax.url('<?= base_url('admin/event/event/getPendamping?id_event_unit=') ?>' + id_event_unit).load(function() {
+            Swal.close()
         });
+        return false;
     }
 
     function update_status_event_unit(id, is_approve) {
@@ -486,6 +593,98 @@
             },
             error: function(xhr, status, error) {
                 console.error('Error:', status, error);
+            }
+        });
+    }
+
+    function update_status_event_pendamping(id, is_approve) {
+        Loading.fire({})
+        $.ajax({
+            url: '<?= base_url('admin/event/event/update_status_event_pendamping') ?>',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                id: id,
+                is_approve: is_approve
+            },
+            success: function(json) {
+                dataTable.ajax.reload(function() {
+                    Swal.close();
+                    Toast.fire({
+                        icon: json.status,
+                        title: json.message
+                    });
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('Error:', status, error);
+                dataTable.ajax.reload();
+            }
+        });
+    }
+
+    function edit_catatan_pendamping(id_event_pendamping) {
+        $("#catatanModalPendamping").modal('show');
+        $("#id_event_pendamping").val(id_event_pendamping);
+    }
+
+    function update_catatan_pendamping() {
+        let id_event_pendamping = $('#id_event_pendamping').val();
+        let event_pendamping_keterangan = $('#event_pendamping_keterangan').val();
+
+        Loading.fire({})
+        $.ajax({
+            url: '<?= base_url('admin/event/event/update_catatan_pendamping') ?>',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                id_event_pendamping: id_event_pendamping,
+                event_pendamping_keterangan: event_pendamping_keterangan
+            },
+            success: function(json) {
+                dataTable.ajax.reload(function() {
+                    Swal.close();
+                    Toast.fire({
+                        icon: json.status,
+                        title: json.message
+                    });
+                });
+
+                $("#catatanModal").modal('hide');
+
+                event_pendamping_keterangan = '';
+                id_event_pendamping = '';
+            },
+            error: function(xhr, status, error) {
+                console.error('Error:', status, error);
+            }
+        });
+
+        // $("#modalForm")[0].reset();
+    }
+
+    function update_status_event_peserta(id, is_approve) {
+        Loading.fire({})
+        $.ajax({
+            url: '<?= base_url('admin/event/event/update_status_event_peserta') ?>',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                id: id,
+                is_approve: is_approve
+            },
+            success: function(json) {
+                dataTable.ajax.reload(function() {
+                    Swal.close();
+                    Toast.fire({
+                        icon: json.status,
+                        title: json.message
+                    });
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('Error:', status, error);
+                dataTable.ajax.reload();
             }
         });
     }

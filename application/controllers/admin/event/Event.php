@@ -12,6 +12,7 @@ class Event extends CI_Controller
         $this->load->model('EventModel', 'defaultModel');
         $this->load->model('Event_pesertaModel');
         $this->load->model('Event_unitModel');
+        $this->load->model('Event_pendampingModel');
         $this->load->helper('slug');
         $this->load->helper('upload_file');
 
@@ -71,14 +72,26 @@ class Event extends CI_Controller
 
     public function getPeserta()
     {
-        // print_r($_GET);
-        // exit();
         if($_GET['id_event_unit']!=null){
             $data = [
                     'id_event_unit' => $_GET['id_event_unit'], 
                     'is_active' => 1
             ];
             echo json_encode(['data' => $this->Event_pesertaModel->findBy($data)->result_array()]);
+        }else{
+            echo json_encode([]);
+        }
+
+    }
+
+    public function getPendamping()
+    {
+        if($_GET['id_event_unit']!=null){
+            $data = [
+                    'id_event_unit' => $_GET['id_event_unit'], 
+                    'is_active' => 1
+            ];
+            echo json_encode(['data' => $this->Event_pendampingModel->findBy($data)->result_array()]);
         }else{
             echo json_encode([]);
         }

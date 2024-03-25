@@ -12,6 +12,7 @@ class Pengajuan extends CI_Controller
         $this->load->model('EventModel', 'defaultModel');
         $this->load->model('Event_pesertaModel');
         $this->load->model('Event_unitModel');
+        $this->load->model('Event_pendampingModel');
         $this->load->model('UnitModel');
         $this->load->model('RelawanModel');
         $this->load->helper('slug');
@@ -37,14 +38,34 @@ class Pengajuan extends CI_Controller
             ];
 
             $this->load->view('layout_admin/base', $data);
-        } else if ($page == 'add') {
+        } else if ($page == 'add_pendamping') {
+            $data = [
+                'title' => 'Edit Data',
+                'content' => 'unit/event/pengajuan/form_pendamping',
+                'cropper' => 'components/cropper',
+                'aspect' => '3/4'
+            ];
+
+            $this->load->view('layout_admin/base', $data);
             
-        } else if ($page == 'edit') {
+        } else if ($page == 'edit_pendamping') {
+            $id_event_pendamping = $_GET['id_event_pendamping'];
+            
+            $data = [
+                'title' => 'Edit Data',
+                'event_pendamping' => $this->Event_pendampingModel->findBy(['id' => $id_event_pendamping])->row(),
+                'content' => 'unit/event/pengajuan/form_pendamping',
+                'cropper' => 'components/cropper',
+                'aspect' => '3/4'
+            ];
+
+            $this->load->view('layout_admin/base', $data);
             
         } else if ($page == 'detail') {
             $id = (isset($_GET['id']) ? $_GET['id'] : '');
             $event_unit = $this->Event_unitModel->findBy(['id' => $id, 'is_active != ' => 0])->row();
-            $event_peserta = $this->Event_pesertaModel->findBy(['id_event_unit' => $event_unit->id])->result();
+            $event_peserta = $this->Event_pesertaModel->findBy(['id_event_unit' => $event_unit->id, 'is_active' => 1])->result();
+            $event_pendamping = $this->Event_pendampingModel->findBy(['id_event_unit' => $event_unit->id, 'is_active' => 1])->result();
             foreach ($event_peserta as $key => $value) {
                 $id_relawan[] = $value->id_relawan;
             }
@@ -54,6 +75,7 @@ class Pengajuan extends CI_Controller
                 'event' => $this->defaultModel->findBy(['id' => $event_unit->id_event])->row(),
                 'event_unit' => $event_unit,
                 'event_peserta' => $event_peserta,
+                'event_pendamping' => $event_pendamping,
                 // 'relawan' => $this->RelawanModel->relawanPeserta(['id_unit' => $event_unit->id_unit, 'is_active' => 1, 'is_approve' => 1],'nama ASC', $id_relawan)->result(),
                 'relawan' => $this->RelawanModel->relawanPeserta(['id_unit' => $event_unit->id_unit, 'is_active' => 1, 'is_approve' => 1],'nama ASC')->result(),
                 'content' => $this->url_index . '/detail',
@@ -68,6 +90,12 @@ class Pengajuan extends CI_Controller
     {
 
         echo json_encode(['data' => $this->Event_pesertaModel->findBy(['id' => $_GET['id_peserta']])->row()]);
+    }
+
+    public function getUnitPendamping()
+    {
+
+        echo json_encode(['data' => $this->Event_pendampingModel->findBy(['id' => $_GET['id_pendamping']])->row()]);
     }
 
     public function save_file($file, $slug, $folderPath)
@@ -146,7 +174,7 @@ class Pengajuan extends CI_Controller
 
         // begin upload pdf
             if (!$this->input->post('file_name')) {
-                $slug = slugify('File Persyaratan'.'-'. $relawan_data->nama . '-' . $this->input->post('unit_nama'));
+                $slug = slugify('File Persyaratan'.'-'. $relawan_data->nama . '-' . $event_data->event_nama);
             } else {
                 $slug = explode('.', $this->input->post('file_name'))[0];
             }
@@ -167,7 +195,7 @@ class Pengajuan extends CI_Controller
 
         // begin upload foto
         if (!$this->input->post('gambar')) {
-            $slug = slugify('foto'.'-'. $relawan_data->nama . '-' . $this->input->post('unit_nama'));
+            $slug = slugify('foto'.'-'. $relawan_data->nama . '-' . $event_data->event_nama);
         } else {
             $slug = explode('.', $this->input->post('gambar'))[0];
         }
@@ -212,6 +240,67 @@ class Pengajuan extends CI_Controller
             exit($this->session->set_flashdata(['status' => 'error', 'message' => 'Oops! Terjadi kesalahan']));
         } else {
             if ($this->Event_pesertaModel->update(['id' => $id], $data)) {
+                $this->session->set_flashdata(['status' => 'success', 'message' => 'Data berhasil diupdate']);
+                redirect(base_url('unit/event/pengajuan?page=detail&id='.$this->input->post('id_event_unit')));
+            }
+            exit($this->session->set_flashdata(['status' => 'error', 'message' => 'Oops! Terjadi kesalahan']));
+        }
+    }
+
+    public function save_pendamping()
+    {
+
+        $id = $this->input->post('id_pendamping');
+        $event_data = $this->Event_unitModel->findBy(['id' => $this->input->post('id_event_unit')])->row();
+
+
+        // begin upload foto
+        if (!$this->input->post('gambar')) {
+            $slug = slugify('foto'.'-'. $this->input->post('nama') . '-' . $event_data->event_nama);
+        } else {
+            $slug = explode('.', $this->input->post('gambar'))[0];
+        }
+
+        $file_foto = $this->input->post('file_foto');
+        $folderPath = './uploads/img/' . $this->defaultVariable . '/pendamping/';
+        $foto = ($this->input->post('gambar') ? $this->input->post('gambar') : $slug); //jika upload berhasil akan di replace oleh function save_foto()
+
+        
+        // exit();
+        if ($file_foto) {
+            $foto = save_foto(
+                $file_foto,
+                $slug,
+                $folderPath
+                // return $foto -> nama foto
+            );
+        }
+        // end upload foto
+
+        $data = [
+            'is_active' => 1,
+            'id_unit'   =>  $event_data->id_unit,
+            'id_event_unit' =>  $this->input->post('id_event_unit'),
+
+            'nama' =>  $this->input->post('nama'),
+
+            'unit_nama' =>  $event_data->unit_nama,
+            'unit_kategori' =>  $event_data->unit_kategori,
+            'unit_jenis'    =>  $event_data->unit_jenis,
+            'foto'  => $foto
+        ];
+
+
+
+        if (empty($id)) {
+            unset($id);
+            if ($this->Event_pendampingModel->add($data)) {
+                $this->session->set_flashdata(['status' => 'success', 'message' => 'Data berhasil dimasukan']);
+                redirect(base_url('unit/event/pengajuan?page=detail&id='.$this->input->post('id_event_unit')));
+            }
+            exit($this->session->set_flashdata(['status' => 'error', 'message' => 'Oops! Terjadi kesalahan']));
+        } else {
+            if ($this->Event_pendampingModel->update(['id' => $id], $data)) {
                 $this->session->set_flashdata(['status' => 'success', 'message' => 'Data berhasil diupdate']);
                 redirect(base_url('unit/event/pengajuan?page=detail&id='.$this->input->post('id_event_unit')));
             }
@@ -281,5 +370,16 @@ class Pengajuan extends CI_Controller
             $this->session->set_flashdata(['status' => 'error', 'message' => 'Oops! Terjadi kesalahan']);
         }
         redirect($this->url_index);
+    }
+
+    public function nonaktif_pendamping($id)
+    {
+        $event_unit = $this->Event_pendampingModel->findBy(['id' => $id])->row();
+        if ($this->Event_pendampingModel->update(['id' => $id], ['is_active' => 0])) {
+            $this->session->set_flashdata(['status' => 'success', 'message' => 'Data berhasil dinonaktifkan']);
+        } else {
+            $this->session->set_flashdata(['status' => 'error', 'message' => 'Oops! Terjadi kesalahan']);
+        }
+        redirect('unit/event/pengajuan?page=detail&id='. $event_unit->id_event_unit);
     }
 }

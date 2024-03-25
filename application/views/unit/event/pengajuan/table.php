@@ -1,8 +1,6 @@
 <div class="card p-3">
     <div class="d-flex justify-content-between">
         <h5 class="my-auto"><?= $title ? $title : '' ?></h5>
-        <a href="<?= base_url('unit/event/pengajuan?page=add') ?>" class="btn btn-sm btn-success my-auto">Tambah data</a>
-        <!-- <a href="" class="btn btn-info">Tambah data</a> -->
     </div>
     <div class="table-responsive text-nowrap mt-2">
         <table id="datatables_table" class="table table-hover">

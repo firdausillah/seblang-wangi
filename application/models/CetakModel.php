@@ -14,7 +14,8 @@
 			a.relawan_kode,  
 			CONCAT(a.unit_jenis, " ", a.unit_kategori, " ", a.unit_nama) AS unit_nama, 
 			a.foto, 
-			b.event_nama 
+			b.event_nama,
+			"Peserta" AS sebagai
 		FROM event_peserta_t a 
 		LEFT JOIN event_unit_t b ON a.id_event_unit = b.id 
 		WHERE a.id_event_unit = '. $id_event_unit);
@@ -27,20 +28,22 @@
 			a.relawan_kode,  
 			CONCAT(a.unit_jenis, " ", a.unit_kategori, " ", a.unit_nama) AS unit_nama, 
 			a.foto, 
-			b.event_nama 
+			b.event_nama,
+			"Peserta" AS sebagai
 		FROM event_peserta_t a 
 		LEFT JOIN event_unit_t b ON a.id_event_unit = b.id 
 		WHERE a.id = '. $id_event_peserta);
  	}
 
- 	function get_kordinator($id_event_unit){
+ 	function get_pendamping($id_event_unit){
 		return $this->db->query('
 		SELECT 
-			a.kordinator_nama, 
+			a.pendamping_nama, 
 			a.kontak,  
 			CONCAT(a.unit_jenis, " ", a.unit_kategori, " ", a.unit_nama) AS unit_nama, 
-			a.event_nama 
-		FROM event_unit a 
+			a.event_nama,
+			"Pendamping" AS sebagai
+		FROM event_unit_t a 
 		WHERE a.id = '. $id_event_unit);
  	}
 

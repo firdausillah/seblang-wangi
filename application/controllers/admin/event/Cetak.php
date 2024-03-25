@@ -34,13 +34,13 @@ class Cetak extends CI_Controller
         $this->load->view('layout_print/base', $data);
     }
 
-    public function id_card_event_unit_kordinator($id)
+    public function id_card_event_unit_pendamping($id)
     {
         $data = [
-            'title' => 'Print ID Card Event Unit Kordinator',
+            'title' => 'Print ID Card Event Unit Pendamping',
             // 'event' => $this->CetakModel->get()->row(),
-            'kordinator' => $this->CetakModel->get_kordinator($id)->result(),
-            'content' => 'admin/event/print/id_card_event_unit_kordinator',
+            'pendamping' => $this->CetakModel->get_pendamping($id)->result(),
+            'content' => 'admin/event/print/id_card_event_unit_pendamping',
             'base_url' => base_url('uploads/img/event/peserta/')
         ];
         $this->load->view('layout_print/base', $data);

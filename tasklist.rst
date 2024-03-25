@@ -64,9 +64,9 @@ kontak kordinator unit *
 
 nambah catatan di peserta *
 
-print id card masing masing peserta 
+print id card masing masing peserta *
 
-input pendamping
+input pendamping + cetak id card
 
 relawan aktif berdasarkan rentang waktu 
 
@@ -75,3 +75,5 @@ download data
 delete img 
 
 cek ulang upload file 
+
+http://localhost/seblang-wangi/admin/event/event?page=detail&id=1
