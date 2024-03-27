@@ -608,7 +608,7 @@
                 is_approve: is_approve
             },
             success: function(json) {
-                dataTable.ajax.reload(function() {
+                dataTable2.ajax.reload(function() {
                     Swal.close();
                     Toast.fire({
                         icon: json.status,
@@ -618,7 +618,7 @@
             },
             error: function(xhr, status, error) {
                 console.error('Error:', status, error);
-                dataTable.ajax.reload();
+                dataTable2.ajax.reload();
             }
         });
     }
@@ -642,7 +642,7 @@
                 event_pendamping_keterangan: event_pendamping_keterangan
             },
             success: function(json) {
-                dataTable.ajax.reload(function() {
+                dataTable2.ajax.reload(function() {
                     Swal.close();
                     Toast.fire({
                         icon: json.status,
@@ -650,7 +650,7 @@
                     });
                 });
 
-                $("#catatanModal").modal('hide');
+                $("#catatanModalPendamping").modal('hide');
 
                 event_pendamping_keterangan = '';
                 id_event_pendamping = '';

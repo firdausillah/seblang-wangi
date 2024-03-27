@@ -166,6 +166,27 @@ class Event extends CI_Controller
         }
     }
 
+    public function update_status_event_pendamping()
+    {
+        if ($this->Event_pendampingModel->update(['id' => $_POST['id']], ['is_approve' => $_POST['is_approve']])) {
+            echo json_encode(['status' => 'success', 'message' => 'Data berhasil diupdate']);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Oops! Terjadi kesalahan']);
+        }
+    }
+
+    public function update_catatan_pendamping()
+    {
+        // print_r($_POST); exit();
+        if ($this->Event_pendampingModel->update(['id' => $_POST['id_event_pendamping']], ['keterangan' => $_POST['event_pendamping_keterangan']])) {
+            echo json_encode(['status' => 'success', 'message' => 'Data berhasil diupdate']);
+            // redirect(base_url('admin/event/event?page=detail&id='.$_POST['id_event']));
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Oops! Terjadi kesalahan']);
+            // redirect(base_url('admin/event/event?page=detail&id='.$_POST['id_event']));
+        }
+    }
+
     public function save_file($file, $slug, $folderPath)
     {
         if (!empty($file)) { // $_FILES untuk mengambil data file

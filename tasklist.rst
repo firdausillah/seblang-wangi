@@ -66,7 +66,9 @@ nambah catatan di peserta *
 
 print id card masing masing peserta *
 
-input pendamping + cetak id card
+input pendamping + cetak id card *
+
+http://localhost/seblang-wangi/admin/event/event?page=detail&id=1 *
 
 relawan aktif berdasarkan rentang waktu 
 
@@ -75,5 +77,3 @@ download data
 delete img 
 
 cek ulang upload file 
-
-http://localhost/seblang-wangi/admin/event/event?page=detail&id=1
