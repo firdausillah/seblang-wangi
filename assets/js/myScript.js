@@ -95,3 +95,12 @@ function confirmSignIn(data){
   });
 }
 
+function exportExcel(url){
+  window.open(url+'exportExcel', '_blank');
+  Toast.fire({
+    icon: 'success',
+    title: 'Data berhasil diexport!'
+  });
+};
+
+

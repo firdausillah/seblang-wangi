@@ -1,5 +1,9 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
+require 'vendor/autoload.php';
+
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class Aset_gedung extends CI_Controller
 {
@@ -83,6 +87,48 @@ class Aset_gedung extends CI_Controller
             }
             exit($this->session->set_flashdata(['status' => 'error', 'message' => 'Oops! Terjadi kesalahan']));
         }
+    }
+
+    public function exportExcel()
+    {
+        // print_r(); exit();
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        foreach (range('A', 'F') as $key => $value) {
+            $spreadsheet->getActiveSheet()->getColumnDimension($value)->setAutoSize(true);
+        }
+
+        $sheet->setCellValue("A1", "nama");
+        $sheet->setCellValue("B1", "tanggal");
+        $sheet->setCellValue("C1", "luas_tanah");
+        $sheet->setCellValue("D1", "tahun_perolehan");
+        $sheet->setCellValue("E1", "nilai_perolehan");
+        $sheet->setCellValue("F1", "alamat");
+        $sheet->setCellValue("G1", "sumber");
+        $sheet->setCellValue("H1", "status_kepemilikan");
+
+
+        $pelaporan = $this->defaultModel->findBy(['is_active' => 1, 'jenis_aset' => 'gedung'])->result_array();
+        $x = 2;
+        foreach ($pelaporan as $key => $value) {
+            $sheet->setCellValue("A" . $x, $value["nama"]);
+            $sheet->setCellValue("B" . $x, $value["created_on"]);
+            $sheet->setCellValue("C" . $x, $value["luas_tanah"]);
+            $sheet->setCellValue("D" . $x, $value["tahun_perolehan"]);
+            $sheet->setCellValue("E" . $x, $value["nilai_perolehan"]);
+            $sheet->setCellValue("F" . $x, $value["alamat"]);
+            $sheet->setCellValue("G" . $x, $value["sumber"]);
+            $sheet->setCellValue("H" . $x, $value["status_kepemilikan"]);
+            $x++;
+        }
+
+        $writer = new Xlsx($spreadsheet);
+        $fileName = 'pelaporan-aset-gedung-seblang-wangi-' . date('dmy') . '.xlsx';
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="' . $fileName . '"');
+        $writer->save('php://output');
     }
 
     public function delete($id)

@@ -1,7 +1,10 @@
 <div class="card p-3">
     <div class="d-flex justify-content-between">
         <h5 class="my-auto"><?= $title ? $title : '' ?></h5>
-        <a href="<?= base_url('admin/logistik/aset_mesin?page=add') ?>" class="btn btn-sm btn-success my-auto">Tambah data</a>
+        <span>
+            <a href="#" onclick="exportExcel('<?= base_url('admin/logistik/aset_mesin/') ?>')" class="btn btn-sm btn-info my-auto">Export Excel</a>
+            <a href="<?= base_url('admin/logistik/aset_mesin?page=add') ?>" class="btn btn-sm btn-success my-auto">Tambah data</a>
+        </span>
         <!-- <a href="" class="btn btn-info">Tambah data</a> -->
     </div>
     <div class="table-responsive text-nowrap mt-2">

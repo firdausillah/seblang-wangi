@@ -1,5 +1,9 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
+require 'vendor/autoload.php';
+
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class Aset_kantor extends CI_Controller
 {
@@ -112,6 +116,61 @@ class Aset_kantor extends CI_Controller
             }
             exit($this->session->set_flashdata(['status' => 'error', 'message' => 'Oops! Terjadi kesalahan']));
         }
+    }
+
+    public function exportExcel()
+    {
+        // print_r(); exit();
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        foreach (range('A', 'F') as $key => $value) {
+            $spreadsheet->getActiveSheet()->getColumnDimension($value)->setAutoSize(true);
+        }
+
+        $sheet->setCellValue("A1", "nama");
+        $sheet->setCellValue("B1", "keterangan");
+        $sheet->setCellValue("C1", "tanggal");
+        $sheet->setCellValue("D1", "tahun_perolehan");
+        $sheet->setCellValue("E1", "nilai_perolehan");
+        $sheet->setCellValue("F1", "sumber");
+        $sheet->setCellValue("G1", "merk");
+        $sheet->setCellValue("H1", "type");
+        $sheet->setCellValue("I1", "serial_number");
+        $sheet->setCellValue("J1", "jumlah");
+        $sheet->setCellValue("K1", "kondisi");
+        $sheet->setCellValue("L1", "pengguna");
+        $sheet->setCellValue("M1", "foto");
+        $sheet->setCellValue("N1", "status_kepemilikan");
+        $sheet->setCellValue("O1", "jenis_aset");
+
+        $pelaporan = $this->defaultModel->findBy(['is_active' => 1, 'jenis_aset' => 'kantor'])->result_array();
+        $x = 2;
+        foreach ($pelaporan as $key => $value) {
+            $sheet->setCellValue("A" . $x, $value["nama"]);
+            $sheet->setCellValue("B" . $x, $value["keterangan"]);
+            $sheet->setCellValue("C" . $x, $value["created_on"]);
+            $sheet->setCellValue("D" . $x, $value["tahun_perolehan"]);
+            $sheet->setCellValue("E" . $x, $value["nilai_perolehan"]);
+            $sheet->setCellValue("F" . $x, $value["sumber"]);
+            $sheet->setCellValue("G" . $x, $value["merk"]);
+            $sheet->setCellValue("H" . $x, $value["type"]);
+            $sheet->setCellValue("I" . $x, $value["serial_number"]);
+            $sheet->setCellValue("J" . $x, $value["jumlah"]);
+            $sheet->setCellValue("K" . $x, $value["kondisi"]);
+            $sheet->setCellValue("L" . $x, $value["pengguna"]);
+            $sheet->setCellValue("M" . $x, $value["foto"]);
+            $sheet->setCellValue("N" . $x, $value["status_kepemilikan"]);
+            $sheet->setCellValue("O" . $x, $value["jenis_aset"]);
+            $x++;
+        }
+
+        $writer = new Xlsx($spreadsheet);
+        $fileName = 'pelaporan-aset-kantor-seblang-wangi-' . date('dmy') . '.xlsx';
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="' . $fileName . '"');
+        $writer->save('php://output');
     }
 
     public function delete($id)

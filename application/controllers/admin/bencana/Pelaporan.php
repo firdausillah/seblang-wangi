@@ -1,5 +1,8 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
+require 'vendor/autoload.php';
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class Pelaporan extends CI_Controller
 {
@@ -132,6 +135,97 @@ class Pelaporan extends CI_Controller
             }
             exit($this->session->set_flashdata(['status' => 'error', 'message' => 'Oops! Terjadi kesalahan']));
         }
+    }
+
+    public function exportExcel(){
+        // print_r(); exit();
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        foreach (range('A', 'F') as $key => $value) {
+            $spreadsheet->getActiveSheet()->getColumnDimension($value)->setAutoSize(true);
+
+        }
+
+        $sheet->setCellValue("A1", "created_on");
+        $sheet->setCellValue("B1", "tanggal");
+        $sheet->setCellValue("C1", "jalan");
+        $sheet->setCellValue("D1", "alamat");
+        $sheet->setCellValue("E1", "kab_kota");
+        $sheet->setCellValue("F1", "provinsi");
+        $sheet->setCellValue("G1", "kejadian");
+        $sheet->setCellValue("H1", "kegiatan");
+        $sheet->setCellValue("I1", "jumlah_terdampak_kk");
+        $sheet->setCellValue("J1", "jumlah_terdampak_jiwa");
+        $sheet->setCellValue("K1", "jumlah_mengungsi_jiwa");
+        $sheet->setCellValue("L1", "jumlah_luka_ringan");
+        $sheet->setCellValue("M1", "jumlah_luka_berat");
+        $sheet->setCellValue("N1", "jumlah_meninggal");
+        $sheet->setCellValue("O1", "jumlah_hilang");
+        $sheet->setCellValue("P1", "jumlah_rumah_rusak_berat");
+        $sheet->setCellValue("Q1", "jumlah_rumah_rusak_sedang");
+        $sheet->setCellValue("R1", "jumlah_rumah_rusak_ringan");
+        $sheet->setCellValue("S1", "jumlah_jalan_rusak");
+        $sheet->setCellValue("T1", "jumlah_jembatan");
+        $sheet->setCellValue("U1", "jumlah_faskes");
+        $sheet->setCellValue("V1", "jumlah_fasilitas_pendidikan");
+        $sheet->setCellValue("W1", "jumlah_tempat_ibadah");
+        $sheet->setCellValue("X1", "jumlah_fasilitas_umum");
+        $sheet->setCellValue("Y1", "akses_telepon_internet");
+        $sheet->setCellValue("Z1", "akses_listrik");
+        $sheet->setCellValue("AA1", "akses_air_bersih");
+        $sheet->setCellValue("AB1", "food_item");
+        $sheet->setCellValue("AC1", "non_food_item");
+        $sheet->setCellValue("AD1", "jumlah_penerima_manfaat");
+        $sheet->setCellValue("AE1", "jumlah_laki_laki");
+        $sheet->setCellValue("AF1", "jumlah_perempuan");
+        $sheet->setCellValue("AG1", "foto");
+
+        $pelaporan = $this->defaultModel->get()->result_array();
+        $x = 2;
+        foreach ($pelaporan as $key => $value) {
+            $sheet->setCellValue("A" . $x, $value["created_on"]);
+            $sheet->setCellValue("B" . $x, $value["tanggal"]);
+            $sheet->setCellValue("C" . $x, $value["jalan"]);
+            $sheet->setCellValue("D" . $x, $value["alamat"]);
+            $sheet->setCellValue("E" . $x, $value["kab_kota"]);
+            $sheet->setCellValue("F" . $x, $value["provinsi"]);
+            $sheet->setCellValue("G" . $x, $value["kejadian"]);
+            $sheet->setCellValue("H" . $x, $value["kegiatan"]);
+            $sheet->setCellValue("I" . $x, $value["jumlah_terdampak_kk"]);
+            $sheet->setCellValue("J" . $x, $value["jumlah_terdampak_jiwa"]);
+            $sheet->setCellValue("K" . $x, $value["jumlah_mengungsi_jiwa"]);
+            $sheet->setCellValue("L" . $x, $value["jumlah_luka_ringan"]);
+            $sheet->setCellValue("M" . $x, $value["jumlah_luka_berat"]);
+            $sheet->setCellValue("N" . $x, $value["jumlah_meninggal"]);
+            $sheet->setCellValue("O" . $x, $value["jumlah_hilang"]);
+            $sheet->setCellValue("P" . $x, $value["jumlah_rumah_rusak_berat"]);
+            $sheet->setCellValue("Q" . $x, $value["jumlah_rumah_rusak_sedang"]);
+            $sheet->setCellValue("R" . $x, $value["jumlah_rumah_rusak_ringan"]);
+            $sheet->setCellValue("S" . $x, $value["jumlah_jalan_rusak"]);
+            $sheet->setCellValue("T" . $x, $value["jumlah_jembatan"]);
+            $sheet->setCellValue("U" . $x, $value["jumlah_faskes"]);
+            $sheet->setCellValue("V" . $x, $value["jumlah_fasilitas_pendidikan"]);
+            $sheet->setCellValue("W" . $x, $value["jumlah_tempat_ibadah"]);
+            $sheet->setCellValue("X" . $x, $value["jumlah_fasilitas_umum"]);
+            $sheet->setCellValue("Y" . $x, $value["akses_telepon_internet"]);
+            $sheet->setCellValue("Z" . $x, $value["akses_listrik"]);
+            $sheet->setCellValue("AA" . $x, $value["akses_air_bersih"]);
+            $sheet->setCellValue("AB" . $x, $value["food_item"]);
+            $sheet->setCellValue("AC" . $x, $value["non_food_item"]);
+            $sheet->setCellValue("AD" . $x, $value["jumlah_penerima_manfaat"]);
+            $sheet->setCellValue("AE" . $x, $value["jumlah_laki_laki"]);
+            $sheet->setCellValue("AF" . $x, $value["jumlah_perempuan"]);
+            $sheet->setCellValue("AG" . $x, $value["foto"]);
+            $x++;
+        }
+
+        $writer = new Xlsx($spreadsheet);
+        $fileName = 'pelaporan-bencana-seblang-wangi-'. date('dmy').'.xlsx';
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="'.$fileName.'"');
+        $writer->save('php://output');
     }
 
     public function delete($id)
