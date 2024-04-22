@@ -30,7 +30,10 @@
         <div class="tab-pane fade active show" id="tab" role="tabpanel">
             <div class="d-flex justify-content-between">
                 <h5 class="my-auto"><?= $title ? $title : '' ?></h5>
-                <a href="#" class="btn btn-sm btn-success my-auto disabled" id="add_btn">Tambah data</a>
+                <span>
+                    <a href="#" id="export_excel" onclick="" class="btn btn-sm btn-info my-auto">Export Excel</a>
+                    <a href="#" class="btn btn-sm btn-success my-auto disabled" id="add_btn">Tambah data</a>
+                </span>
             </div>
             <div class="table-responsive text-nowrap mt-2">
                 <table id="datatables_table1" class="table table-hover">
@@ -189,6 +192,8 @@
 
         $('#add_btn').removeClass('disabled');
         $('#add_btn').attr('href', '<?= base_url('admin/relawan/relawan?page=add&unit=') ?>' + tabId.substring(1));
+
+        $('#export_excel').attr('onclick', "exportExcel2('<?= base_url('admin/relawan/relawan/exportExcel/') ?>"+tabId.substring(1)+"')")
 
 
         history.replaceState(null, null, '?unit=' + tabId.substring(1));

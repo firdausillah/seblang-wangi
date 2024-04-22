@@ -1,5 +1,9 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
+require 'vendor/autoload.php';
+
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class Penghargaan extends CI_Controller
 {
@@ -80,6 +84,47 @@ class Penghargaan extends CI_Controller
             }
             exit($this->session->set_flashdata(['status' => 'error', 'message' => 'Oops! Terjadi kesalahan']));
         }
+    }
+
+    public function exportExcel()
+    {
+        // print_r(); exit();
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        foreach (range('A', 'F') as $key => $value) {
+            $spreadsheet->getActiveSheet()->getColumnDimension($value)->setAutoSize(true);
+        }
+
+        $sheet->setCellValue("A1", "nama");
+        $sheet->setCellValue("B1", "jenis_kelamin");
+        $sheet->setCellValue("C1", "tempat_lahir");
+        $sheet->setCellValue("D1", "tanggal_lahir");
+        $sheet->setCellValue("E1", "alamat");
+        $sheet->setCellValue("F1", "penghargaan");
+
+
+
+
+        $pelaporan = $this->defaultModel->findBy(['is_active' => 1])->result_array();
+        $x = 2;
+        foreach ($pelaporan as $key => $value) {
+            $sheet->setCellValue("A" . $x, $value["nama"]);
+            $sheet->setCellValue("B" . $x, $value["jenis_kelamin"]);
+            $sheet->setCellValue("C" . $x, $value["tempat_lahir"]);
+            $sheet->setCellValue("D" . $x, $value["tanggal_lahir"]);
+            $sheet->setCellValue("E" . $x, $value["alamat"]);
+            $sheet->setCellValue("F" . $x, $value["penghargaan"]);
+
+            $x++;
+        }
+
+        $writer = new Xlsx($spreadsheet);
+        $fileName = $this->defaultVariable . '-seblang-wangi-' . date('dmy') . '.xlsx';
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="' . $fileName . '"');
+        $writer->save('php://output');
     }
 
     public function delete($id)

@@ -1,5 +1,9 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
+require 'vendor/autoload.php';
+
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class Unit extends CI_Controller
 {
@@ -213,6 +217,54 @@ class Unit extends CI_Controller
             }
             exit($this->session->set_flashdata(['status' => 'error', 'message' => 'Oops! Terjadi kesalahan']));
         }
+    }
+
+    public function exportExcel()
+    {
+        // print_r(); exit();
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        foreach (range('A', 'F') as $key => $value) {
+            $spreadsheet->getActiveSheet()->getColumnDimension($value)->setAutoSize(true);
+        }
+
+        $sheet->setCellValue("A1", "nama");
+        $sheet->setCellValue("B1", "kode");
+        $sheet->setCellValue("C1", "keterangan");
+        $sheet->setCellValue("D1", "jenis");
+        $sheet->setCellValue("E1", "kategori");
+        $sheet->setCellValue("F1", "email");
+        $sheet->setCellValue("G1", "telepon");
+        $sheet->setCellValue("H1", "alamat");
+        $sheet->setCellValue("I1", "sk");
+        $sheet->setCellValue("J1", "password");
+        $sheet->setCellValue("K1", "status_pendaftaran");
+
+        $pelaporan = $this->defaultModel->findBy(['is_active' => 1])->result_array();
+        $x = 2;
+        foreach ($pelaporan as $key => $value) {
+            $sheet->setCellValue("A" . $x, $value["nama"]);
+            $sheet->setCellValue("B" . $x, $value["kode"]);
+            $sheet->setCellValue("C" . $x, $value["keterangan"]);
+            $sheet->setCellValue("D" . $x, $value["jenis"]);
+            $sheet->setCellValue("E" . $x, $value["kategori"]);
+            $sheet->setCellValue("F" . $x, $value["email"]);
+            $sheet->setCellValue("G" . $x, $value["telepon"]);
+            $sheet->setCellValue("H" . $x, $value["alamat"]);
+            $sheet->setCellValue("I" . $x, $value["sk"]);
+            $sheet->setCellValue("J" . $x, $value["password"]);
+            $sheet->setCellValue("K" . $x, ($value["is_approve"]==1?'Disetujui':($value["is_approve"]==0?"Diperiksa":"Ditolak")));
+
+            $x++;
+        }
+
+        $writer = new Xlsx($spreadsheet);
+        $fileName = $this->defaultVariable . '-seblang-wangi-' . date('dmy') . '.xlsx';
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="' . $fileName . '"');
+        $writer->save('php://output');
     }
 
     public function delete($id)

@@ -1,5 +1,9 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
+require 'vendor/autoload.php';
+
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class Mobile_unit extends CI_Controller
 {
@@ -84,6 +88,53 @@ class Mobile_unit extends CI_Controller
             }
             exit($this->session->set_flashdata(['status' => 'error', 'message' => 'Oops! Terjadi kesalahan']));
         }
+    }
+
+    public function exportExcel()
+    {
+        // print_r(); exit();
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        foreach (range('A', 'F') as $key => $value) {
+            $spreadsheet->getActiveSheet()->getColumnDimension($value)->setAutoSize(true);
+        }
+
+        $sheet->setCellValue("A1", "tanggal");
+        $sheet->setCellValue("B1", "nama_lembaga");
+        $sheet->setCellValue("C1", "lokasi");
+        $sheet->setCellValue("D1", "jumlah_kantong");
+        $sheet->setCellValue("E1", "keterangan");
+        $sheet->setCellValue("F1", "jumlah_a");
+        $sheet->setCellValue("G1", "jumlah_b");
+        $sheet->setCellValue("H1", "jumlah_ab");
+        $sheet->setCellValue("I1", "jumlah_o");
+
+
+
+        $pelaporan = $this->defaultModel->findBy(['is_active' => 1])->result_array();
+        $x = 2;
+        foreach ($pelaporan as $key => $value) {
+            $sheet->setCellValue("A" . $x, $value["tanggal"]);
+            $sheet->setCellValue("B" . $x, $value["nama_lembaga"]);
+            $sheet->setCellValue("C" . $x, $value["lokasi"]);
+            $sheet->setCellValue("D" . $x, $value["jumlah_kantong"]);
+            $sheet->setCellValue("E" . $x, $value["keterangan"]);
+            $sheet->setCellValue("F" . $x, $value["jumlah_a"]);
+            $sheet->setCellValue("G" . $x, $value["jumlah_b"]);
+            $sheet->setCellValue("H" . $x, $value["jumlah_ab"]);
+            $sheet->setCellValue("I" . $x, $value["jumlah_o"]);
+
+
+            $x++;
+        }
+
+        $writer = new Xlsx($spreadsheet);
+        $fileName = $this->defaultVariable.'-seblang-wangi-' . date('dmy') . '.xlsx';
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="' . $fileName . '"');
+        $writer->save('php://output');
     }
 
     public function delete($id)

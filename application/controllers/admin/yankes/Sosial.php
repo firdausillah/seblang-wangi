@@ -1,5 +1,9 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
+require 'vendor/autoload.php';
+
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class Sosial extends CI_Controller
 {
@@ -30,7 +34,7 @@ class Sosial extends CI_Controller
         if($page == 'index'){
             $data = [
                 'title' => 'Pelayanan Sosial',
-                $this->defaultVariable => $this->defaultModel->findBy(['jenis_pelayanan' => 'Sosial'])->result(),
+                $this->defaultVariable => $this->defaultModel->findBy(['jenis_pelayanan' => 'Sosial', 'is_active' => 1])->result(),
                 'content' => 'admin/yankes/table',
                 'jenis_pelayanan' => 'sosial'
             ];
@@ -126,6 +130,68 @@ class Sosial extends CI_Controller
             }
             exit($this->session->set_flashdata(['status' => 'error', 'message' => 'Oops! Terjadi kesalahan']));
         }
+    }
+
+    public function exportExcel()
+    {
+        // print_r(); exit();
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        foreach (range('A', 'F') as $key => $value) {
+            $spreadsheet->getActiveSheet()->getColumnDimension($value)->setAutoSize(true);
+        }
+
+        $sheet->setCellValue("A1", "jenis_pelayanan");
+        $sheet->setCellValue("B1", "kategori_pelayanan");
+        $sheet->setCellValue("C1", "tanggal_mulai");
+        $sheet->setCellValue("D1", "tanggal_selesai");
+        $sheet->setCellValue("E1", "foto");
+        $sheet->setCellValue("F1", "jumlah_kk");
+        $sheet->setCellValue("G1", "jumlah_jiwa");
+        $sheet->setCellValue("H1", "jumlah_laki_laki");
+        $sheet->setCellValue("I1", "jumlah_perempuan");
+        $sheet->setCellValue("J1", "jumlah_bayi");
+        $sheet->setCellValue("K1", "jumlah_balita");
+        $sheet->setCellValue("L1", "jumlah_anak");
+        $sheet->setCellValue("M1", "jumlah_remaja");
+        $sheet->setCellValue("N1", "jumlah_dewasa");
+        $sheet->setCellValue("O1", "jumlah_lansia");
+        $sheet->setCellValue("P1", "jumlah_disabilitas");
+        $sheet->setCellValue("Q1", "jumlah_ibu_hamil");
+        $sheet->setCellValue("R1", "tempat");
+
+        $pelaporan = $this->defaultModel->findBy(['is_active' => 1, 'jenis_pelayanan' => 'Sosial'])->result_array();
+        $x = 2;
+        foreach ($pelaporan as $key => $value) {
+            $sheet->setCellValue("A" . $x, $value["jenis_pelayanan"]);
+            $sheet->setCellValue("B" . $x, $value["kategori_pelayanan"]);
+            $sheet->setCellValue("C" . $x, $value["tanggal_mulai"]);
+            $sheet->setCellValue("D" . $x, $value["tanggal_selesai"]);
+            $sheet->setCellValue("E" . $x, $value["foto"]);
+            $sheet->setCellValue("F" . $x, $value["jumlah_kk"]);
+            $sheet->setCellValue("G" . $x, $value["jumlah_jiwa"]);
+            $sheet->setCellValue("H" . $x, $value["jumlah_laki_laki"]);
+            $sheet->setCellValue("I" . $x, $value["jumlah_perempuan"]);
+            $sheet->setCellValue("J" . $x, $value["jumlah_bayi"]);
+            $sheet->setCellValue("K" . $x, $value["jumlah_balita"]);
+            $sheet->setCellValue("L" . $x, $value["jumlah_anak"]);
+            $sheet->setCellValue("M" . $x, $value["jumlah_remaja"]);
+            $sheet->setCellValue("N" . $x, $value["jumlah_dewasa"]);
+            $sheet->setCellValue("O" . $x, $value["jumlah_lansia"]);
+            $sheet->setCellValue("P" . $x, $value["jumlah_disabilitas"]);
+            $sheet->setCellValue("Q" . $x, $value["jumlah_ibu_hamil"]);
+            $sheet->setCellValue("R" . $x, $value["tempat"]);
+
+            $x++;
+        }
+
+        $writer = new Xlsx($spreadsheet);
+        $fileName = 'pelayanan-sosial-seblang-wangi-' . date('dmy') . '.xlsx';
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="' . $fileName . '"');
+        $writer->save('php://output');
     }
 
     public function delete($id)

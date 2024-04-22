@@ -103,4 +103,12 @@ function exportExcel(url){
   });
 };
 
+function exportExcel2(url){
+  window.open(url, '_blank');
+  Toast.fire({
+    icon: 'success',
+    title: 'Data berhasil diexport!'
+  });
+};
+
 
